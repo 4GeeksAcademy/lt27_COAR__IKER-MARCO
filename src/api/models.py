@@ -36,6 +36,8 @@ class Craftmen(db.Model):
         return f'<Craftmen {self.name}>'
 
     
+
+##################### MODEL CATEGORY ####################################    
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
