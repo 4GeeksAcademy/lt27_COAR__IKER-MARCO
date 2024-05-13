@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -8,17 +10,85 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			],
+			allCategory: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+			categorys: () => {	
+					try{
+						fetch(process.env.BACKEND_URL + "category")
+						.then(resp => {
+							if(!resp.ok){
+								throw new Error('The application was unsuccessful')
+							}
+							return resp.json()
+						})
+						.then(data => {
+							setStore({allCategory: data})
+						})
+					}
+					catch{
+						console.error('Something wrong', error)
+					}
+			},
+			addCategory: async (newCategory) => {
+				try{
+					const response = await fetch(process.env.BACKEND_URL + "category/new", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({name:newCategory})
+					})
+					if (!response.ok){
+						throw new Error('Error adding category')
+					}
+					actions.categorys();
+
+				} catch (error){
+					console.error('Errod adding category:', error)
+				}
+			},
+			editCategory: async (newCategory, id) => {
+				try{
+					const actions = getActions()
+					const response = await fetch(process.env.BACKEND_URL + "category/update/" + id, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({name:newCategory})
+					})
+					if (!response.ok){
+						throw new Error('Error adding category')
+					}
+					actions.categorys();
+
+				} catch (error){
+					console.error('Error adding category:', error)
+				}
+			},
+			deleteCategory: async (categoryId) => {
+				try{
+					const actions = getActions()
+					const response = await fetch(process.env.BACKEND_URL + "category/delete/" + categoryId, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+					if (!response.ok){
+						throw new Error('Error adding category')
+					}
+					actions.categorys();
+
+				} catch (error){
+					console.error('Error adding category:', error)
+				}
 			},
 
 			getMessage: async () => {
