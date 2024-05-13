@@ -65,4 +65,22 @@ class Category(db.Model):
             "id": self.id,
             "name": self.name,
         }
+    
+class Admiin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    lastName = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), unique=True, nullable=False)
+   
+    def __repr__(self):
+        return f'<Admiin {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "lastName": self.lastName,
+            "email": self.email
+        }
 
