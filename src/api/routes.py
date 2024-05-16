@@ -22,8 +22,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
-#################################CRUD CRAFTMEN#################################
+#################################CRUD CRAFTMEN########################
 @api.route('/craftmen', methods=['GET'])
 def get_craftmen():
     craftmen = Craftmen.query.all()
@@ -71,6 +70,51 @@ def delete_craftmen(id):
     return jsonify("Craftmen deleted"), 200
 
 ################################---------#############################
+#################################CRUD PRODUCT#########################
+@api.route('/product', methods=['GET'])
+def get_product():
+    product = Product.query.all()
+    product = list(map(lambda x: x.serialize(), product))
+
+    return jsonify(product), 200
+
+@api.route('/product/<int:id>', methods=['GET'])
+def get_product_by_id(id):
+    product = Product.query.get(id)
+    product = product.serialize()
+
+    return jsonify(product), 200
+
+@api.route('/product', methods=['POST'])
+def create_product():
+    request_body = request.get_json()
+    product = Product(name=request_body["name"], description=request_body["description"], price=request_body["price"], stock=request_body["stock"], image=request_body["image"])
+    db.session.add(product)
+    db.session.commit()
+    return jsonify("Product created"), 200
+
+@api.route('/product/<int:id>', methods=['PUT'])
+def update_product(id):
+    product = Product.query.get(id)
+    request_body = request.get_json()
+    product.name = request_body["name"]
+    product.description = request_body["description"]
+    product.price = request_body["price"]
+    product.stock = request_body["stock"]
+    product.image = request_body["image"]
+    db.session.commit()
+    return jsonify("Product updated"), 200
+
+@api.route('/product/<int:id>', methods=['DELETE'])
+def delete_product(id):
+    product = Product.query.get(id)
+    db.session.delete(product)
+    db.session.commit()
+    return jsonify("Product deleted"), 200
+
+################################---------#############################
+
+
 @api.route('/category', methods=['GET'])
 def all_category():
     category = Category.query.all()
