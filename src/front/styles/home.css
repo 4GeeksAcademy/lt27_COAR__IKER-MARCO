@@ -5,3 +5,28 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.horizontal-scrollable > .row { 
+    overflow-x: auto; 
+    white-space: nowrap; 
+} 
+  
+.horizontal-scrollable > .row > .col-xs-4 { 
+    display: inline-block; 
+    float: none; 
+} 
+/* Decorations */ 
+  
+.col-xs-4 { 
+    color: white; 
+    font-size: 24px; 
+    padding-bottom: 20px; 
+    padding-top: 18px; 
+} 
+  
+.col-xs-4:nth-child(2n+1) { 
+    background: green; 
+} 
+  
+.col-xs-4:nth-child(2n+2) { 
+    background: black; 
+} 
