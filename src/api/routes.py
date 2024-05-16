@@ -12,7 +12,7 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-
+####################################### START CRUD ENDPOINTS CATEGORY ##############################
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -125,13 +125,82 @@ def all_category():
             "msg":"no categories"
         }
         return jsonify(response_body),404
+    else: return jsonify(resp),200
+    
+
+@api.route('/category/<int:category_id>', methods=['GET'])
+def just_one_category(category_id):
+    one_category = Category.query.filter_by(id = category_id).first()
+    if one_category == None:
+        one_category = {
+            "msg":"This category does not exist"
+        }
+        return jsonify(one_category), 404
+
+    else: return jsonify(one_category.serialize()), 200
+
+
+@api.route('/category/new', methods=['POST'])
+def new_category():
+    new_name_category = request.get_json()["name"]
+    New_Category = Category(name = new_name_category)
+
+    db.session.add(New_Category)
+    db.session.commit()
+
+    response_body = {
+        "message": "New category successfully added"
+    }
+
+    return jsonify(response_body), 200
+
+
+@api.route('/category/delete/<int:id_category>', methods=['DELETE'])
+def delete_category(id_category):
+    category = Category.query.filter_by(id=id_category).first()
+
+    if category:
+        db.session.delete(category)
+        db.session.commit()
+
+        response_body = {
+            "msg":"Category successfully eliminated"
+        }
+        return jsonify(response_body), 200
     else:
-        resp
-        return jsonify(resp),200
+        response_body = {
+            "msg":"This category does not exist"
+        }
+        return jsonify(response_body), 401
     
 
-# @api.route('/category/new', methods=['POST'])
-# def new_category():
+@api.route('/category/update/<int:id_category>', methods=['PUT'])
+def update_category(id_category):
+    category = Category.query.filter_by(id=id_category).first()
+
+    if not category:
+        response_body = {
+            "msg": "don't exist"
+        }
+        return jsonify(response_body), 404
     
 
-#     return jsonify(response_body), 200
+    new_name = request.get_json().get("name")
+
+    if new_name:
+        category.name = new_name
+        db.session.commit()
+
+        response_body = {
+            "msg":"Category successfully updated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"A new category name is required to update."
+        }
+        return jsonify(response_body), 400
+    
+
+
+############################# END ############################################       

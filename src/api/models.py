@@ -17,7 +17,7 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
-
+##################### MODEL CRAFTMEN  ####################################    
 
 class Craftmen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +31,9 @@ class Craftmen(db.Model):
     state = db.Column(db.String(120), unique=False, nullable=False)
     zip_code = db.Column(db.String(120), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Craftmen {self.name}>'  
 
     def serialize(self):
         return {
@@ -51,6 +54,8 @@ class Craftmen(db.Model):
     def __repr__(self):
         return f'<Craftmen {self.name}>'
 
+##################### MODEL PRODUCT ####################################    
+      
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
@@ -75,6 +80,7 @@ class Product(db.Model):
             "category_id": self.category_id,
             "category": self.category.name
         }
+##################### MODEL CATEGORY ####################################    
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
