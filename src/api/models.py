@@ -33,8 +33,8 @@ class Craftmen(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Craftmen {self.name}>'  
-
+        return f'<Craftmen {self.name}>'
+   
     def serialize(self):
         return {
             "id": self.id,
@@ -51,8 +51,6 @@ class Craftmen(db.Model):
             # do not serialize the password, its a security breach
         }
     
-    def __repr__(self):
-        return f'<Craftmen {self.name}>'
 
 ##################### MODEL PRODUCT ####################################    
       
@@ -80,12 +78,36 @@ class Product(db.Model):
             "category_id": self.category_id,
             "category": self.category.name
         }
-##################### MODEL CATEGORY ####################################    
-
+##################### MODEL CATEGORY ####################################        
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
    
     def __repr__(self):
         return f'<Category {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
+    
+##################### MODEL ADMIN ###################################################################
+class Admiin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    lastName = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), unique=True, nullable=False)
+   
+    def __repr__(self):
+        return f'<Admiin {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "lastName": self.lastName,
+            "email": self.email
+        }
 

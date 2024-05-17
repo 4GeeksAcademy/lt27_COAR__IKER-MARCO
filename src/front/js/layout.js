@@ -9,10 +9,15 @@ import { Single } from "./pages/single";
 
 import injectContext from "./store/appContext";
 
+
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Category } from "./component/Category";
+import { CategoryCreate } from "./pages/CategoryCreate";
+import { CategoryEdit } from "./pages/CategoryEdit";
 import { Craftmen } from "./pages/craftmen";
 import { Craftmendetail } from "./pages/craftmendetail";
+
 
 //create your first component
 const Layout = () => {
@@ -23,29 +28,33 @@ const Layout = () => {
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
 
-  return (
-    <div>
-      <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Navbar />
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Demo />} path="/demo" />
-            <Route element={<Craftmen />} path="/craftmen" />
-            <Route element={<Single />} path="/single/:theid" />
-            <Route
-              path="/craftmendetail/:id"
-              element={<Craftmendetail />}
-              component={Craftmendetail}
-            />
-            
-            <Route element={<h1>Not found!</h1>} />
-          </Routes>
-          <Footer />
-        </ScrollToTop>
-      </BrowserRouter>
-    </div>
-  );
+
+    return (
+        <div>
+            <BrowserRouter basename={basename}>
+                <ScrollToTop>
+                    <Navbar />
+                    <Routes>
+                        <Route element={<Home />} path="/" />
+                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Category />} path="/category" />
+                        <Route element={<CategoryCreate />} path="/create" />
+                        <Route element={<CategoryEdit />} path="/edit/:id" />
+                        <Route element={<Craftmen />} path="/craftmen" />            
+                        <Route
+                         path="/craftmendetail/:id"
+                         element={<Craftmendetail />}
+                         component={Craftmendetail}
+                         />
+                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<h1>Not found!</h1>} />
+                    </Routes>
+                    <Footer />
+                </ScrollToTop>
+            </BrowserRouter>
+        </div>
+    );
+
 };
 
 export default injectContext(Layout);
