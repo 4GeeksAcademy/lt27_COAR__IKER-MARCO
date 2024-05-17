@@ -1,70 +1,41 @@
-import React, {useContext, useState} from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const Category =()=>{
-
     const { store, actions } = useContext(Context);
-    const [selectOption, setSelectOption]= useState('Choose your category')
-    const [newCategory, setNewCategory] = useState('')
+    const Navigate = useNavigate()
 
-    const handleClick =(name)=>{
-        setSelectOption(name)
+    const handleClick =()=>{
+        actions.authFalse()
     }
 
-    const handleInputChange =(e)=>{
-        setNewCategory(e.target.value)
+    const handleDelete =(id)=>{
+        actions.deleteCategory(id)
     }
 
-    const handleAddCategory =()=>{
-        actions.addCategory(newCategory)
-        setNewCategory('')
+    const handleEdit =(id)=>{
+        Navigate("/edit/" + id)
+        actions.authFalse()
     }
-
-
-    const handleEditCategory =()=>{
-        if(selectOption === 'Choose your category'){
-            alert('Please select a category to edit')
-            return;
-        }
-        actions.editCategory(newCategory, store.allCategory.find(category=> category.name === selectOption).id);
-        setNewCategory('')
-    }
-
-    const handleDeleteCategory =(categoryId)=>{
-        actions.deleteCategory(categoryId)
-    }
-
-
-    return (
-        <div className="conteiner-principal">
-            <div className="btn-group">
-                <button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {selectOption}
-                </button>
-                <ul className="dropdown-menu">
-                    {store.allCategory.map((element)=> <button style={{"background": "black", "color":"white"}} onClick={()=>handleClick(element.name)} key={element.id}>{element.name}</button>)}
-                </ul>
-            </div>
-
-            <div className="add-category">
-                <h3>Can't find your category? Add, edit or delete it.</h3>
-                <input
-                type="text"
-                placeholder="write something"
-                value={newCategory}
-                onChange={handleInputChange}
-                />
-                <button onClick={handleAddCategory}>
-                    add category
-                </button>
-                <button onClick={handleEditCategory}>
-                    edit category
-                </button>
-                <button onClick={()=>handleDeleteCategory(store.allCategory.find(category => category.name === selectOption).id)} >
-                    delete category
-                </button>
-            </div>
+    
+    return(
+        <div className="text-center">
+            <h1>Category</h1>
+            <Link to={"/create"}>
+            <button onClick={handleClick} >Create New</button>
+            </Link>
+            {store.allCategory.map((element)=> (
+                
+                <div key={element.id} className="card" style={{"width": "18rem"}}>
+                    <div className="card-body">
+                        <h5 className="card-title">{element.name}</h5>
+                        <button onClick={()=>handleEdit(element.id)} >Edit</button>
+                        <button onClick={()=> handleDelete(element.id)} >Delete</button>
+                    </div>
+                </div>
+            ))}
         </div>
     )
 }

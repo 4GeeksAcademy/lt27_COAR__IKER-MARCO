@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -11,12 +9,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				},
 			],
-			allCategory: []
+			allCategory: [],
+			auth: false
 		},
+		
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+			authFalse: () => {
+				setStore({auth : false})
 			},
 			categorys: () => {	
 					try{
@@ -35,47 +38,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error('Something wrong', error)
 					}
 			},
-			addCategory: async (newCategory) => {
+			addCategory: async (inputChange) => {
 				try{
+					const actions = getActions()
 					const response = await fetch(process.env.BACKEND_URL + "category/new", {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
 						},
-						body: JSON.stringify({name:newCategory})
+						body: JSON.stringify({name:inputChange})
 					})
 					if (!response.ok){
 						throw new Error('Error adding category')
 					}
 					actions.categorys();
+					setStore({ auth: true })
 
 				} catch (error){
 					console.error('Errod adding category:', error)
 				}
 			},
-			editCategory: async (newCategory, id) => {
+			editCategory: async (inputChange, id) => {
 				try{
-					const actions = getActions()
 					const response = await fetch(process.env.BACKEND_URL + "category/update/" + id, {
 						method: 'PUT',
 						headers: {
 							'Content-Type': 'application/json'
 						},
-						body: JSON.stringify({name:newCategory})
+						body: JSON.stringify({name:inputChange})
 					})
 					if (!response.ok){
 						throw new Error('Error adding category')
 					}
-					actions.categorys();
+					const actions = getActions()
+					actions.categorys()
+					
 
 				} catch (error){
 					console.error('Error adding category:', error)
 				}
 			},
-			deleteCategory: async (categoryId) => {
+			deleteCategory: async (id) => {
 				try{
 					const actions = getActions()
-					const response = await fetch(process.env.BACKEND_URL + "category/delete/" + categoryId, {
+					const response = await fetch(process.env.BACKEND_URL + "category/delete/" + id, {
 						method: 'DELETE',
 						headers: {
 							'Content-Type': 'application/json'
