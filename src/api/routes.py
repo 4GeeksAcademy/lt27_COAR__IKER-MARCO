@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Craftmen, Category, Product
+from api.models import db, User, Craftmen, Category, Product, Admiin
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -10,16 +10,6 @@ api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
-
-####################################### START CRUD ENDPOINTS CATEGORY ##############################
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
 
 #################################CRUD CRAFTMEN########################
 @api.route('/craftmen', methods=['GET'])
@@ -113,7 +103,7 @@ def delete_product(id):
 
 ################################---------#############################
 
-
+############################### CRUD CATEGORY ##################################
 @api.route('/category', methods=['GET'])
 def all_category():
     category = Category.query.all()
@@ -203,3 +193,90 @@ def update_category(id_category):
 
 
 ############################# END ############################################       
+
+
+######################## START CRUD ADMINN ##################################
+@api.route('/admin', methods=['GET'])
+def getAdmin():
+    admin = Admiin.query.all()
+    resp = list(map(lambda element: element.serialize(),admin))
+
+    return jsonify(resp), 200
+
+@api.route('/admin/<int:id_admin>', methods=['GET'])
+def getOneAdmin(id_admin):
+    oneAdmin = Admiin.query.filter_by(id = id_admin).first()
+    if oneAdmin == None:
+        oneAdmin = {
+            "msg": "No existe ese Admin"
+        }
+        return jsonify(oneAdmin), 404
+    else:
+        return jsonify(oneAdmin.serialize()),200
+    
+@api.route('/admin/new', methods=['POST'])
+def newAdmin():
+    body = request.get_json()
+    new_admin = Admiin(name = body["name"], lastName = body["lastName"], email = body["email"], password = body["password"])
+
+    db.session.add(new_admin)
+    db.session.commit()
+
+    response_body = {
+        "message": "New Admin successfully added"
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/admin/update/<int:id_admin>', methods=['PUT'])
+def updateAdmin(id_admin):
+    update_admin = Admiin.query.filter_by(id=id_admin).first()
+
+    if not update_admin:
+        response_body = {
+            "msg": "Admin don't exist"
+        }
+        return jsonify(response_body), 404
+    
+    data = request.get_json()
+
+    if  'name' in data:
+        update_admin.name = data['name']
+    if 'lastName' in data:
+        update_admin.lastName = data['lastName']
+    if 'email' in data:
+        update_admin.email = data['email']
+    if 'password' in data:
+        update_admin.password = data['password']
+
+        db.session.commit()
+
+        response_body = {
+            "msg":"Admin successfully updated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"A update Admin info is required to update."
+        }
+        return jsonify(response_body), 400
+
+
+@api.route('/admin/delete/<int:id_admin>', methods=['DELETE'])
+def deleteAdmin(id_admin):
+    Admin = Admiin.query.filter_by(id=id_admin).first()
+
+    if Admin:
+        db.session.delete(Admin)
+        db.session.commit()
+
+        response_body = {
+            "msg":"Admin successfully eliminated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"This Admin does not exist"
+        }
+        return jsonify(response_body), 401
+
