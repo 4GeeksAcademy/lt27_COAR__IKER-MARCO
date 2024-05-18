@@ -54,7 +54,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadSomeData: () => {
         const store = getStore();
         fetch(
-          "https://literate-memory-pjr4w5jpjq49f6r57-3001.app.github.dev/api/craftmen/"
+          "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -73,7 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://literate-memory-pjr4w5jpjq49f6r57-3001.app.github.dev/api/craftmen/${id}`,
+          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -116,7 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://literate-memory-pjr4w5jpjq49f6r57-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
+          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -133,7 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://literate-memory-pjr4w5jpjq49f6r57-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
+          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -157,7 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://literate-memory-pjr4w5jpjq49f6r57-3001.app.github.dev/api/craftmen",
+          "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/",
           requestOptions
         )
           .then((response) => response.text())

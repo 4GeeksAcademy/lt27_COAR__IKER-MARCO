@@ -13,6 +13,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Craftmen } from "./pages/craftmen";
 import { Craftmendetail } from "./pages/craftmendetail";
+import { Craftmencreate } from "./pages/craftmencreate";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,8 @@ const Layout = () => {
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Craftmen />} path="/craftmen" />
+            <Route element={<Craftmencreate />} path="/craftmencreate" />
+
             <Route element={<Single />} path="/single/:theid" />
             <Route
               path="/craftmendetail/:id"

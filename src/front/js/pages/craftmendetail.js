@@ -94,6 +94,73 @@ export const Craftmendetail = (props) => {
             </table>
           </div>
 
+          <button
+            type="button"
+            className="btn btn-warning"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop2"
+            onClick={() => handleSelected(props.id)}
+          >
+            Editar
+          </button>
+
+          <div
+            className="modal fade"
+            id="staticBackdrop2"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabIndex="-1"
+            aria-labelledby="staticBackdropLabel2"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="staticBackdropLabel2">
+                    Are you sure do you want to edit this contact?
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    data-bs-dismiss="modal"
+                    onClick={() => {
+                      actions.putedit();
+                    }}
+                  >
+                    Yes, edit it
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Link to={"/"} className="btn btn-outline-primary">
+            <span>Home</span>
+          </Link>
+          <Link
+            to={"/craftmen"}
+            className="btn btn-outline-success"
+            onClick={() => actions.loadSomeData()}
+          >
+            <span>Regresar</span>
+          </Link>
+
+
+
           <form>
             <div className="mb-3">
               <label forhtml="exampleInputAddress1" className="form-label">
