@@ -17,6 +17,7 @@ import { CategoryCreate } from "./pages/CategoryCreate";
 import { CategoryEdit } from "./pages/CategoryEdit";
 import { Craftmen } from "./pages/craftmen";
 import { Craftmendetail } from "./pages/craftmendetail";
+import { Craftmencreate } from "./pages/craftmencreate";
 
 
 //create your first component
@@ -27,8 +28,6 @@ const Layout = () => {
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
-
-
     return (
         <div>
             <BrowserRouter basename={basename}>
@@ -37,6 +36,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<Craftmen />} path="/craftmen" />
+                        <Route element={<Craftmencreate />} path="/craftmencreate" />
                         <Route element={<Category />} path="/category" />
                         <Route element={<CategoryCreate />} path="/create" />
                         <Route element={<CategoryEdit />} path="/edit/:id" />
@@ -54,7 +55,6 @@ const Layout = () => {
             </BrowserRouter>
         </div>
     );
-
 };
 
 export default injectContext(Layout);
