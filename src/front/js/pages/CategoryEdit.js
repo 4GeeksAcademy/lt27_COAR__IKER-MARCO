@@ -35,7 +35,6 @@ export const CategoryEdit =()=>{
                         onChange={handleInputChange}
                     />
                     <button onClick={()=>handleEdit(id)} >Edit</button>
-                    {store.auth == true ? <Navigate to={"/category"} /> : null}
                 </div>
             </div>
         </div>
