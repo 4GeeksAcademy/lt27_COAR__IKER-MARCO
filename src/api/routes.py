@@ -241,14 +241,15 @@ def updateAdmin(id_admin):
     
     data = request.get_json()
 
-    if  'name' in data:
-        update_admin.name = data['name']
-    if 'lastName' in data:
-        update_admin.lastName = data['lastName']
-    if 'email' in data:
-        update_admin.email = data['email']
-    if 'password' in data:
-        update_admin.password = data['password']
+    if data:
+        if  'name' in data:
+            update_admin.name = data['name']
+        if 'lastName' in data:
+            update_admin.lastName = data['lastName']
+        if 'email' in data:
+            update_admin.email = data['email']
+        if 'password' in data:
+            update_admin.password = data['password']
 
         db.session.commit()
 
@@ -281,3 +282,4 @@ def deleteAdmin(id_admin):
         }
         return jsonify(response_body), 401
 
+################################## END ####################################

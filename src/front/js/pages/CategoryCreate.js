@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Navigate } from "react-router-dom";
 
@@ -19,7 +19,6 @@ export const CategoryCreate =()=>{
             <div className="card-body">
                 <h1>Please enter a new category</h1>
             </div>
-            
             <input
             className="mx-4"
             style={{"border":"2px solid black"}} 
