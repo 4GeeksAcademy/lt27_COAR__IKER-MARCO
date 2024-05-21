@@ -1,4 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	
   return {
     store: {
       message: null,
@@ -20,15 +21,186 @@ const getState = ({ getStore, getActions, setStore }) => {
       productselected: [],
       authorize: false,
       user: {},
-
-      
+     
+      allCategory: [],
+      allAdmins: [],
+			auth: false
     },
     actions: {
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },
+      authFalse: () => {
+			  setStore({auth : false})
+			},
+      Admins: () => {	
+        try{
+          fetch(process.env.BACKEND_URL + "admin")
+          .then(resp => {
+            if(!resp.ok){
+              throw new Error('The application was unsuccessful')
+            }
+            return resp.json()
+          })
+          .then(data => {
+            setStore({allAdmins: data})
+          })
+        }
+        catch{
+          console.error('Something wrong', error)
+        }
+    },
+    newAdmin: async (newAdmin) => {
+      const store = getStore()
+      const actions = getActions()
 
+      try{
+        const response = await fetch(process.env.BACKEND_URL + "admin/new", {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify(newAdmin)
+        })
+
+        if(!response.ok){
+          throw new Error('Failed to create admin')
+        }
+
+        const data = await response.json()
+
+        setStore({
+          allAdmins: [...store.allAdmins, data]
+        })
+        actions.Admins();
+      }catch (error) {
+        console.error('Error creating admin', error)
+      }
+    },
+    updateAdmin: async (updatedAdmin, id) => {
+      const store = getStore()
+      const actions = getActions()
+      try{
+        const response = await fetch(process.env.BACKEND_URL + "admin/update/" + id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedAdmin)
+        })
+
+        if (!response.ok){
+          throw new Error('Error adding category')
+        }
+
+        const data = await response.json()
+
+        const updatedAdminIndex = store.allAdmins.findIndex(admin => admin.id === id);
+        const updatedAdmins = [...store.allAdmins];
+        updatedAdmins[updatedAdminIndex] = { ...updatedAdmins[updatedAdminIndex], ...updatedAdmin };
+
+        setStore({
+            allAdmins: updatedAdmins
+        })
+        actions.Admins()
+      } catch (error){
+        console.error('Error adding category:', error)
+      } 
+    },
+    deleteAdmin: async (id) => {
+      try{
+        const actions = getActions()
+        const response = await fetch(process.env.BACKEND_URL + "admin/delete/" + id, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        if (!response.ok){
+          throw new Error('Error adding category')
+        }
+        actions.Admins();
+
+      } catch (error){
+        console.error('Error adding category:', error)
+      }
+    },
+      categorys: () => {	
+					try{
+						fetch(process.env.BACKEND_URL + "category")
+						.then(resp => {
+							if(!resp.ok){
+								throw new Error('The application was unsuccessful')
+							}
+							return resp.json()
+						})
+						.then(data => {
+							setStore({allCategory: data})
+						})
+					}
+					catch{
+						console.error('Something wrong', error)
+					}
+			},
+      addCategory: async (inputChange) => {
+				try{
+					const actions = getActions()
+					const response = await fetch(process.env.BACKEND_URL + "category/new", {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({name:inputChange})
+					})
+					if (!response.ok){
+						throw new Error('Error adding category')
+					}
+					actions.categorys();
+					setStore({ auth: true })
+
+				} catch (error){
+					console.error('Errod adding category:', error)
+				}
+			},
+      editCategory: async (inputChange, id) => {
+				try{
+					const response = await fetch(process.env.BACKEND_URL + "category/update/" + id, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({name:inputChange})
+					})
+					if (!response.ok){
+						throw new Error('Error adding category')
+					}
+					const actions = getActions()
+					actions.categorys()
+					
+
+				} catch (error){
+					console.error('Error adding category:', error)
+				}
+			},
+      deleteCategory: async (id) => {
+				try{
+					const actions = getActions()
+					const response = await fetch(process.env.BACKEND_URL + "category/delete/" + id, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+					if (!response.ok){
+						throw new Error('Error adding category')
+					}
+					actions.categorys();
+
+				} catch (error){
+					console.error('Error adding category:', error)
+				}
+			},
       selectcraftmen: (currentCraftman) => {
         const store = getStore();
         console.log("seleccionado", currentCraftman);

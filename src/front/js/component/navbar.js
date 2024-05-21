@@ -51,6 +51,16 @@ export const Navbar = () => {
               </>
             ) : null}
           </div>
+          <div className="col">
+            <Link to="/category">
+              <button className="btn btn-outline-secondary">Category</button>
+            </Link>
+          </div>
+          <div className="col">
+            <Link to="/admin">
+              <button className="btn btn-outline-secondary">Admin</button>
+            </Link>
+          </div>
         </div>
       </nav>
     </>
