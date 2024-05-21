@@ -1,5 +1,4 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	
   return {
     store: {
       message: null,
@@ -21,10 +20,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       productselected: [],
       authorize: false,
       user: {},
-     
+
       allCategory: [],
       allAdmins: [],
-			auth: false
+      auth: false,
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -32,175 +31,188 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
       authFalse: () => {
-			  setStore({auth : false})
-			},
-      Admins: () => {	
-        try{
+        setStore({ auth: false });
+      },
+      Admins: () => {
+        try {
           fetch(process.env.BACKEND_URL + "admin")
-          .then(resp => {
-            if(!resp.ok){
-              throw new Error('The application was unsuccessful')
-            }
-            return resp.json()
-          })
-          .then(data => {
-            setStore({allAdmins: data})
-          })
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error("The application was unsuccessful");
+              }
+              return resp.json();
+            })
+            .then((data) => {
+              setStore({ allAdmins: data });
+            });
+        } catch {
+          console.error("Something wrong", error);
         }
-        catch{
-          console.error('Something wrong', error)
-        }
-    },
-    newAdmin: async (newAdmin) => {
-      const store = getStore()
-      const actions = getActions()
+      },
+      newAdmin: async (newAdmin) => {
+        const store = getStore();
+        const actions = getActions();
 
-      try{
-        const response = await fetch(process.env.BACKEND_URL + "admin/new", {
-          method: 'POST',
-          headers: {
-            'Content-Type' : 'application/json'
-          },
-          body: JSON.stringify(newAdmin)
-        })
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "admin/new", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newAdmin),
+          });
 
-        if(!response.ok){
-          throw new Error('Failed to create admin')
-        }
-
-        const data = await response.json()
-
-        setStore({
-          allAdmins: [...store.allAdmins, data]
-        })
-        actions.Admins();
-      }catch (error) {
-        console.error('Error creating admin', error)
-      }
-    },
-    updateAdmin: async (updatedAdmin, id) => {
-      const store = getStore()
-      const actions = getActions()
-      try{
-        const response = await fetch(process.env.BACKEND_URL + "admin/update/" + id, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(updatedAdmin)
-        })
-
-        if (!response.ok){
-          throw new Error('Error adding category')
-        }
-
-        const data = await response.json()
-
-        const updatedAdminIndex = store.allAdmins.findIndex(admin => admin.id === id);
-        const updatedAdmins = [...store.allAdmins];
-        updatedAdmins[updatedAdminIndex] = { ...updatedAdmins[updatedAdminIndex], ...updatedAdmin };
-
-        setStore({
-            allAdmins: updatedAdmins
-        })
-        actions.Admins()
-      } catch (error){
-        console.error('Error adding category:', error)
-      } 
-    },
-    deleteAdmin: async (id) => {
-      try{
-        const actions = getActions()
-        const response = await fetch(process.env.BACKEND_URL + "admin/delete/" + id, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
+          if (!response.ok) {
+            throw new Error("Failed to create admin");
           }
-        })
-        if (!response.ok){
-          throw new Error('Error adding category')
+
+          const data = await response.json();
+
+          setStore({
+            allAdmins: [...store.allAdmins, data],
+          });
+          actions.Admins();
+        } catch (error) {
+          console.error("Error creating admin", error);
         }
-        actions.Admins();
+      },
+      updateAdmin: async (updatedAdmin, id) => {
+        const store = getStore();
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "admin/update/" + id,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(updatedAdmin),
+            }
+          );
 
-      } catch (error){
-        console.error('Error adding category:', error)
-      }
-    },
-      categorys: () => {	
-					try{
-						fetch(process.env.BACKEND_URL + "category")
-						.then(resp => {
-							if(!resp.ok){
-								throw new Error('The application was unsuccessful')
-							}
-							return resp.json()
-						})
-						.then(data => {
-							setStore({allCategory: data})
-						})
-					}
-					catch{
-						console.error('Something wrong', error)
-					}
-			},
+          if (!response.ok) {
+            throw new Error("Error adding category");
+          }
+
+          const data = await response.json();
+
+          const updatedAdminIndex = store.allAdmins.findIndex(
+            (admin) => admin.id === id
+          );
+          const updatedAdmins = [...store.allAdmins];
+          updatedAdmins[updatedAdminIndex] = {
+            ...updatedAdmins[updatedAdminIndex],
+            ...updatedAdmin,
+          };
+
+          setStore({
+            allAdmins: updatedAdmins,
+          });
+          actions.Admins();
+        } catch (error) {
+          console.error("Error adding category:", error);
+        }
+      },
+      deleteAdmin: async (id) => {
+        try {
+          const actions = getActions();
+          const response = await fetch(
+            process.env.BACKEND_URL + "admin/delete/" + id,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error adding category");
+          }
+          actions.Admins();
+        } catch (error) {
+          console.error("Error adding category:", error);
+        }
+      },
+      categorys: () => {
+        try {
+          fetch(process.env.BACKEND_URL + "category")
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error("The application was unsuccessful");
+              }
+              return resp.json();
+            })
+            .then((data) => {
+              setStore({ allCategory: data });
+            });
+        } catch {
+          console.error("Something wrong", error);
+        }
+      },
       addCategory: async (inputChange) => {
-				try{
-					const actions = getActions()
-					const response = await fetch(process.env.BACKEND_URL + "category/new", {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({name:inputChange})
-					})
-					if (!response.ok){
-						throw new Error('Error adding category')
-					}
-					actions.categorys();
-					setStore({ auth: true })
-
-				} catch (error){
-					console.error('Errod adding category:', error)
-				}
-			},
+        try {
+          const actions = getActions();
+          const response = await fetch(
+            process.env.BACKEND_URL + "category/new",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: inputChange }),
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error adding category");
+          }
+          actions.categorys();
+          setStore({ auth: true });
+        } catch (error) {
+          console.error("Errod adding category:", error);
+        }
+      },
       editCategory: async (inputChange, id) => {
-				try{
-					const response = await fetch(process.env.BACKEND_URL + "category/update/" + id, {
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({name:inputChange})
-					})
-					if (!response.ok){
-						throw new Error('Error adding category')
-					}
-					const actions = getActions()
-					actions.categorys()
-					
-
-				} catch (error){
-					console.error('Error adding category:', error)
-				}
-			},
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "category/update/" + id,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: inputChange }),
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error adding category");
+          }
+          const actions = getActions();
+          actions.categorys();
+        } catch (error) {
+          console.error("Error adding category:", error);
+        }
+      },
       deleteCategory: async (id) => {
-				try{
-					const actions = getActions()
-					const response = await fetch(process.env.BACKEND_URL + "category/delete/" + id, {
-						method: 'DELETE',
-						headers: {
-							'Content-Type': 'application/json'
-						}
-					})
-					if (!response.ok){
-						throw new Error('Error adding category')
-					}
-					actions.categorys();
-
-				} catch (error){
-					console.error('Error adding category:', error)
-				}
-			},
+        try {
+          const actions = getActions();
+          const response = await fetch(
+            process.env.BACKEND_URL + "category/delete/" + id,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error adding category");
+          }
+          actions.categorys();
+        } catch (error) {
+          console.error("Error adding category:", error);
+        }
+      },
       selectcraftmen: (currentCraftman) => {
         const store = getStore();
         console.log("seleccionado", currentCraftman);
@@ -213,7 +225,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ productselected: currentProduct });
         console.log(store.productselected);
       },
-
 
       getMessage: async () => {
         try {
@@ -239,7 +250,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadSomeData: () => {
         const store = getStore();
         fetch(
-          "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen"
+          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -249,7 +260,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.error(error));
         fetch(
-          "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/product"
+          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -269,7 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/${id}`,
+          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -289,7 +300,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/product/${id}`,
+          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -332,7 +343,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
+          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -369,7 +380,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/product/${store.productselected.id}`,
+          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -386,7 +397,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
+          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -405,7 +416,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/product/${store.productselected.id}`,
+          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -429,7 +440,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/craftmen/",
+          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/",
           requestOptions
         )
           .then((response) => response.text())
@@ -452,7 +463,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/product/",
+          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/",
           requestOptions
         )
           .then((response) => response.text())
@@ -464,40 +475,39 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       login: (email, password) => {
         const myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append(
-            "Cookie",
-            ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxPaq2YA5Wc6Ce7dTIIcnPdgBMn8T9O_hXjuhiRtmmcxWwKPPX7jm4DAFjLwfCkPjgldDNs2RTdLeSsTNji0IIR0Spd9-RHtic_VWgTSU0UxRELK0fV5bHMqaUjjZ_uYrvmCEhzv6AUW_jDHeG9MXWfeCt0owx7oXbslCy0PB5-dz2yTuYmac8Yax2p7lRIreyi4iNva-pO4uUBwX5tYOTBRb1a7tfLn2YzbXTdkhNW90Mf0jOEZnjS80hbOzqa5AuzlvgLE2e5sQD3NIt7TzpXqzxLouZ_qTMENV6K6zcGIo477jkzuelhkkPGYBG2FxKGklVtu2FmQDCosfYyx8RYovlpD0cuIQEBo9XERP-Glk__ItW8PEcz2-WzjUMgYPJY0Ja_y4WUILlDqduphXYCfG6CiSFlSVDasEph7oqRS_t_PDf5-ZBJjmXJm9-NO9j26NYCFOKWDaoKLvYlWGL6AKSSiK8DGxVe2hMpdofzWsWXlioLBcIUoNZw1ZJ0bQj3Fs84yFq_KL87hs_XpA395G3l-EHYavImD5uGD7lDbAxjNIna29bQegfyfFB0Ea3T2BlJsMgMmYXWntiO9rw-4jziz4J3TcL8soXovSWYkyct9kAFScZ_EbkfiEEgBILfuDWwRIzigX4wyPakbRUmEyxNyl0zvPXJLKQTGVK_V769Vsrcz-IuxlOPdMCqEmmx3bQhRMUk2JZ4pYMMwUOiG0wqqO6T0-Rgsv2KsMGeBS_2_Qd-f5xnWFFdst4hssHgTBThSqEbaq5Kf3I8oct2nLQizPPxC0i6OT-qEoPbr3DhcQKKxMJzl38D10NeLDhVDsTWjchCBfvIhiWTgTJZmBbgX_QxHYQV_c899cogZrn8xVzTlwApXQWrHElEBZcsastc2CgPfMPPHBl5dP6TjnwAMsGkQBEIzMnNGMsyFPR0GXcL4lbccqsfKCTNgjJlndVda2oTneulo1fqeMitI"
-          );
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append(
+          "Cookie",
+          ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxPaq2YA5Wc6Ce7dTIIcnPdgBMn8T9O_hXjuhiRtmmcxWwKPPX7jm4DAFjLwfCkPjgldDNs2RTdLeSsTNji0IIR0Spd9-RHtic_VWgTSU0UxRELK0fV5bHMqaUjjZ_uYrvmCEhzv6AUW_jDHeG9MXWfeCt0owx7oXbslCy0PB5-dz2yTuYmac8Yax2p7lRIreyi4iNva-pO4uUBwX5tYOTBRb1a7tfLn2YzbXTdkhNW90Mf0jOEZnjS80hbOzqa5AuzlvgLE2e5sQD3NIt7TzpXqzxLouZ_qTMENV6K6zcGIo477jkzuelhkkPGYBG2FxKGklVtu2FmQDCosfYyx8RYovlpD0cuIQEBo9XERP-Glk__ItW8PEcz2-WzjUMgYPJY0Ja_y4WUILlDqduphXYCfG6CiSFlSVDasEph7oqRS_t_PDf5-ZBJjmXJm9-NO9j26NYCFOKWDaoKLvYlWGL6AKSSiK8DGxVe2hMpdofzWsWXlioLBcIUoNZw1ZJ0bQj3Fs84yFq_KL87hs_XpA395G3l-EHYavImD5uGD7lDbAxjNIna29bQegfyfFB0Ea3T2BlJsMgMmYXWntiO9rw-4jziz4J3TcL8soXovSWYkyct9kAFScZ_EbkfiEEgBILfuDWwRIzigX4wyPakbRUmEyxNyl0zvPXJLKQTGVK_V769Vsrcz-IuxlOPdMCqEmmx3bQhRMUk2JZ4pYMMwUOiG0wqqO6T0-Rgsv2KsMGeBS_2_Qd-f5xnWFFdst4hssHgTBThSqEbaq5Kf3I8oct2nLQizPPxC0i6OT-qEoPbr3DhcQKKxMJzl38D10NeLDhVDsTWjchCBfvIhiWTgTJZmBbgX_QxHYQV_c899cogZrn8xVzTlwApXQWrHElEBZcsastc2CgPfMPPHBl5dP6TjnwAMsGkQBEIzMnNGMsyFPR0GXcL4lbccqsfKCTNgjJlndVda2oTneulo1fqeMitI"
+        );
 
-          const raw = JSON.stringify({
-            username: email,
-            password: password,
+        const raw = JSON.stringify({
+          username: email,
+          password: password,
+        });
+
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(
+          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/login",
+          requestOptions
+        )
+          .then((response) => {
+            console.log(response);
+            if (response.status == 200) {
+              setStore({ authorize: true });
+            }
+            return response.json(); // Devuelve el valor para que pueda ser utilizado en la siguiente función .then
+          })
+          .then((data) => {
+            console.log(data);
+            localStorage.setItem("token", data.access_token);
           });
-
-          const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          };
-
-          fetch(
-            "https://effective-acorn-wr7p5qrgrpqrfvgjg-3001.app.github.dev/api/login",
-            requestOptions
-          )
-            .then((response) => {
-              console.log(response);
-              if (response.status == 200) {
-                setStore({ authorize: true });
-              }
-              return response.json(); // Devuelve el valor para que pueda ser utilizado en la siguiente función .then
-            })
-            .then((data) => {
-              console.log(data);
-              localStorage.setItem("token", data.access_token);
-            });
-        
       },
       logout: () => {
         console.log("logout desde flux");
