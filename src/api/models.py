@@ -15,6 +15,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "is_active": self.is_active,
             # do not serialize the password, its a security breach
         }
 ##################### MODEL CRAFTMEN  ####################################    
@@ -87,5 +88,5 @@ class Category(db.Model):
     name = db.Column(db.String(120), nullable=False)
    
     def __repr__(self):
-        return f'<Category {self.id}>'
+        return f'<{self.name}>'
 

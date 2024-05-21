@@ -3,11 +3,11 @@ import rigoImage from "../../img/rigo-baby.jpg";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-const CraftmenCard = (props) => {
+const ProductCard = (props) => {
   const { store, actions } = useContext(Context);
 
   const handleSelected = (id) => {
-    actions.getcraftman(id);
+    actions.getproduct(id);
   };
 
   return (
@@ -15,19 +15,21 @@ const CraftmenCard = (props) => {
       <img src={rigoImage} className="card-img-top" alt="..." />
       <div className="card-body m-2 ">
         <h5 className="card-title">
-          Craftman
+          Product
         </h5>
         <h5 className="card-title">
           Nombre:
           <strong> {props.name}</strong>
         </h5>
-        <p className="card-text">Last Name: {props.last_name}</p>
-        <p className="card-text">Email: {props.email}</p>
-        <p className="card-text">Phoner: {props.phone}</p>
+        <p className="card-text">Price: {props.price}</p>
+        <p className="card-text">Category: {props.category}</p>
+        <p className="card-text">In stock: {props.stock}</p>
         <p className="card-text">id: {props.id}</p>
+
+
         <div className="d-flex justify-content-between">
           <Link
-            to={"/craftmendetail/" + props.id}
+            to={"/productdetail/" + props.id}
             className="btn btn-outline-primary"
           >
             <span>Editar</span>
@@ -41,8 +43,8 @@ const CraftmenCard = (props) => {
             onClick={() => handleSelected(props.id)}
           >
             Delete
-          {props.id}
           </button>
+
           <div
             className="modal fade"
             id="staticBackdrop2"
@@ -56,7 +58,7 @@ const CraftmenCard = (props) => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel2">
-                    Are you sure do you want to erase this craftman?
+                    Are you sure do you want to erase this contact?
                   </h1>
                   <button
                     type="button"
@@ -67,10 +69,9 @@ const CraftmenCard = (props) => {
                 </div>
                 <div className="modal-body">
                   <p>
-                    Once you erase this craftman, you will not be able to recover
+                    Once you erase this contact, you will not be able to recover
                     it.
                   </p>
-                  <p></p>
                 </div>
                 <div className="modal-footer">
                   <button
@@ -85,7 +86,7 @@ const CraftmenCard = (props) => {
                     className="btn btn-danger"
                     data-bs-dismiss="modal"
                     onClick={() => {
-                      actions.deletecraftman();
+                      actions.deleteproduct();
                     }}
                   >
                     Yes, erase it
@@ -100,4 +101,4 @@ const CraftmenCard = (props) => {
   );
 };
 
-export default CraftmenCard;
+export default ProductCard;

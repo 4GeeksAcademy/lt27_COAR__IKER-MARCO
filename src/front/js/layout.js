@@ -14,6 +14,10 @@ import { Footer } from "./component/footer";
 import { Craftmen } from "./pages/craftmen";
 import { Craftmendetail } from "./pages/craftmendetail";
 import { Craftmencreate } from "./pages/craftmencreate";
+import { Product } from "./pages/product";
+import { Productcreate } from "./pages/productcreate.js";
+import { Productdetail } from "./pages/productdetail.js";
+
 
 //create your first component
 const Layout = () => {
@@ -33,13 +37,19 @@ const Layout = () => {
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Craftmen />} path="/craftmen" />
+            <Route element={<Product />} path="/product" />
+            <Route element={<Productcreate />} path="/productcreate" />
             <Route element={<Craftmencreate />} path="/craftmencreate" />
-
             <Route element={<Single />} path="/single/:theid" />
             <Route
               path="/craftmendetail/:id"
               element={<Craftmendetail />}
               component={Craftmendetail}
+            />
+            <Route
+              path="/productdetail/:id"
+              element={<Productdetail />}
+              component={Productdetail}
             />
             
             <Route element={<h1>Not found!</h1>} />

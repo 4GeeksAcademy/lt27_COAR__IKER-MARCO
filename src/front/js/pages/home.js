@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { Form } from '../component/formlogin';
+import { Navigate } from "react-router-dom";
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
@@ -12,6 +14,8 @@ export const Home = () => {
             <p>
                 <img src={rigoImageUrl} />
             </p>
+            {store.authorize == true ? <Navigate to="/craftmen" /> : <Form />} 
+            
             <div className="alert alert-info">
                 {store.message || "Loading message from the backend (make sure your python backend is running)..."}
             </div>

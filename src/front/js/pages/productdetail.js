@@ -4,37 +4,34 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImage from "../../img/rigo-baby.jpg";
 
-export const Craftmendetail = (props) => {
+export const Productdetail = (props) => {
   const { store, actions } = useContext(Context);
 
   const { id } = useParams();
 
-  const [currentCraftman, setCurrentCraftman] = useState({
-    address: "",
-    city: "",
-    email: "",
+  const [currentProduct, setCurrentProduct] = useState({
+    category: "",
+    category_id: "",
+    description: "",
     id: "",
-    is_active: true,
-    last_name: "",
+    image: "",
     name: "",
-    password: "",
-    phone: "",
-    state: "",
-    zip_code: "",
+    price: "",
+    stock: "",
   });
 
   useEffect(() => {
-    const artesano = actions.getcraftman(id);
-    setCurrentCraftman(store.craftmenselected);
+    const artesano = actions.getproduct(id);
+    setCurrentProduct(store.productselected);
   }, []);
 
   const handleSelected = () => {
-    actions.selectcraftmen(currentCraftman);
+    actions.selectproduct(currentProduct);
   };
 
   const info = (e) => {
-    setCurrentCraftman({
-      ...currentCraftman,
+    setCurrentProduct({
+      ...currentProduct,
       [e.target.name]: e.target.value,
     });
   };
@@ -48,8 +45,8 @@ export const Craftmendetail = (props) => {
               <img src={rigoImage} className="img-thumbnail" alt="..." />
             </div>
             <div className="col-7">
-              <h2>Craftman</h2>
-              <h2>{store.craftmenselected.name}</h2>
+              <h2>Product</h2>
+              <h2>{store.productselected.name}</h2>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -65,31 +62,27 @@ export const Craftmendetail = (props) => {
             <table className="table">
               <thead>
                 <tr className="text-danger">
-                  <th>address</th>
-                  <th>city</th>
-                  <th>email</th>
+                  <th>category</th>
+                  <th>category id</th>
+                  <th>description</th>
                   <th>id</th>
-                  <th>is_active</th>
-                  <th>last_name</th>
+                  <th>image</th>
                   <th>name</th>
-                  <th>phone</th>
-                  <th>state</th>
-                  <th>zip_code</th>
+                  <th>price</th>
+                  <th>stock</th>
                 </tr>
               </thead>
               <tbody className="text-danger">
                 <tr>
-                  <td>{store.craftmenselected.address}</td>
-                  <td>{store.craftmenselected.city}</td>
-                  <td>{store.craftmenselected.email}</td>
-                  <td>{store.craftmenselected.id}</td>
-                  <td>{store.craftmenselected.is_active}</td>
-                  <td>{store.craftmenselected.boolean}</td>
-                  <td>{store.craftmenselected.last_name}</td>
-                  <td>{store.craftmenselected.name}</td>
-                  <td>{store.craftmenselected.phone}</td>
-                  <td>{store.craftmenselected.state}</td>
-                  <td>{store.craftmenselected.zip_code}</td>
+                  <td>{store.productselected.category}</td>
+                  <td>{store.productselected.category_id}</td>
+                  <td>{store.productselected.description}</td>
+                  <td>{store.productselected.id}</td>
+                  <td>{store.productselected.image}</td>
+                  <td>{store.productselected.name}</td>
+                  <td>{store.productselected.price}</td>
+                  <td>{store.productselected.stock}</td>
+
                 </tr>
               </tbody>
             </table>
@@ -118,7 +111,7 @@ export const Craftmendetail = (props) => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel2">
-                    Are you sure do you want to edit this contact?
+                    Are you sure do you want to edit this product?
                   </h1>
                   <button
                     type="button"
@@ -140,7 +133,7 @@ export const Craftmendetail = (props) => {
                     className="btn btn-warning"
                     data-bs-dismiss="modal"
                     onClick={() => {
-                      actions.puteditcraftman();
+                      actions.puteditproduct();
                     }}
                   >
                     Yes, edit it
@@ -153,52 +146,50 @@ export const Craftmendetail = (props) => {
             <span>Home</span>
           </Link>
           <Link
-            to={"/craftmen"}
+            to={"/product"}
             className="btn btn-outline-success"
             onClick={() => actions.loadSomeData()}
           >
             <span>Regresar</span>
           </Link>
 
-
-
           <form>
             <div className="mb-3">
-              <label forhtml="exampleInputAddress1" className="form-label">
-                address
+              <label forhtml="exampleInputcategory1" className="form-label">
+                category
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputAddress1"
+                id="exampleInputcategory1"
                 onChange={info}
-                name="address"
+                name="category"
               />
             </div>
 
             <div className="mb-3">
-              <label forhtml="exampleInputCity1" className="form-label">
-                city
+              <label forhtml="exampleInputcategory_id1" className="form-label">
+               category_id
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputCity1"
+                id="exampleInputcategory_id1"
                 onChange={info}
-                name="city"
+                name="category_id"
               />
             </div>
 
             <div className="mb-3">
-              <label forhtml="exampleInputEmail1" className="form-label">
-                email
+              <label forhtml="exampleInputdescription1" className="form-label">
+               description
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputEmail1"
+                id="exampleInputdescription1"
                 onChange={info}
-                name="email"
+                name="description"
               />
             </div>
 
@@ -210,103 +201,65 @@ export const Craftmendetail = (props) => {
                 type="id"
                 className="form-control"
                 id="exampleInputId1"
-                placeholder={store.craftmenselected.id}
+                placeholder={store.productselected.id}
                 onChange={info}
                 name="id"
               />
             </div>
 
             <div className="mb-3">
-              <label forhtml="exampleInputIsActive1" className="form-label">
-                is_active
+              <label forhtml="exampleInputIsimage1" className="form-label">
+               image
               </label>
               <input
                 type="boolean"
                 className="form-control"
-                id="exampleInputIsActive1"
-                placeholder="true"
+                id="exampleInputIsimage1"
                 onChange={info}
-                name="is_active"
+                name="image"
               />
             </div>
 
             <div className="mb-3">
-              <label forhtml="exampleInputIsLastname1" className="form-label">
-                last_name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputLastname1"
-                onChange={info}
-                name="last_name"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label forhtml="exampleInputIsName1" className="form-label">
+              <label forhtml="exampleInputIname1" className="form-label">
                 name
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputName1"
+                id="exampleInputname1"
                 onChange={info}
                 name="name"
               />
             </div>
 
             <div className="mb-3">
-              <label forhtml="exampleInputPassword" className="form-label">
-                password
+              <label forhtml="exampleInputprice1" className="form-label">
+                price
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputPassword"
+                id="exampleInputprice1"
                 onChange={info}
-                name="password"
+                name="price"
               />
             </div>
 
             <div className="mb-3">
-              <label forhtml="exampleInputPhone1" className="form-label">
-                phone
+              <label forhtml="exampleInputstock" className="form-label">
+                stock
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputPhone1"
+                id="exampleInputstock"
                 onChange={info}
-                name="phone"
+                name="stock"
               />
             </div>
 
-            <div className="mb-3">
-              <label forhtml="exampleInputState1" className="form-label">
-                state
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputState1"
-                onChange={info}
-                name="state"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label forhtml="exampleInputZip_code1" className="form-label">
-                zip_code
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputZip_code1"
-                onChange={info}
-                name="zip_code"
-              />
-            </div>
+          
           </form>
 
           <button
@@ -332,7 +285,7 @@ export const Craftmendetail = (props) => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel2">
-                    Are you sure do you want to edit this contact?
+                    Are you sure do you want to edit this product?
                   </h1>
                   <button
                     type="button"
@@ -354,7 +307,7 @@ export const Craftmendetail = (props) => {
                     className="btn btn-warning"
                     data-bs-dismiss="modal"
                     onClick={() => {
-                      actions.putedit();
+                      actions.puteditproduct();
                     }}
                   >
                     Yes, edit it
@@ -367,7 +320,7 @@ export const Craftmendetail = (props) => {
             <span>Home</span>
           </Link>
           <Link
-            to={"/craftmen"}
+            to={"/product"}
             className="btn btn-outline-success"
             onClick={() => actions.loadSomeData()}
           >
@@ -379,6 +332,6 @@ export const Craftmendetail = (props) => {
   );
 };
 
-Craftmendetail.propTypes = {
+Productdetail.propTypes = {
   match: PropTypes.object,
 };
