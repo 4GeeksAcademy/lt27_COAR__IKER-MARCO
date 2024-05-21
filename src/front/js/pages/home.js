@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { Context } from "../store/appContext";
 
 
 export const Home = () => {
