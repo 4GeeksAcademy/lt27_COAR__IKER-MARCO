@@ -3,9 +3,13 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImage from "../../img/rigo-baby.jpg";
+import { useNavigate } from "react-router-dom";
+
 
 export const Craftmencreate = (props) => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     address: "",
     city: "",
@@ -20,9 +24,12 @@ export const Craftmencreate = (props) => {
     zip_code: "",
   });
 
+
   const saveCraftmen = (e) => {
     e.preventDefault();
-    actions.postContact(data);
+    actions.postcratfman(data);
+    navigate("/craftmen");
+
   };
 
   const info = (e) => {
@@ -35,7 +42,7 @@ export const Craftmencreate = (props) => {
   return (
     <>
       <div className="text-center mt-5">
-        <h1>Create</h1>
+        <h1>Create Craftman</h1>
       </div>
       <div className="container text-center">
               <div className="row">

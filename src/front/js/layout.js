@@ -9,7 +9,6 @@ import { Single } from "./pages/single";
 
 import injectContext from "./store/appContext";
 
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Category } from "./component/Category";
@@ -21,7 +20,9 @@ import { CategoryEdit } from "./pages/CategoryEdit";
 import { Craftmen } from "./pages/craftmen";
 import { Craftmendetail } from "./pages/craftmendetail";
 import { Craftmencreate } from "./pages/craftmencreate";
-
+import { Product } from "./pages/product";
+import { Productcreate } from "./pages/productcreate.js";
+import { Productdetail } from "./pages/productdetail.js";
 
 //create your first component
 const Layout = () => {
@@ -31,36 +32,45 @@ const Layout = () => {
 
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
-    return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Craftmen />} path="/craftmen" />
-                        <Route element={<Craftmencreate />} path="/craftmencreate" />
-                        <Route element={<Category />} path="/category" />
-                        <Route element={<Admin />} path="/admin" />
-                        <Route element={<AdminEdit />} path="/admin/edit/:id" />
-                        <Route element={<AdminCreate />} path="/new" />
-                        <Route element={<CategoryCreate />} path="/create" />
-                        <Route element={<CategoryEdit />} path="/edit/:id" />
-                        <Route element={<Craftmen />} path="/craftmen" />            
-                        <Route
-                         path="/craftmendetail/:id"
-                         element={<Craftmendetail />}
-                         component={Craftmendetail}
-                         />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
-    );
+
+  return (
+    <div>
+      <BrowserRouter basename={basename}>
+        <ScrollToTop>
+          <Navbar />
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Demo />} path="/demo" />
+            <Route element={<Craftmen />} path="/craftmen" />
+            <Route element={<Product />} path="/product" />
+            <Route element={<Productcreate />} path="/productcreate" />
+            <Route element={<Craftmencreate />} path="/craftmencreate" />
+            <Route element={<Single />} path="/single/:theid" />
+            <Route
+              path="/craftmendetail/:id"
+              element={<Craftmendetail />}
+              component={Craftmendetail}
+            />
+            <Route
+              path="/productdetail/:id"
+              element={<Productdetail />}
+              component={Productdetail}
+            />
+
+            <Route element={<h1>Not found!</h1>} />
+            <Route element={<Category />} path="/category" />
+            <Route element={<Admin />} path="/admin" />
+            <Route element={<AdminEdit />} path="/admin/edit/:id" />
+            <Route element={<AdminCreate />} path="/new" />
+            <Route element={<CategoryCreate />} path="/create" />
+            <Route element={<CategoryEdit />} path="/edit/:id" />
+          </Routes>
+
+          <Footer />
+        </ScrollToTop>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default injectContext(Layout);

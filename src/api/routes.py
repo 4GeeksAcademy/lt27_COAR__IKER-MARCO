@@ -6,10 +6,46 @@ from api.models import db, User, Craftmen, Category, Product, Admiin
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
+
+
+app = Flask(__name__)
+app.url_map.strict_slashes = False
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-secret 1 2 3" # Change this!
+jwt = JWTManager(app)
+
+#########################################
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+
+####################################### START CRUD ENDPOINTS CATEGORY ##############################
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
+
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+
+    return jsonify(response_body), 200
+
+####################################### USERS ##############################
+@api.route('/user', methods=['GET'])
+#@jwt_required()
+
+def get_user():
+    user = User.query.all()
+    user = list(map(lambda x: x.serialize(), user))
+
+    return jsonify(user), 200
+
 
 #################################CRUD CRAFTMEN########################
 @api.route('/craftmen', methods=['GET'])
@@ -18,6 +54,8 @@ def get_craftmen():
     craftmen = list(map(lambda x: x.serialize(), craftmen))
 
     return jsonify(craftmen), 200
+
+
 
 @api.route('/craftmen/<int:id>', methods=['GET'])
 def get_craftmen_by_id(id):
@@ -191,7 +229,48 @@ def update_category(id_category):
         return jsonify(response_body), 400
     
 
+################################# SIGNUP ########################
 
+@api.route('/signup', methods=['POST'])
+def signup():
+    body = request.get_json()
+    user = User.query.filter_by(email=body["email"]).first()
+    print(user)
+    if user == None:
+        user = User(email=body["email"], password=body["password"], is_active=True)
+        db.session.add(user)
+        db.session.commit()
+        response_body = {
+            "msg": "User created"
+        }
+        return jsonify(response_body), 200
+    else:
+        return jsonify({"msg": "user already exist"}), 401
+
+################################# LOGIN ########################
+
+@api.route('/login', methods=['POST'])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email=username).first()
+    print(user)
+    print(user.serialize()) 
+
+    if user.password != password:
+        return jsonify({"msg": "Bad username or password"}), 401
+    
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
+
+################################# PROTECTED ########################
+
+@app.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 ############################# END ############################################       
 
 
