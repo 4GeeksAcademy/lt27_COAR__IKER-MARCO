@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       Admins: () => {
         try {
-          fetch(process.env.BACKEND_URL + "admin")
+          fetch(process.env.BACKEND_URL + "/api/admin")
             .then((resp) => {
               if (!resp.ok) {
                 throw new Error("The application was unsuccessful");
@@ -54,7 +54,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const actions = getActions();
 
         try {
-          const response = await fetch(process.env.BACKEND_URL + "admin/new", {
+          const response = await fetch(process.env.BACKEND_URL + "/api/admin/new", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -81,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const actions = getActions();
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "admin/update/" + id,
+            process.env.BACKEND_URL + "/api/admin/update/" + id,
             {
               method: "PUT",
               headers: {
@@ -118,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "admin/delete/" + id,
+            process.env.BACKEND_URL + "/api/admin/delete/" + id,
             {
               method: "DELETE",
               headers: {
@@ -136,7 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       categorys: () => {
         try {
-          fetch(process.env.BACKEND_URL + "category")
+          fetch(process.env.BACKEND_URL + "/api/category")
             .then((resp) => {
               if (!resp.ok) {
                 throw new Error("The application was unsuccessful");
@@ -154,7 +154,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "category/new",
+            process.env.BACKEND_URL + "/api/category/new",
             {
               method: "POST",
               headers: {
@@ -175,7 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       editCategory: async (inputChange, id) => {
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "category/update/" + id,
+            process.env.BACKEND_URL + "/api/category/update/" + id,
             {
               method: "PUT",
               headers: {
@@ -197,7 +197,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "category/delete/" + id,
+            process.env.BACKEND_URL + "/api/category/delete/" + id,
             {
               method: "DELETE",
               headers: {
@@ -250,7 +250,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadSomeData: () => {
         const store = getStore();
         fetch(
-          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen"
+          process.env.BACKEND_URL + "/api/craftmen"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -260,7 +260,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.error(error));
         fetch(
-          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product"
+          process.env.BACKEND_URL + "/api/product"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -280,7 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/${id}`,
+          process.env.BACKEND_URL +'/api/craftmen/'+ `${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -300,7 +300,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/${id}`,
+          process.env.BACKEND_URL +'/api/product/'+ `${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -343,7 +343,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
+          process.env.BACKEND_URL +'/api/product/'+ `${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -380,7 +380,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/${store.productselected.id}`,
+          process.env.BACKEND_URL +'/api/product/'+`${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -397,7 +397,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/${store.craftmenselected.id}`,
+          process.env.BACKEND_URL + '/api/craftmen/'+ `${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -416,7 +416,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          `https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/${store.productselected.id}`,
+          process.env.BACKEND_URL + '/api/product/'+ `${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -440,7 +440,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/craftmen/",
+          process.env.BACKEND_URL + "/api/craftmen/",
           requestOptions
         )
           .then((response) => response.text())
@@ -463,7 +463,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/product/",
+          process.env.BACKEND_URL + "/api/product/",
           requestOptions
         )
           .then((response) => response.text())
@@ -494,7 +494,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          "https://curly-journey-v6v9rj6q6xj6hpx6q-3001.app.github.dev/api/login",
+          process.env.BACKEND_URL + "/api/login",
           requestOptions
         )
           .then((response) => {
