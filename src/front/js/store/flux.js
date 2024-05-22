@@ -24,6 +24,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       allCategory: [],
       allAdmins: [],
       auth: false,
+
+      authorize_b: false,
+
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -513,6 +516,47 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("logout desde flux");
         localStorage.removeItem("token");
         setStore({ authorize: false });
+      },
+      login_b: (email_b, password_b) => {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append(
+          "Cookie",
+          ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxPaq2YA5Wc6Ce7dTIIcnPdgBMn8T9O_hXjuhiRtmmcxWwKPPX7jm4DAFjLwfCkPjgldDNs2RTdLeSsTNji0IIR0Spd9-RHtic_VWgTSU0UxRELK0fV5bHMqaUjjZ_uYrvmCEhzv6AUW_jDHeG9MXWfeCt0owx7oXbslCy0PB5-dz2yTuYmac8Yax2p7lRIreyi4iNva-pO4uUBwX5tYOTBRb1a7tfLn2YzbXTdkhNW90Mf0jOEZnjS80hbOzqa5AuzlvgLE2e5sQD3NIt7TzpXqzxLouZ_qTMENV6K6zcGIo477jkzuelhkkPGYBG2FxKGklVtu2FmQDCosfYyx8RYovlpD0cuIQEBo9XERP-Glk__ItW8PEcz2-WzjUMgYPJY0Ja_y4WUILlDqduphXYCfG6CiSFlSVDasEph7oqRS_t_PDf5-ZBJjmXJm9-NO9j26NYCFOKWDaoKLvYlWGL6AKSSiK8DGxVe2hMpdofzWsWXlioLBcIUoNZw1ZJ0bQj3Fs84yFq_KL87hs_XpA395G3l-EHYavImD5uGD7lDbAxjNIna29bQegfyfFB0Ea3T2BlJsMgMmYXWntiO9rw-4jziz4J3TcL8soXovSWYkyct9kAFScZ_EbkfiEEgBILfuDWwRIzigX4wyPakbRUmEyxNyl0zvPXJLKQTGVK_V769Vsrcz-IuxlOPdMCqEmmx3bQhRMUk2JZ4pYMMwUOiG0wqqO6T0-Rgsv2KsMGeBS_2_Qd-f5xnWFFdst4hssHgTBThSqEbaq5Kf3I8oct2nLQizPPxC0i6OT-qEoPbr3DhcQKKxMJzl38D10NeLDhVDsTWjchCBfvIhiWTgTJZmBbgX_QxHYQV_c899cogZrn8xVzTlwApXQWrHElEBZcsastc2CgPfMPPHBl5dP6TjnwAMsGkQBEIzMnNGMsyFPR0GXcL4lbccqsfKCTNgjJlndVda2oTneulo1fqeMitI"
+        );
+
+        const raw = JSON.stringify({
+          email: email_b,
+          password: password_b,
+        });
+
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(
+          process.env.BACKEND_URL + "/api/login_b",
+          requestOptions
+        )
+          .then((response) => {
+            console.log(response);
+            if (response.status == 200) {
+              setStore({ authorize_b: true });
+            }
+            return response.json(); // Devuelve el valor para que pueda ser utilizado en la siguiente función .then
+          })
+          .then((datab) => {
+            console.log(datab);
+            localStorage.setItem("token2", datab.access_token);
+          });
+      },
+      logout_b: () => {
+        console.log("logout desde flux");
+        localStorage.removeItem("token");
+        setStore({ authorize_b: false });
       },
     },
   };

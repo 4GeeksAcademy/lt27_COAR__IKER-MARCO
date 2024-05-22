@@ -24,6 +24,8 @@ import { Product } from "./pages/product";
 import { Productcreate } from "./pages/productcreate.js";
 import { Productdetail } from "./pages/productdetail.js";
 
+import { Buyer_products } from "./pages/buyer_products.js";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -64,6 +66,9 @@ const Layout = () => {
             <Route element={<AdminCreate />} path="/new" />
             <Route element={<CategoryCreate />} path="/create" />
             <Route element={<CategoryEdit />} path="/edit/:id" />
+
+            <Route element={<Buyer_products />} path="/buyer_products" />
+            
           </Routes>
 
           <Footer />

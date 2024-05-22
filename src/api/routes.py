@@ -363,6 +363,8 @@ def deleteAdmin(id_admin):
 ################################## CRUD BUYER ####################################
 
 @api.route('/buyer', methods=['GET'])
+#@jwt_required()
+
 def getBuyer():
     buyer = Buyer.query.all()
     resp = list(map(lambda element: element.serialize(),buyer))
@@ -447,3 +449,30 @@ def deleteBuyer(id_buyer):
             "msg":"This Buyer does not exist"
         }
         return jsonify(response_body), 401
+    
+
+################################# LOGIN_B########################
+
+@api.route('/login_b', methods=['POST'])
+def login_b():
+
+    # username = request.json.get("username", None)
+    # password = request.json.get("password", None)
+    # if username != "test" or password != "test":
+    #     return jsonify({"msg": "Bad username or password, estas en login_b"}), 401
+
+    # access_token = create_access_token(identity=username)
+    # return jsonify(access_token=access_token)
+
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    buyer = Buyer.query.filter_by(email=email).first()
+    print(buyer)
+    print(buyer.serialize()) 
+
+    if buyer.password != password:
+         return jsonify({"msg": "Bad username or password, estas en login_b!"}), 401
+    
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
