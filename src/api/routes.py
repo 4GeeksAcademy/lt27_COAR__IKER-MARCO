@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Craftmen, Category, Product, Admiin
+from api.models import db, User, Craftmen, Category, Product, Admiin, Buyer
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -360,4 +360,90 @@ def deleteAdmin(id_admin):
         }
         return jsonify(response_body), 401
 
-################################## END ####################################
+################################## CRUD BUYER ####################################
+
+@api.route('/buyer', methods=['GET'])
+def getBuyer():
+    buyer = Buyer.query.all()
+    resp = list(map(lambda element: element.serialize(),buyer))
+
+    return jsonify(resp), 200
+
+@api.route('/buyer/<int:id_buyer>', methods=['GET'])
+def getOneBuyer(id_buyer):
+    oneBuyer = Buyer.query.filter_by(id = id_buyer).first()
+    if oneBuyer == None:
+        oneBuyer = {
+            "msg": "Don't exist"
+        }
+        return jsonify(oneBuyer), 404
+    else:
+        return jsonify(oneBuyer.serialize()),200
+    
+@api.route('/buyer/new', methods=['POST'])
+def newBuyer():
+    body = request.get_json()
+    new_buyer = Buyer(name = body["name"], lastName = body["lastName"], email = body["email"], password = body["password"], address = body["address"])
+
+    db.session.add(new_buyer)
+    db.session.commit()
+
+    response_body = {
+        "message": "New buyer successfully added"
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/buyer/update/<int:id_buyer>', methods=['PUT'])
+def updateBuyer(id_buyer):
+    update_buyer = Buyer.query.filter_by(id=id_buyer).first()
+
+    if not update_buyer:
+        response_body = {
+            "msg": "buyer don't exist"
+        }
+        return jsonify(response_body), 404
+    
+    data = request.get_json()
+
+    if data:
+        if  'name' in data:
+            update_buyer.name = data['name']
+        if 'lastName' in data:
+            update_buyer.lastName = data['lastName']
+        if 'email' in data:
+            update_buyer.email = data['email']
+        if 'password' in data:
+            update_buyer.password = data['password']
+        if 'address' in data:
+            update_buyer.address = data['address']
+
+        db.session.commit()
+
+        response_body = {
+            "msg":"Buyer successfully updated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"A update Buyer info is required to update."
+        }
+        return jsonify(response_body), 400
+    
+@api.route('/buyer/delete/<int:id_buyer>', methods=['DELETE'])
+def deleteBuyer(id_buyer):
+    Buye = Buyer.query.filter_by(id=id_buyer).first()
+
+    if Buye:
+        db.session.delete(Buye)
+        db.session.commit()
+
+        response_body = {
+            "msg":"Buyer successfully eliminated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"This Buyer does not exist"
+        }
+        return jsonify(response_body), 401
