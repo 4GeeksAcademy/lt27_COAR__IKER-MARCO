@@ -3,6 +3,7 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Formc } from "../component/formlogin_c";
 import { Formb } from "../component/formlogin_b";
+import { Forma } from "../component/formlogin_a";
 
 import { Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -28,6 +29,7 @@ export const Home = () => {
           </div>
           <div className="col">
             <h2>Admin</h2>
+            {store.authorize_a == true ? <Navigate to="/admin" /> : <Forma />}
           </div>
         </div>
       </div>

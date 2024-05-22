@@ -5,9 +5,15 @@ import { Context } from "../store/appContext";
 import rigoImage from "../../img/rigo-baby.jpg";
 import { useNavigate } from "react-router-dom";
 
-
 export const Productcreate = (props) => {
   const { store, actions } = useContext(Context);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+
+  useEffect(() => {
+    actions.categorys();
+  }, []);
+
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -25,7 +31,6 @@ export const Productcreate = (props) => {
     e.preventDefault();
     actions.postproduct(data);
     navigate("/product");
-
   };
 
   const info = (e) => {
@@ -41,56 +46,54 @@ export const Productcreate = (props) => {
         <h1>Create Product</h1>
       </div>
       <div className="container text-center">
-              <div className="row">
+        <div className="row">
+          <div className="col">
+            <button onClick={saveProduct} className="btn btn-outline-success">
+              Create new Product
+            </button>
+          </div>
 
-                <div className="col">
-                  <button
-                    onClick={saveProduct}
-                    className="btn btn-outline-success"
-                  >
-                    Create new Product
-                  </button>
-                </div>
+          <div className="col">
+            <Link to={"/"} className="btn btn-outline-primary">
+              <span>Home</span>
+            </Link>
+          </div>
 
-                <div className="col">
-                  <Link to={"/"} className="btn btn-outline-primary">
-                    <span>Home</span>
-                  </Link>
-                </div>
-
-                <div className="col">
-                  <Link
-                    to={"/product"}
-                    className="btn btn-outline-success"
-                    onClick={() => actions.loadSomeData()}
-                  >
-                    <span>Regresar</span>
-                  </Link>
-                </div>
-
-              </div>
-            </div>
-
+          <div className="col">
+            <Link
+              to={"/product"}
+              className="btn btn-outline-success"
+              onClick={() => actions.loadSomeData()}
+            >
+              <span>Regresar</span>
+            </Link>
+          </div>
+        </div>
+      </div>
 
       <div className="text-start mt-5">
         <div className="container">
-        <form>
+          <form>
             <div className="mb-3">
               <label forhtml="exampleInputcategory1" className="form-label">
-                category
+                Category
               </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputcategory1"
-                onChange={info}
+              <select
                 name="category"
-              />
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {store.allCategory.map((category, index) => (
+                  <option key={index} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="mb-3">
               <label forhtml="exampleInputdescription1" className="form-label">
-               description
+                description
               </label>
               <input
                 type="text"
@@ -103,7 +106,7 @@ export const Productcreate = (props) => {
 
             <div className="mb-3">
               <label forhtml="exampleInputIsimage1" className="form-label">
-               image
+                image
               </label>
               <input
                 type="boolean"
@@ -152,8 +155,6 @@ export const Productcreate = (props) => {
                 name="stock"
               />
             </div>
-
-          
           </form>
         </div>
       </div>

@@ -26,7 +26,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       auth: false,
 
       authorize_b: false,
+      authorize_a: false,
 
+      productsLiked: [],
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -57,13 +59,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         const actions = getActions();
 
         try {
-          const response = await fetch(process.env.BACKEND_URL + "/api/admin/new", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newAdmin),
-          });
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/admin/new",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newAdmin),
+            }
+          );
 
           if (!response.ok) {
             throw new Error("Failed to create admin");
@@ -252,9 +257,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadSomeData: () => {
         const store = getStore();
-        fetch(
-          process.env.BACKEND_URL + "/api/craftmen"
-        )
+        fetch(process.env.BACKEND_URL + "/api/craftmen")
           .then((response) => response.json())
           .then((data) => {
             setStore({ craftmen: data });
@@ -262,9 +265,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(store.craftmen);
           })
           .catch((error) => console.error(error));
-        fetch(
-          process.env.BACKEND_URL + "/api/product"
-        )
+        fetch(process.env.BACKEND_URL + "/api/product")
           .then((response) => response.json())
           .then((data) => {
             setStore({ product: data });
@@ -283,7 +284,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL +'/api/craftmen/'+ `${id}`,
+          process.env.BACKEND_URL + "/api/craftmen/" + `${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -303,7 +304,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL +'/api/product/'+ `${id}`,
+          process.env.BACKEND_URL + "/api/product/" + `${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -346,7 +347,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL +'/api/product/'+ `${store.craftmenselected.id}`,
+          process.env.BACKEND_URL +
+            "/api/product/" +
+            `${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -383,7 +386,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL +'/api/product/'+`${store.productselected.id}`,
+          process.env.BACKEND_URL +
+            "/api/product/" +
+            `${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -400,7 +405,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL + '/api/craftmen/'+ `${store.craftmenselected.id}`,
+          process.env.BACKEND_URL +
+            "/api/craftmen/" +
+            `${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -419,7 +426,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL + '/api/product/'+ `${store.productselected.id}`,
+          process.env.BACKEND_URL +
+            "/api/product/" +
+            `${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -442,10 +451,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(
-          process.env.BACKEND_URL + "/api/craftmen/",
-          requestOptions
-        )
+        fetch(process.env.BACKEND_URL + "/api/craftmen/", requestOptions)
           .then((response) => response.text())
           .then((result) => {
             console.log(result);
@@ -465,10 +471,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(
-          process.env.BACKEND_URL + "/api/product/",
-          requestOptions
-        )
+        fetch(process.env.BACKEND_URL + "/api/product/", requestOptions)
           .then((response) => response.text())
           .then((result) => {
             console.log(result);
@@ -476,6 +479,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.error(error));
       },
+      ////////////////////////////  LOGINS  ////////////////////////////
+
       login: (email, password) => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -496,10 +501,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(
-          process.env.BACKEND_URL + "/api/login",
-          requestOptions
-        )
+        fetch(process.env.BACKEND_URL + "/api/login", requestOptions)
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
@@ -518,15 +520,17 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ authorize: false });
       },
       login_b: (email_b, password_b) => {
+        console.log("desde flux " + email_b, password_b);
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append(
           "Cookie",
-          ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxPaq2YA5Wc6Ce7dTIIcnPdgBMn8T9O_hXjuhiRtmmcxWwKPPX7jm4DAFjLwfCkPjgldDNs2RTdLeSsTNji0IIR0Spd9-RHtic_VWgTSU0UxRELK0fV5bHMqaUjjZ_uYrvmCEhzv6AUW_jDHeG9MXWfeCt0owx7oXbslCy0PB5-dz2yTuYmac8Yax2p7lRIreyi4iNva-pO4uUBwX5tYOTBRb1a7tfLn2YzbXTdkhNW90Mf0jOEZnjS80hbOzqa5AuzlvgLE2e5sQD3NIt7TzpXqzxLouZ_qTMENV6K6zcGIo477jkzuelhkkPGYBG2FxKGklVtu2FmQDCosfYyx8RYovlpD0cuIQEBo9XERP-Glk__ItW8PEcz2-WzjUMgYPJY0Ja_y4WUILlDqduphXYCfG6CiSFlSVDasEph7oqRS_t_PDf5-ZBJjmXJm9-NO9j26NYCFOKWDaoKLvYlWGL6AKSSiK8DGxVe2hMpdofzWsWXlioLBcIUoNZw1ZJ0bQj3Fs84yFq_KL87hs_XpA395G3l-EHYavImD5uGD7lDbAxjNIna29bQegfyfFB0Ea3T2BlJsMgMmYXWntiO9rw-4jziz4J3TcL8soXovSWYkyct9kAFScZ_EbkfiEEgBILfuDWwRIzigX4wyPakbRUmEyxNyl0zvPXJLKQTGVK_V769Vsrcz-IuxlOPdMCqEmmx3bQhRMUk2JZ4pYMMwUOiG0wqqO6T0-Rgsv2KsMGeBS_2_Qd-f5xnWFFdst4hssHgTBThSqEbaq5Kf3I8oct2nLQizPPxC0i6OT-qEoPbr3DhcQKKxMJzl38D10NeLDhVDsTWjchCBfvIhiWTgTJZmBbgX_QxHYQV_c899cogZrn8xVzTlwApXQWrHElEBZcsastc2CgPfMPPHBl5dP6TjnwAMsGkQBEIzMnNGMsyFPR0GXcL4lbccqsfKCTNgjJlndVda2oTneulo1fqeMitI"
+          ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxO7gSl767VvlaCAxpULtGdwOTsHY-rQ8V30c0Q4BkTKsDssR2hUq2HqJrFwdKttz6MKMXxvIjsn2zQ0gJ2RSxlP_WNhmapzQGsL05_xDPjNzu_XVNj9xyB-wrYZsT36nb76Z-8aw6GhTyfha0Bva-dBS2aEnQtif98hRsxqacVq3TTm0YotdVK0K-upXtAsy3jOVxKeAC1ZPgDw6HtYvMV1JUlCniZsxpyiPnTP9HtV8Lqv4ubwL1ZJDRItKVQ1aFde44Sjel-BpGGGYYhdtCEgrtcW-uu4grmhCkOdWkKJzaQnevVlO4KSHbhE1l0EEG_CiRMm7KxFSBIspqpe-742Nit6Vuv935Pbea7x3N3URJd94I_YIxRIlpkm02_qBe5u4LGkyK5mpfJn34M_v5yNV8C4h76uQFC0_jSXfXeXIclg0jC95lxvuYkNp-WtGBu2oav7_ZA6yqL768dtVTJOJq9D7IbMSNqwSDLPU7lVvQdpMnQpMydqOL6xEk8bvMc26pfepTDgcO5nDkDg2senfp7wlUT_SqAxv_FHDFalpArdgxKfvF_b3IHCcD-F4T2SnKEPThXRRi_96GqDlHf34YcPc4krxJrL67Z4ZQKHv6Ad-yk-DX88XhgKMm924iIu9T6G9m52ngava8shjlDwK_AyFTHxj7zE99AmqlsTSu-xDFC_9o05r7Ny_pX9ruhhurt6RE38YmZsqZZReHBg61PTDEC_ojlUZ_0SvT-uYlCmEfsCPZyehYgk3rAzDqAGWWSIabcU04kz3L0duK0erZtzWTATN6YCAJVjG3E4_vZfzOGTp8AXY4rS_RIEjo6ycLASox-y0EHG9hOwvUP-2nv1dELMxPUyLjLZwsUQZNjSgAcjW4zWBpgWzkmd2Okv5GjJUmnwflVOfkQsbQmE1IjoQTI-MzL_2al5U6ILUngqrGY-pWzQGzBYE_Yh2gu_quaYuJJSFShnVXj7hIw9"
         );
 
         const raw = JSON.stringify({
-          email: email_b,
+          username: email_b,
           password: password_b,
         });
 
@@ -537,10 +541,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(
-          process.env.BACKEND_URL + "/api/login_b",
-          requestOptions
-        )
+        fetch(process.env.BACKEND_URL + "/api/login_b", requestOptions)
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
@@ -557,6 +558,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("logout desde flux");
         localStorage.removeItem("token");
         setStore({ authorize_b: false });
+      },
+      ////////////////////////////  ADD FAVORITES  ////////////////////////////
+
+      favoriteLiked: (productsName) => {
+        console.log(productsName);
+        const store = getStore();
+
+        if (store.productsLiked.includes(productsName)) {
+          setStore({
+            productsLiked: store.productsLiked.filter(
+              (elemento) => elemento != productsName
+            ),
+          });
+        } else
+          setStore({
+            productsLiked: [...store.productsLiked, productsName],
+          });
+      },
+
+      ////////////////////////////  DELETE FAVORITES  ////////////////////////////
+
+      deleteFavorite: (productsName) => {
+        const store = getStore();
+
+        setStore({
+          productsLiked: store.productsLiked.filter(
+            (elemento) => elemento != productsName
+          ),
+        });
       },
     },
   };

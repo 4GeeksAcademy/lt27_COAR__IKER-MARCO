@@ -76,7 +76,6 @@ class Product(db.Model):
             "price": self.price,
             "stock": self.stock,
             "image": self.image,
-            "category_id": self.category_id,
             "category": self.category.name
         }
 ##################### MODEL CATEGORY ####################################        

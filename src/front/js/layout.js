@@ -25,6 +25,7 @@ import { Productcreate } from "./pages/productcreate.js";
 import { Productdetail } from "./pages/productdetail.js";
 
 import { Buyer_products } from "./pages/buyer_products.js";
+import { Buyer_Productdetail } from "./pages/buyer_productdetail.js";
 
 //create your first component
 const Layout = () => {
@@ -68,6 +69,11 @@ const Layout = () => {
             <Route element={<CategoryEdit />} path="/edit/:id" />
 
             <Route element={<Buyer_products />} path="/buyer_products" />
+            <Route
+              path="/buyer_productdetail/:id"
+              element={<Buyer_Productdetail />}
+              component={Buyer_Productdetail}
+            />
             
           </Routes>
 
