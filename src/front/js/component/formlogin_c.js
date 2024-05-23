@@ -1,7 +1,7 @@
 import React, { useState, useContext, act } from "react";
 import { Context } from "../store/appContext";
 
-export const Form = () => {
+export const Formc = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { store, actions } = useContext(Context);

@@ -112,10 +112,19 @@ def get_product_by_id(id):
 
     return jsonify(product), 200
 
-@api.route('/product', methods=['POST'])
+@api.route('/product/new/', methods=['POST'])
 def create_product():
     request_body = request.get_json()
-    product = Product(name=request_body["name"], description=request_body["description"], price=request_body["price"], stock=request_body["stock"], image=request_body["image"])
+    category = Category.query.get(category_id)
+    if category is None:
+        return jsonify("Category not found"), 404
+    product = Product(
+        name=request_body["name"], 
+        description=request_body["description"], 
+        price=request_body["price"], 
+        stock=request_body["stock"], 
+        image=request_body["image"],
+        category_id=category_id)
     db.session.add(product)
     db.session.commit()
     return jsonify("Product created"), 200
@@ -363,6 +372,7 @@ def deleteAdmin(id_admin):
 ################################## CRUD BUYER ####################################
 
 @api.route('/buyer', methods=['GET'])
+#@jwt_required()
 def getBuyer():
     buyer = Buyer.query.all()
     resp = list(map(lambda element: element.serialize(),buyer))
@@ -447,3 +457,24 @@ def deleteBuyer(id_buyer):
             "msg":"This Buyer does not exist"
         }
         return jsonify(response_body), 401
+    
+
+################################# LOGIN_B########################
+
+@api.route('/login_b', methods=['POST'])
+def login_b():
+
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    oneBuyer = Buyer.query.filter_by(email = username).first()
+    print(oneBuyer)
+    print(oneBuyer.serialize())
+
+    if oneBuyer.password != password:
+        return jsonify({"msg": "Bad username or password, estas en login_b"}), 401
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
+
+   
+
