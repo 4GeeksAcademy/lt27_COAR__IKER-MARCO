@@ -113,6 +113,11 @@ export const Navbar = () => {
             </Link>
           </div>
           <div className="col">
+            <Link to="/buyer">
+              <button className="btn btn-outline-secondary">Buyer</button>
+            </Link>
+          </div>
+          <div className="col">
             <Link to="/admin">
               <button className="btn btn-outline-secondary">Admin</button>
             </Link>
