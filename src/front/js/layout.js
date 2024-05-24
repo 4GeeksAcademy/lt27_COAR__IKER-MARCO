@@ -12,6 +12,9 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Category } from "./component/Category";
+import { Buyer } from "./component/Buyer.js";
+import { BuyerCreate } from "./pages/BuyerCreate";
+import { BuyerEdit } from "./pages/BuyerEdit.js"
 import { Admin } from "./component/Admin";
 import { AdminEdit } from "./pages/AdminEdit";
 import { AdminCreate } from "./pages/AdminCreate";
@@ -59,21 +62,24 @@ const Layout = () => {
               element={<Productdetail />}
               component={Productdetail}
             />
-
-            <Route element={<h1>Not found!</h1>} />
-            <Route element={<Category />} path="/category" />
-            <Route element={<Admin />} path="/admin" />
-            <Route element={<AdminEdit />} path="/admin/edit/:id" />
-            <Route element={<AdminCreate />} path="/new" />
-            <Route element={<CategoryCreate />} path="/create" />
-            <Route element={<CategoryEdit />} path="/edit/:id" />
-
             <Route element={<Buyer_products />} path="/buyer_products" />
             <Route
               path="/buyer_productdetail/:id"
               element={<Buyer_Productdetail />}
               component={Buyer_Productdetail}
             />
+
+            <Route element={<Category />} path="/category" />
+            <Route element={<Buyer />} path="/buyer" />
+            <Route element={<BuyerCreate />} path="/buyer/new" />
+            <Route element={<BuyerEdit />} path="/buyer/edit/:id" />
+            <Route element={<Admin />} path="/admin" />
+            <Route element={<AdminEdit />} path="/admin/edit/:id" />
+            <Route element={<AdminCreate />} path="/new" />
+            <Route element={<CategoryCreate />} path="/create" />
+            <Route element={<CategoryEdit />} path="/edit/:id" />
+
+            <Route element={<h1>Not found!</h1>} />
             
           </Routes>
 
