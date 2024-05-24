@@ -393,7 +393,8 @@ def getOneBuyer(id_buyer):
 @api.route('/buyer/new', methods=['POST'])
 def newBuyer():
     body = request.get_json()
-    new_buyer = Buyer(name = body["name"], lastName = body["lastName"], email = body["email"], password = body["password"], address = body["address"])
+    is_active = body.get("is_active",False)
+    new_buyer = Buyer(name = body["name"], lastName = body["lastName"], email = body["email"], password = body["password"], address = body["address"], is_active = is_active)
 
     db.session.add(new_buyer)
     db.session.commit()
@@ -427,6 +428,8 @@ def updateBuyer(id_buyer):
             update_buyer.password = data['password']
         if 'address' in data:
             update_buyer.address = data['address']
+        if 'is_active' in data:
+            update_buyer.is_active = data['is_active']
 
         db.session.commit()
 
