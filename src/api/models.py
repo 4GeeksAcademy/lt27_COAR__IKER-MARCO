@@ -114,6 +114,7 @@ class Admiin(db.Model):
 #################### MODEL BUYER ##################################################
 
 class Buyer(db.Model):
+    __tablename__='buyers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     lastName = db.Column(db.String(120), nullable=False)
@@ -121,9 +122,10 @@ class Buyer(db.Model):
     password = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(120), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    orders = db.relationship('Order', back_populates='buyer', lazy='dynamic')
    
     def __repr__(self):
-        return f'<Buyer {self.name}>'
+        return f'<Buyer {self.id}>'
     
     def serialize(self):
         return {
@@ -137,3 +139,20 @@ class Buyer(db.Model):
 
         }
 
+class Order(db.Model):
+    __tablename__='orders'
+    id = db.Column(db.Integer, primary_key=True)
+    buyer_id = db.Column(db.Integer, db.ForeignKey('buyers.id'), nullable=False)
+    product_state = db.Column(db.String(120), nullable=False)
+
+    buyer = db.relationship('Buyer', back_populates='orders')
+   
+    def __repr__(self):
+        return f'<Orders {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "buyer_id": self.buyer_id,
+            "product_state": self.product_state
+        }
