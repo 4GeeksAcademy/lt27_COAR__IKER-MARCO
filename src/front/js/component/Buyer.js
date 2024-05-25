@@ -7,10 +7,6 @@ export const Buyer =()=>{
     const { store, actions } = useContext(Context);
     const Navigate = useNavigate()
 
-    const handleClick =()=>{
-        Navigate("/buyer/new")
-    }
-
     const handleEdit =(id)=>{
         Navigate("/buyer/edit/" + id)
     }
@@ -22,8 +18,7 @@ export const Buyer =()=>{
 
     return(
         <div>
-            <h1>Buyer</h1>
-            <button onClick={handleClick} className="btn btn-dark">Create New</button>
+            <h1>Buyers Availables</h1>
             {store.allBuyers.map((element)=> {
                 return(
                     <div key={element.id} className="card m-3" style={{"width":"20rem", "border":"2px solid black"}}>

@@ -11,7 +11,7 @@ const ProductCard_Buyer = (props) => {
   };
 
   return (
-    <div className="card mx-3" style={{ width: "14rem" }}>
+    <div className="card mx-3 m-3" style={{ width: "14rem" }}>
       <img src={rigoImage} className="card-img-top" alt="..." />
       <div className="card-body m-2 ">
         <h5 className="card-title">

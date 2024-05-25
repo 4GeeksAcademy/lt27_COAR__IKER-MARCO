@@ -35,6 +35,7 @@ import { Login_buyer } from "./pages/login_buyer.js";
 import { Login_admin } from "./pages/login_admin.js";
 
 import { Signup_b } from "./component/formsignup_b";
+import { Allproducts } from "./pages/allproducts.js";
 
 //create your first component
 const Layout = () => {
@@ -97,6 +98,7 @@ const Layout = () => {
             <Route element={<Login_admin />} path="/login_admin" />
 
             <Route element={<Signup_b />} path="/signup_b" />
+            <Route element={<Allproducts />} path="/allproducts" />
             
             <Route element={<h1>Not found!</h1>} />
             
