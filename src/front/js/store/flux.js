@@ -23,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       allCategory: [],
       allAdmins: [],
+      allBuyers: [],
       auth: false,
 
       authorize_b: false,
@@ -39,6 +40,97 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       authFalse: () => {
         setStore({ auth: false });
+      },
+      BUYER: () => {
+        try {
+          fetch(process.env.BACKEND_URL + "/api/buyer")
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error("The application was unsuccessful");
+              }
+              return resp.json();
+            })
+            .then((data) => {
+              setStore({ allBuyers: data });
+            });
+        } catch {
+          console.error("Something wrong", error);
+        }
+      },
+      newBuyer: async (NewBuyer) => {
+        const store = getStore();
+        const actions = getActions();
+
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/buyer/new",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(NewBuyer),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to create buyer");
+          }
+
+          const data = await response.json();
+
+          setStore({
+            allBuyers: [...store.allBuyers, data],
+          });
+          actions.BUYER();
+        } catch (error) {
+          console.error("Error creating buyer", error);
+        }
+      },
+      updateBuyer: async (updateBuyer, id) =>{
+        const actions = getActions();
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/buyer/update/" + id , {
+            method:"PUT",
+            headers:{
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updateBuyer),
+          })
+
+          if(!response.ok) {
+            throw new Error("Failed to update buyer")
+          }
+
+          const data = await response.json();
+
+          setStore({
+            allBuyers: getStore().allBuyers.map(b => (b.id === id ? data: b))
+          })
+          actions.BUYER()
+        }catch(error) {
+          console.error("error updating buyer", error)
+        }
+      },
+      deleteBuyer: async (id) => {
+        try {
+          const actions = getActions();
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/buyer/delete/" + id,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error delete1 buyer");
+          }
+          actions.BUYER();
+        } catch (error) {
+          console.error("Error delete buyer:", error);
+        }
       },
       Admins: () => {
         try {

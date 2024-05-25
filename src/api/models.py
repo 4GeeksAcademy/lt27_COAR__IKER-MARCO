@@ -121,7 +121,9 @@ class Buyer(db.Model):
     password = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(120), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-   
+    
+    orders = db.relationship('Order', back_populates='buyer', lazy='dynamic')
+
     def __repr__(self):
         return f'<Buyer {self.name}>'
     
@@ -132,8 +134,24 @@ class Buyer(db.Model):
             "lastName": self.lastName,
             "email": self.email,
             "address": self.address,
-            "password": self.password, # this is never serialized
             "is_active": self.is_active
 
         }
 
+class Order(db.Model):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    buyer_id = db.Column(db.Integer, db.ForeignKey('buyer.id'), nullable=False)
+    product_state = db.Column(db.String(120), nullable=False)
+
+    buyer = db.relationship('Buyer', back_populates='orders')
+   
+    def __repr__(self):
+        return f'<Order {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "buyer_id": self.buyer_id,
+            "product_state": self.product_state
+        }
