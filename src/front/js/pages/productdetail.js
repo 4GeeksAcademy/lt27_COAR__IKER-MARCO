@@ -163,7 +163,6 @@ export const Productdetail = (props) => {
                 className="form-control"
                 id="exampleInputcategory1"
                 onChange={info}
-                name="category"
               />
             </div>
 
