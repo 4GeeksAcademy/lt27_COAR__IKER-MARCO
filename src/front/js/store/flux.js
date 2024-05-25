@@ -30,6 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       authorize_a: false,
 
       productsLiked: [],
+      signup_b: [],
+
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -651,6 +653,46 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.removeItem("token");
         setStore({ authorize_b: false });
       },
+      login_a: (email_a, password_a) => {
+        console.log("desde flux " + email_a, password_a);
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append(
+          "Cookie",
+          ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxO7gSl767VvlaCAxpULtGdwOTsHY-rQ8V30c0Q4BkTKsDssR2hUq2HqJrFwdKttz6MKMXxvIjsn2zQ0gJ2RSxlP_WNhmapzQGsL05_xDPjNzu_XVNj9xyB-wrYZsT36nb76Z-8aw6GhTyfha0Bva-dBS2aEnQtif98hRsxqacVq3TTm0YotdVK0K-upXtAsy3jOVxKeAC1ZPgDw6HtYvMV1JUlCniZsxpyiPnTP9HtV8Lqv4ubwL1ZJDRItKVQ1aFde44Sjel-BpGGGYYhdtCEgrtcW-uu4grmhCkOdWkKJzaQnevVlO4KSHbhE1l0EEG_CiRMm7KxFSBIspqpe-742Nit6Vuv935Pbea7x3N3URJd94I_YIxRIlpkm02_qBe5u4LGkyK5mpfJn34M_v5yNV8C4h76uQFC0_jSXfXeXIclg0jC95lxvuYkNp-WtGBu2oav7_ZA6yqL768dtVTJOJq9D7IbMSNqwSDLPU7lVvQdpMnQpMydqOL6xEk8bvMc26pfepTDgcO5nDkDg2senfp7wlUT_SqAxv_FHDFalpArdgxKfvF_b3IHCcD-F4T2SnKEPThXRRi_96GqDlHf34YcPc4krxJrL67Z4ZQKHv6Ad-yk-DX88XhgKMm924iIu9T6G9m52ngava8shjlDwK_AyFTHxj7zE99AmqlsTSu-xDFC_9o05r7Ny_pX9ruhhurt6RE38YmZsqZZReHBg61PTDEC_ojlUZ_0SvT-uYlCmEfsCPZyehYgk3rAzDqAGWWSIabcU04kz3L0duK0erZtzWTATN6YCAJVjG3E4_vZfzOGTp8AXY4rS_RIEjo6ycLASox-y0EHG9hOwvUP-2nv1dELMxPUyLjLZwsUQZNjSgAcjW4zWBpgWzkmd2Okv5GjJUmnwflVOfkQsbQmE1IjoQTI-MzL_2al5U6ILUngqrGY-pWzQGzBYE_Yh2gu_quaYuJJSFShnVXj7hIw9"
+        );
+
+        const raw = JSON.stringify({
+          username: email_a,
+          password: password_a,
+        });
+
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(process.env.BACKEND_URL + "/api/login_a", requestOptions)
+          .then((response) => {
+            console.log(response);
+            if (response.status == 200) {
+              setStore({ authorize_a: true });
+            }
+            return response.json(); // Devuelve el valor para que pueda ser utilizado en la siguiente función .then
+          })
+          .then((datab) => {
+            console.log(datab);
+            localStorage.setItem("token3", datab.access_token);
+          });
+      },
+      logout_a: () => {
+        console.log("logout desde flux");
+        localStorage.removeItem("token");
+        setStore({ authorize_a: false });
+      },
       ////////////////////////////  ADD FAVORITES  ////////////////////////////
 
       favoriteLiked: (productsName) => {
@@ -679,6 +721,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             (elemento) => elemento != productsName
           ),
         });
+      },
+
+      ////////////////////////////  SIGN-UP  ////////////////////////////
+      signup_b: (email, password) => {
+        
       },
     },
   };

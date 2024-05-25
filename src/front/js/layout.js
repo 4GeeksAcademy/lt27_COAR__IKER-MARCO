@@ -30,6 +30,12 @@ import { Productdetail } from "./pages/productdetail.js";
 import { Buyer_products } from "./pages/buyer_products.js";
 import { Buyer_Productdetail } from "./pages/buyer_productdetail.js";
 
+import { Login_craftmen } from "./pages/login_craftmen.js";
+import { Login_buyer } from "./pages/login_buyer.js";
+import { Login_admin } from "./pages/login_admin.js";
+
+import { Signup_b } from "./component/formsignup_b";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -79,6 +85,19 @@ const Layout = () => {
             <Route element={<CategoryCreate />} path="/create" />
             <Route element={<CategoryEdit />} path="/edit/:id" />
 
+            <Route element={<Buyer_products />} path="/buyer_products" />
+            <Route
+              path="/buyer_productdetail/:id"
+              element={<Buyer_Productdetail />}
+              component={Buyer_Productdetail}
+            />
+
+            <Route element={<Login_craftmen />} path="/login_craftmen" />
+            <Route element={<Login_buyer />} path="/login_buyer" />
+            <Route element={<Login_admin />} path="/login_admin" />
+
+            <Route element={<Signup_b />} path="/signup_b" />
+            
             <Route element={<h1>Not found!</h1>} />
             
           </Routes>

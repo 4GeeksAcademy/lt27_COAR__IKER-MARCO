@@ -6,7 +6,7 @@ import rigoImage from "../../img/rigo-baby.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-export const Craftmencreate = (props) => {
+export const Signup_b = (props) => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export const Craftmencreate = (props) => {
   });
 
 
-  const saveCraftmen = (e) => {
+  const saveBuyer = (e) => {
     e.preventDefault();
     actions.postcratfman(data);
     navigate("/login_craftmen");
@@ -42,17 +42,17 @@ export const Craftmencreate = (props) => {
   return (
     <>
       <div className="text-center mt-5">
-        <h1>Are you a New Craftmen? Please sign-up</h1>
+        <h1>Are you a New Buyer? Please sign-up</h1>
       </div>
       <div className="container text-center">
               <div className="row">
 
                 <div className="col">
                   <button
-                    onClick={saveCraftmen}
+                    onClick={saveBuyer}
                     className="btn btn-outline-success"
                   >
-                    Create new craftmen
+                    Create new Buyer
                   </button>
                 </div>
 
@@ -92,19 +92,7 @@ export const Craftmencreate = (props) => {
                 name="address"
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputAgendaName" className="form-label">
-                city
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputCity2"
-                value={data.city}
-                onChange={info}
-                name="city"
-              />
-            </div>
+
             <div className="mb-3">
               <label htmlFor="exampleInputFullName" className="form-label">
                 Email
@@ -157,55 +145,16 @@ export const Craftmencreate = (props) => {
                 name="password"
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPhone1" className="form-label">
-                Phone
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputPhone1"
-                value={data.phone}
-                onChange={info}
-                name="phone"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPhone1" className="form-label">
-                State
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputState1"
-                value={data.state}
-                onChange={info}
-                name="state"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPhone1" className="form-label">
-                Zip code
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="exampleInputzip_code"
-                value={data.zip_code}
-                onChange={info}
-                name="zip_code"
-              />
-            </div>
-
+                
             <div className="container text-center">
               <div className="row">
 
                 <div className="col">
                   <button
-                    onClick={saveCraftmen}
+                    onClick={saveBuyer}
                     className="btn btn-outline-success"
                   >
-                    Create new craftmen
+                    Create new buyer
                   </button>
                 </div>
 
@@ -217,11 +166,11 @@ export const Craftmencreate = (props) => {
 
                 <div className="col">
                   <Link
-                    to={"/craftmen"}
+                    to={"/login_buyer"}
                     className="btn btn-outline-success"
                     onClick={() => actions.loadSomeData()}
                   >
-                    <span>Regresar</span>
+                    <span>back</span>
                   </Link>
                 </div>
 
