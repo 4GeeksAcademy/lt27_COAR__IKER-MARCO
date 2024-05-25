@@ -23,39 +23,36 @@ export const Navbar = () => {
   return (
     <>
       <nav className="navbar navbar-light bg-light">
-        <div className="row container text-center">
+        <div className="container center col-sm-11">
           <div className="col">
             <Link to="/">
               <span className="navbar-brand mb-0 h1">React Boilerplate</span>
             </Link>
           </div>
 
+          <div className="col">
+            <Link to="/allproducts">
+              <button className="btn btn-primary">All Products</button>
+            </Link>
+          </div>
 
           <div className="col">
             <Link to="/login_craftmen">
-              <button className="btn btn-primary">
-                Login Craftmen
-              </button>
+              <button className="btn btn-primary">Login Craftmen</button>
             </Link>
           </div>
 
           <div className="col">
             <Link to="/login_buyer">
-              <button className="btn btn-primary">
-                Login buyer
-              </button>
+              <button className="btn btn-primary">Login buyer</button>
             </Link>
           </div>
 
           <div className="col">
             <Link to="/login_admin">
-              <button className="btn btn-primary">
-                Login admin
-              </button>
+              <button className="btn btn-primary">Login admin</button>
             </Link>
           </div>
-
-
 
           <div className="col">
             {store.authorize}
@@ -67,7 +64,7 @@ export const Navbar = () => {
                 >
                   Logout Craftmen
                 </button>
-                
+
                 <Link to="/product">
                   <button className="btn btn-outline-secondary">
                     Products
@@ -132,28 +129,52 @@ export const Navbar = () => {
           <div className="col">
             {store.authorize_a}
             {store.authorize_a == true ? (
-              <>
-                <button
-                  onClick={() => handlelogout_a()}
-                  className="btn btn-danger"
-                >
-                  Logout Admin
-                </button>
-                <Link to="/category">
-                  <button className="btn btn-outline-secondary">
-                    Category
+              <div className="col">
+                <div className="col">
+                  <button
+                    onClick={() => handlelogout_a()}
+                    className="btn btn-danger"
+                  >
+                    Logout Admin
                   </button>
-                </Link>
-                <Link to="/admin">
-                  <button className="btn btn-outline-secondary">Admin</button>
-                </Link>
-                <Link to="/craftmen">
-                  <button className="btn btn-outline-seconda ry">
-                    Craftmen
-                  </button>
-                </Link>
-              </>
+                </div>
+                <div className="col">
+                  <Link to="/category">
+                    <button className="btn btn-outline-secondary">
+                      Category
+                    </button>
+                  </Link>
+                </div>
+                <div className="col">
+                  <Link to="/admin">
+                    <button className="btn btn-outline-secondary">Admin</button>
+                  </Link>
+                </div>
+                <div className="col">
+                  <Link to="/craftmen">
+                    <button className="btn btn-outline-secondary">
+                      Craftmen
+                    </button>
+                  </Link>
+                </div>
+                <div className="col">
+                  <Link to="/buyer">
+                    <button className="btn btn-outline-secondary">
+                      Buyers
+                    </button>
+                  </Link>
+                </div>
+              </div>
             ) : null}
+          </div>
+        </div>
+        <div className="container center col-sm-1">
+          <div className="col">
+            <Link to="/">
+              <button className="btn btn-primary">
+                <i class="bi bi-cart4"></i>
+              </button>
+            </Link>
           </div>
         </div>
       </nav>

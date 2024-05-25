@@ -27,7 +27,7 @@ export const Login_buyer = () => {
         </div>
       </div>
 
-      <h2>Or <Link to={"/signup_b"} className="btn btn-outline-primary">
+      <h2>Or <Link to={"/buyer/new"} className="btn btn-outline-primary">
                     <span>Sign-up</span>
               </Link>  if you are new </h2>
 

@@ -17,7 +17,7 @@ export const BuyerCreate =()=>{
     const handleSaveChanges = async ()=>{
         const NewBuyer = {name, lastName, email, address, password, is_active}
         await actions.newBuyer(NewBuyer)
-        navigate("/buyer")
+        navigate("/login_buyer")
     }
 
     return(

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import ProductCard_Buyer from "../component/productCard_Buyer";
 
-export const Buyer_products = () => {
+export const Allproducts = () => {
   const { store, actions } = useContext(Context);
   
 
@@ -30,23 +30,19 @@ export const Buyer_products = () => {
     <div className="container mt-5">
       <div className="row">
         <div className="card col-6 col-md-2">
-          <h1>Welcome buyer</h1>
+          <h1>All products</h1>
           <br />
-          <button className="btn btn-outline-secondary">
-            Edit profile
-          </button>
-          <br />
-          <button className="btn btn-outline-secondary">
-            Orders
-          </button>
-          <br />
-          <button className="btn btn-outline-secondary">
-            Favorites
-          </button>
-          <br />
-          
-
-
+          <h2>Order by : </h2>
+            <select
+                className="form-select"
+                aria-label="Default select example"
+                name="category"
+                onChange={info}>
+                <option value="1">Category</option>
+                <option value="2">Price</option>
+                <option value="3">Stock</option>
+                <option value="4">Craftmen</option>
+            </select>         
 
         </div>
         <div className="row mb-3 text-center col-md-10">
