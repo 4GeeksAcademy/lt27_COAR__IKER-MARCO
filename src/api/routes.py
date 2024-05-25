@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Craftmen, Category, Product, Admiin, Buyer, Order
+from api.models import db, User, Craftmen, Category, Product, Admiin, Buyer, Order, OrderProduct
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -574,3 +574,12 @@ def deleteOrder(id_order):
             "msg":"This orden does not exist"
         }
         return jsonify(response_body), 401
+    
+########################## CRUD ORDER PRODUCT #################################################
+
+@api.route('/orderProduct', methods=['GET'])
+def getOrderProduct():
+    allOrderProduct = OrderProduct.query.all()
+    resp = list(map(lambda element: element.serialize(),allOrderProduct))
+
+    return jsonify(resp), 200
