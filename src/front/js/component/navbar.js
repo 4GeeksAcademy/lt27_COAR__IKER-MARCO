@@ -15,6 +15,10 @@ export const Navbar = () => {
     actions.logout_b();
     navigate("/");
   }
+  function handlelogout_a() {
+    actions.logout_a();
+    navigate("/");
+  }
 
   return (
     <>
@@ -25,13 +29,34 @@ export const Navbar = () => {
               <span className="navbar-brand mb-0 h1">React Boilerplate</span>
             </Link>
           </div>
+
+
           <div className="col">
-            <Link to="/demo">
+            <Link to="/login_craftmen">
               <button className="btn btn-primary">
-                Check the Context in action
+                Login Craftmen
               </button>
             </Link>
           </div>
+
+          <div className="col">
+            <Link to="/login_buyer">
+              <button className="btn btn-primary">
+                Login buyer
+              </button>
+            </Link>
+          </div>
+
+          <div className="col">
+            <Link to="/login_admin">
+              <button className="btn btn-primary">
+                Login admin
+              </button>
+            </Link>
+          </div>
+
+
+
           <div className="col">
             {store.authorize}
             {store.authorize == true ? (
@@ -42,11 +67,7 @@ export const Navbar = () => {
                 >
                   Logout Craftmen
                 </button>
-                <Link to="/craftmen">
-                  <button className="btn btn-outline-seconda ry">
-                    Craftmen
-                  </button>
-                </Link>
+                
                 <Link to="/product">
                   <button className="btn btn-outline-secondary">
                     Products
@@ -55,6 +76,7 @@ export const Navbar = () => {
               </>
             ) : null}
           </div>
+
           <div className="col">
             {store.authorize_b}
             {store.authorize_b == true ? (
@@ -108,14 +130,30 @@ export const Navbar = () => {
           </div>
 
           <div className="col">
-            <Link to="/category">
-              <button className="btn btn-outline-secondary">Category</button>
-            </Link>
-          </div>
-          <div className="col">
-            <Link to="/admin">
-              <button className="btn btn-outline-secondary">Admin</button>
-            </Link>
+            {store.authorize_a}
+            {store.authorize_a == true ? (
+              <>
+                <button
+                  onClick={() => handlelogout_a()}
+                  className="btn btn-danger"
+                >
+                  Logout Admin
+                </button>
+                <Link to="/category">
+                  <button className="btn btn-outline-secondary">
+                    Category
+                  </button>
+                </Link>
+                <Link to="/admin">
+                  <button className="btn btn-outline-secondary">Admin</button>
+                </Link>
+                <Link to="/craftmen">
+                  <button className="btn btn-outline-seconda ry">
+                    Craftmen
+                  </button>
+                </Link>
+              </>
+            ) : null}
           </div>
         </div>
       </nav>

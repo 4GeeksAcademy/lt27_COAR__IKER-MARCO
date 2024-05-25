@@ -55,8 +55,6 @@ def get_craftmen():
 
     return jsonify(craftmen), 200
 
-
-
 @api.route('/craftmen/<int:id>', methods=['GET'])
 def get_craftmen_by_id(id):
     craftmen = Craftmen.query.get(id)
@@ -256,21 +254,6 @@ def signup():
     else:
         return jsonify({"msg": "user already exist"}), 401
 
-################################# LOGIN ########################
-
-@api.route('/login', methods=['POST'])
-def login():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    user = User.query.filter_by(email=username).first()
-    print(user)
-    print(user.serialize()) 
-
-    if user.password != password:
-        return jsonify({"msg": "Bad username or password"}), 401
-    
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
 
 ################################# PROTECTED ########################
 
@@ -458,8 +441,22 @@ def deleteBuyer(id_buyer):
         }
         return jsonify(response_body), 401
     
+################################# LOGIN_C ########################
 
-################################# LOGIN_B########################
+@api.route('/login', methods=['POST'])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    craftmen = Craftmen.query.filter_by(email=username).first()
+    print(craftmen)
+    print(craftmen.serialize()) 
+
+    if craftmen.password != password:
+        return jsonify({"msg": "Bad username or password, estas en login_C"}), 401
+    
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
+################################# LOGIN_B ########################
 
 @api.route('/login_b', methods=['POST'])
 def login_b():
@@ -476,5 +473,21 @@ def login_b():
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token)
 
+################################# LOGIN_A ########################
+
+@api.route('/login_a', methods=['POST'])
+def login_a():
+
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    oneAdmin = Admiin.query.filter_by(email = username).first()
+    print(oneAdmin)
+    print(oneAdmin.serialize())
+
+    if oneAdmin.password != password:
+        return jsonify({"msg": "Bad username or password, estas en login_a"}), 401
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
    
 

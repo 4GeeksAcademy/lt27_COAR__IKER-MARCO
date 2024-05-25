@@ -8,16 +8,21 @@ import { Forma } from "../component/formlogin_a";
 import { Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Home = () => {
+export const Login_admin = () => {
   const { store, actions } = useContext(Context);
 
   return (
     <div className="text-center mt-5">
-      <h1>Hello Rigo!!</h1>
-      <p>
-        <img src={rigoImageUrl} />
-      </p>
+      <h1>Hello Admin!!</h1>
+      <div className="container text-center">
+        <div className="row">
+          <div className="col">
+            {store.authorize_a == true ? <Navigate to="/admin" /> : <Forma />}
+          </div>
+        </div>
+      </div>
 
+      <h2>Or sing up if you are new </h2>
 
       <div className="alert alert-info">
         {store.message ||
