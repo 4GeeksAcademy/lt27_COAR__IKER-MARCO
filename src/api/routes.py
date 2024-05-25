@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Craftmen, Category, Product, Admiin, Buyer
+from api.models import db, User, Craftmen, Category, Product, Admiin, Buyer, Order
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -479,5 +479,84 @@ def login_b():
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token)
 
-   
+################################# ORDERS ############################################3
 
+@api.route('/orders', methods=['GET'])
+def getOrders():
+    allOrders = Order.query.all()
+    resp = list(map(lambda element: element.serialize(),allOrders))
+
+    return jsonify(resp), 200
+
+@api.route('/orders/<int:id_orders>', methods=['GET'])
+def getOneOrder(id_orders):
+    oneOrder = Order.query.filter_by(id = id_orders).first()
+    if oneOrder == None:
+        oneOrder = {
+            "msg": "Don't exist"
+        }
+        return jsonify(oneOrder), 404
+    else:
+        return jsonify(oneOrder.serialize()),200
+    
+@api.route('/orders/new', methods=['POST'])
+def newOrders():
+    body = request.get_json()
+    new_order = Order(buyer_id = body["buyer_id"], product_state = body["product_state"])
+
+    db.session.add(new_order)
+    db.session.commit()
+
+    response_body = {
+        "message": "New order successfully added"
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/orders/update/<int:id_order>', methods=['PUT'])
+def updateOrder(id_order):
+    updateOrder = Order.query.filter_by(id=id_order).first()
+
+    if not updateOrder:
+        response_body = {
+            "msg": "Order don't exist"
+        }
+        return jsonify(response_body), 404
+    
+    data = request.get_json()
+
+    if data:
+        if  'buyer_id' in data:
+            updateOrder.buyer_id = data['buyer_id']
+        if 'product_state' in data:
+            updateOrder.product_state = data['product_state']
+
+        db.session.commit()
+
+        response_body = {
+            "msg":"Order successfully updated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"A order info is required to update."
+        }
+        return jsonify(response_body), 400
+    
+@api.route('/orders/delete/<int:id_order>', methods=['DELETE'])
+def deleteOrder(id_order):
+    orden = Order.query.filter_by(id=id_order).first()
+
+    if orden:
+        db.session.delete(orden)
+        db.session.commit()
+
+        response_body = {
+            "msg":"orden successfully eliminated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"This orden does not exist"
+        }
+        return jsonify(response_body), 401
