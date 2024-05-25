@@ -65,6 +65,8 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship('Category', backref=db.backref('products', lazy=True))
 
+    order = db.relationship('OrderProduct', back_populates='product')
+
     def __repr__(self):
         return f'<Product {self.name}>'
 
@@ -122,7 +124,7 @@ class Buyer(db.Model):
     address = db.Column(db.String(120), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     
-    orders = db.relationship('Order', back_populates='buyer', lazy='dynamic')
+    order = db.relationship('Order', back_populates='buyer', lazy='dynamic')
 
     def __repr__(self):
         return f'<Buyer {self.name}>'
@@ -137,14 +139,16 @@ class Buyer(db.Model):
             "is_active": self.is_active
 
         }
+    
+######################### MODEL ORDERS ######################################
 
 class Order(db.Model):
-    __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     buyer_id = db.Column(db.Integer, db.ForeignKey('buyer.id'), nullable=False)
     product_state = db.Column(db.String(120), nullable=False)
 
-    buyer = db.relationship('Buyer', back_populates='orders')
+    buyer = db.relationship('Buyer', back_populates='order')
+    orderProduct = db.relationship('OrderProduct', back_populates='order')
    
     def __repr__(self):
         return f'<Order {self.id}>'
@@ -154,4 +158,26 @@ class Order(db.Model):
             "id": self.id,
             "buyer_id": self.buyer_id,
             "product_state": self.product_state
+        }
+    
+############################ MODEL ORDERSPRODUCT #####################################
+
+class OrderProduct(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    quantity = db.Column(db.String(120), nullable=False)
+
+    product = db.relationship('Product', back_populates='order')
+    order = db.relationship('Order', back_populates='orderProduct')
+   
+    def __repr__(self):
+        return f'<OrderProduct {self.id}>'
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "product_id": self.product_id,
+            "order_id": self.order_id,
+            "quantity": self.quantity
         }
