@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "name": "item1",
+      "description": "description1",
+      "unit_amount": {
+        "currency_code": "USD",
+        "value": "100.00"
+      }
+    },
+    {
+      "name": "item2",
+      "description": "description2",
+      "unit_amount": {
+        "currency_code": "USD",
+        "value": "200.00"
+      }
+    }
+  ]
+}

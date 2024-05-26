@@ -43,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       BUYER: () => {
         try {
-          fetch(process.env.BACKEND_URL + "/api/buyer")
+          fetch(process.env.BACKEND_URL + "api/buyer")
             .then((resp) => {
               if (!resp.ok) {
                 throw new Error("The application was unsuccessful");
@@ -63,7 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/buyer/new",
+            process.env.BACKEND_URL + "api/buyer/new",
             {
               method: "POST",
               headers: {
@@ -90,7 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       updateBuyer: async (updateBuyer, id) =>{
         const actions = getActions();
         try {
-          const response = await fetch(process.env.BACKEND_URL + "/api/buyer/update/" + id , {
+          const response = await fetch(process.env.BACKEND_URL + "api/buyer/update/" + id , {
             method:"PUT",
             headers:{
               "Content-Type": "application/json",
@@ -116,7 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/buyer/delete/" + id,
+            process.env.BACKEND_URL + "api/buyer/delete/" + id,
             {
               method: "DELETE",
               headers: {
@@ -134,7 +134,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       Admins: () => {
         try {
-          fetch(process.env.BACKEND_URL + "/api/admin")
+          fetch(process.env.BACKEND_URL + "api/admin")
             .then((resp) => {
               if (!resp.ok) {
                 throw new Error("The application was unsuccessful");
@@ -154,7 +154,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/admin/new",
+            process.env.BACKEND_URL + "api/admin/new",
             {
               method: "POST",
               headers: {
@@ -183,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const actions = getActions();
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/admin/update/" + id,
+            process.env.BACKEND_URL + "api/admin/update/" + id,
             {
               method: "PUT",
               headers: {
@@ -220,7 +220,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/admin/delete/" + id,
+            process.env.BACKEND_URL + "api/admin/delete/" + id,
             {
               method: "DELETE",
               headers: {
@@ -238,7 +238,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       categorys: () => {
         try {
-          fetch(process.env.BACKEND_URL + "/api/category")
+          fetch(process.env.BACKEND_URL + "api/category")
             .then((resp) => {
               if (!resp.ok) {
                 throw new Error("The application was unsuccessful");
@@ -256,7 +256,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/category/new",
+            process.env.BACKEND_URL + "api/category/new",
             {
               method: "POST",
               headers: {
@@ -277,7 +277,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       editCategory: async (inputChange, id) => {
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/category/update/" + id,
+            process.env.BACKEND_URL + "api/category/update/" + id,
             {
               method: "PUT",
               headers: {
@@ -299,7 +299,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const actions = getActions();
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/category/delete/" + id,
+            process.env.BACKEND_URL + "api/category/delete/" + id,
             {
               method: "DELETE",
               headers: {
@@ -330,7 +330,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getMessage: async () => {
         try {
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+          const resp = await fetch(process.env.BACKEND_URL + "api/hello");
           const data = await resp.json();
           setStore({ message: data.message });
           return data;
@@ -351,7 +351,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadSomeData: () => {
         const store = getStore();
-        fetch(process.env.BACKEND_URL + "/api/craftmen")
+        fetch(process.env.BACKEND_URL + "api/craftmen")
           .then((response) => response.json())
           .then((data) => {
             setStore({ craftmen: data });
@@ -359,7 +359,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(store.craftmen);
           })
           .catch((error) => console.error(error));
-        fetch(process.env.BACKEND_URL + "/api/product")
+        fetch(process.env.BACKEND_URL + "api/product")
           .then((response) => response.json())
           .then((data) => {
             setStore({ product: data });
@@ -378,7 +378,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL + "/api/craftmen/" + `${id}`,
+          process.env.BACKEND_URL + "api/craftmen/" + `${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -398,7 +398,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         fetch(
-          process.env.BACKEND_URL + "/api/product/" + `${id}`,
+          process.env.BACKEND_URL + "api/product/" + `${id}`,
           requestOptions
         )
           .then((response) => response.json())
@@ -442,7 +442,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/product/" +
+            "api/product/" +
             `${store.craftmenselected.id}`,
           requestOptions
         )
@@ -481,7 +481,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/product/" +
+            "api/product/" +
             `${store.productselected.id}`,
           requestOptions
         )
@@ -500,7 +500,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/craftmen/" +
+            "api/craftmen/" +
             `${store.craftmenselected.id}`,
           requestOptions
         )
@@ -521,7 +521,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/product/" +
+            "api/product/" +
             `${store.productselected.id}`,
           requestOptions
         )
@@ -545,7 +545,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(process.env.BACKEND_URL + "/api/craftmen/", requestOptions)
+        fetch(process.env.BACKEND_URL + "api/craftmen/", requestOptions)
           .then((response) => response.text())
           .then((result) => {
             console.log(result);
@@ -565,7 +565,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(process.env.BACKEND_URL + "/api/product/", requestOptions)
+        fetch(process.env.BACKEND_URL + "api/product/", requestOptions)
           .then((response) => response.text())
           .then((result) => {
             console.log(result);
@@ -595,7 +595,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(process.env.BACKEND_URL + "/api/login", requestOptions)
+        fetch(process.env.BACKEND_URL + "api/login", requestOptions)
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
@@ -635,7 +635,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(process.env.BACKEND_URL + "/api/login_b", requestOptions)
+        fetch(process.env.BACKEND_URL + "api/login_b", requestOptions)
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
@@ -675,7 +675,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           redirect: "follow",
         };
 
-        fetch(process.env.BACKEND_URL + "/api/login_a", requestOptions)
+        fetch(process.env.BACKEND_URL + "api/login_a", requestOptions)
           .then((response) => {
             console.log(response);
             if (response.status == 200) {

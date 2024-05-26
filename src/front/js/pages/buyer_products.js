@@ -44,6 +44,11 @@ export const Buyer_products = () => {
             Favorites
           </button>
           <br />
+          <div className="col">
+            <Link to="/checkoutpaypall">
+              <button className="btn btn-outline-secondary">Checkout</button>
+            </Link>
+          </div>
           
 
 

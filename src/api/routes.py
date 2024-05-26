@@ -574,3 +574,17 @@ def deleteOrder(id_order):
             "msg":"This orden does not exist"
         }
         return jsonify(response_body), 401
+
+
+################################# PAYPALL ############################################3
+
+@payment_routes.post('/create-order')
+def create_order_paypal():
+    data = request.json
+    order = Order(
+        buyer_id = data["buyer_id"],
+        product_state = data["product_state"]
+    )
+    db.session.add(order)
+    db.session.commit()
+    return jsonify("Order created"), 200
