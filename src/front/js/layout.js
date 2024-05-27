@@ -35,7 +35,7 @@ import { Login_buyer } from "./pages/login_buyer.js";
 import { Login_admin } from "./pages/login_admin.js";
 
 import { Signup_b } from "./component/formsignup_b";
-import { Allproducts } from "./pages/allproducts.js";
+import { CartView } from "./pages/CartView.js";
 
 //create your first component
 const Layout = () => {
@@ -75,7 +75,7 @@ const Layout = () => {
               element={<Buyer_Productdetail />}
               component={Buyer_Productdetail}
             />
-
+            <Route element={<CartView />} path="/cart" />
             <Route element={<Category />} path="/category" />
             <Route element={<Buyer />} path="/buyer" />
             <Route element={<BuyerCreate />} path="/buyer/new" />
@@ -97,9 +97,7 @@ const Layout = () => {
             <Route element={<Login_buyer />} path="/login_buyer" />
             <Route element={<Login_admin />} path="/login_admin" />
 
-            <Route element={<Signup_b />} path="/signup_b" />
-            <Route element={<Allproducts />} path="/allproducts" />
-            
+            <Route element={<Signup_b />} path="/signup_b" />            
             <Route element={<h1>Not found!</h1>} />
             
           </Routes>

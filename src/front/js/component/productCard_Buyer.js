@@ -1,14 +1,33 @@
 import React, { useState, useContext, useEffect } from "react";
 import rigoImage from "../../img/rigo-baby.jpg";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductCard_Buyer = (props) => {
   const { store, actions } = useContext(Context);
+  const Navigate = useNavigate()
+
+
+
+  const handleAdd =()=>{
+    const product = {
+      name: props.name,
+      price:props.price,
+      category:props.category,
+      stock:props.stock
+    }
+    if(store.authorize_b == true){
+      actions.addToCart(product)
+    }else{
+      Navigate("/login_buyer")
+    }      
+  }
 
   const handleSelected = (id) => {
     actions.getproduct(id);
   };
+
+  console.log(store.cart)
 
   return (
     <div className="card mx-3 m-3" style={{ width: "14rem" }}>
@@ -33,6 +52,12 @@ const ProductCard_Buyer = (props) => {
           >
             <span>Details</span>
           </Link>
+
+          <button className="btn btn-outline-primary mx-2"
+           onClick={handleAdd}
+          >
+              <i class="fa-solid fa-cart-shopping"></i>
+          </button>
 
           <button
             type="button"
