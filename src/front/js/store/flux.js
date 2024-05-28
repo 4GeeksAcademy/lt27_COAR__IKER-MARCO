@@ -39,6 +39,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
     },
     actions: {
+      deleteFromCart: (itemName) => {
+        const store = getStore();
+        setStore({
+            cart: store.cart.filter(item => item.name !== itemName)
+        });
+      },
       Total: (total) => {
         const store = getStore()
         console.log(total)
@@ -710,13 +716,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
-              setStore({ authorize_b: true });
+              return response.json();
             }
-            return response.json(); // Devuelve el valor para que pueda ser utilizado en la siguiente función .then
+            throw new Error ("Failed to authenticate")
           })
           .then((datab) => {
             console.log(datab);
             localStorage.setItem("token2", datab.access_token);
+            setStore({ authorize_b: true, currentBuyerId: datab.buyer_id})
           });
       },
       logout_b: () => {
