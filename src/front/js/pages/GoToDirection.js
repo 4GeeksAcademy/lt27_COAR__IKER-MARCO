@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const GoToDirection =()=>{
     const { store, actions } = useContext(Context)
     const [newAddress, setNewAddress] = useState("")
+    const navigate = useNavigate()
 
     const buyer = store.allBuyers.find(item => item.id === store.currentBuyerId)
 
@@ -11,8 +13,8 @@ export const GoToDirection =()=>{
         setNewAddress(e.target.value);
     };
 
-    const handleAddressSubmit = () => {
-        actions.addNewAddress(newAddress);
+    const handleAddressSubmit = async () => {
+        await actions.addNewAddress(newAddress);
         setNewAddress("");
     };
 
@@ -37,6 +39,8 @@ export const GoToDirection =()=>{
                 onChange={handleAddressChange}
             />
             <button onClick={handleAddressSubmit}>Submit</button>
+            <br />
+            <button onClick={()=> navigate("/paypalltest")} className="my-5 btn btn-warning">Pay</button>
         </div>
     )
 }

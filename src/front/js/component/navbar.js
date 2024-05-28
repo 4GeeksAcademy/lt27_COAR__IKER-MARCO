@@ -52,13 +52,7 @@ export const Navbar = () => {
               <button className="btn btn-primary">Login admin</button>
             </Link>
           </div>
-
-          <div className="col">
-            <Link to="/paypalltest">
-              <button className="btn btn-primary">paypalltest</button>
-            </Link>
-          </div>
-
+      
           <div className="col">
             {store.authorize}
             {store.authorize == true ? (
@@ -181,7 +175,7 @@ export const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 >
-                <i style={{"border":"1px solid white"}} onClick={handleClick} class="fa-solid fa-cart-shopping p-1 m-0"></i>
+                <i style={{"border":"1px solid white"}} onClick={handleClick} className="fa-solid fa-cart-shopping p-1 m-0"></i>
                 <span className="badge text-bg-secondary">
                   ({store.cart.length}) 
                 </span>
