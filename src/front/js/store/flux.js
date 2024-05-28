@@ -24,6 +24,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       allCategory: [],
       allAdmins: [],
       allBuyers: [],
+      allOrders: [],
+      oneOrder:[],
+      cart:[],
       auth: false,
 
       authorize_b: false,
@@ -34,12 +37,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 
     },
     actions: {
+      deleteFromCart: (itemName) => {
+        const store = getStore()
+        const updateCart = store.cart.filter(item => item.name !== itemName)
+        setStore({cart:updateCart})
+      },
+      addToCart: (product) => {
+        const store = getStore()
+        if (typeof product === 'string') {
+          product = JSON.parse(product);
+        }
+        console.log('Adding product to cart:', product)
+        setStore({ cart: [...store.cart, product] })
+      },
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },
       authFalse: () => {
         setStore({ auth: false });
+      },
+      Order: () => {
+        try {
+          fetch(process.env.BACKEND_URL + "/api/orders")
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error("The application was unsuccessful");
+              }
+              return resp.json();
+            })
+            .then((data) => {
+              setStore({ allOrders: data });
+            });
+        } catch {
+          console.error("Something wrong", error);
+        }
+      },
+      OneOrder: (id) => {
+        try {
+          fetch(process.env.BACKEND_URL + "/api/orders/" + id)
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error("The application was unsuccessful");
+              }
+              return resp.json();
+            })
+            .then((data) => {
+              console.log(data)
+              setStore({ oneOrder: data });
+            });
+        } 
+        catch {
+          console.error("Something wrong", error);
+        }
       },
       BUYER: () => {
         try {

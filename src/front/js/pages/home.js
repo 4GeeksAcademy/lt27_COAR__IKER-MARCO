@@ -1,34 +1,64 @@
-import React, { useContext } from "react";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
-import { Formc } from "../component/formlogin_c";
-import { Formb } from "../component/formlogin_b";
-import { Forma } from "../component/formlogin_a";
-
-import { Navigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
+
+import ProductCard_Buyer from "../component/productCard_Buyer";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
+  
+
+  const [data, setData] = useState({
+    category: "",
+    category_id: "",
+    description: "",
+    id: "",
+    image: "",
+    name: "",
+    price: "",
+    stock: "",
+  });
+
+  const info = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
-    <div className="text-center mt-5">
-      <h1>Hello Rigo!!</h1>
-      <p>
-        <img src={rigoImageUrl} />
-      </p>
+    <div className="container mt-5">
+      <div className="row text-center">
+        <h1>WELCOME TO Co-Ar</h1>
+        <div className="card col-6 col-md-2">
+          <h2>Order by : </h2>
+            <select
+                className="form-select"
+                aria-label="Default select example"
+                name="category"
+                onChange={info}>
+                <option value="1">Category</option>
+                <option value="2">Price</option>
+                <option value="3">Stock</option>
+                <option value="4">Craftmen</option>
+            </select>         
 
-
-      <div className="alert alert-info">
-        {store.message ||
-          "Loading message from the backend (make sure your python backend is running)..."}
+        </div>
+        <div className="row mb-3 text-center col-md-10">
+          {store.product.map((product) => {
+            return (
+              <ProductCard_Buyer
+                key={product.id}
+                name={product.name}
+                category={product.category}
+                stock={product.stock}
+                price={product.price}
+                {...product}
+              />
+            );
+          })}
+        </div>
       </div>
-      <p>
-        This boilerplate comes with lots of documentation:{" "}
-        <a href="https://start.4geeksacademy.com/starters/react-flask">
-          Read documentation
-        </a>
-      </p>
     </div>
   );
 };
