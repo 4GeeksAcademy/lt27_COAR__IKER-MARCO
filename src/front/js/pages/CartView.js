@@ -8,11 +8,10 @@ export const CartView = () => {
     const total = store.cart.reduce((acc, item) => acc + item.price, 0)
     const navigate = useNavigate()
 
-    const handleGoToPay = async () => {
+    const handleGoToDirection = async () => {
         await actions.Total(total)
-        navigate("/paypalltest");
+        navigate("/go-to-direction");
     }
-
 
     return (
         <div className="container">
@@ -58,14 +57,10 @@ export const CartView = () => {
                                 Price: {item.price}</p>
                         </div>
                     ))}
-
-
-                    <div className="col">
-                        <Link to="/paypalltest">
-                            <button className="btn btn-warning" onClick={handleGoToPay}>Pay</button>
-                        </Link>
+                    <div className="text-center">
+                        <h2>Total: {total}</h2>
+                        <button onClick={handleGoToDirection} className="btn-danger" >go to pay</button> 
                     </div>
-
                 </div>
             </div>
         </div>

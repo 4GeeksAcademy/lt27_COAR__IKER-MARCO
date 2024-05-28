@@ -26,6 +26,7 @@ import { Craftmencreate } from "./pages/craftmencreate";
 import { Product } from "./pages/product";
 import { Productcreate } from "./pages/productcreate.js";
 import { Productdetail } from "./pages/productdetail.js";
+import { GoToDirection } from "./pages/GoToDirection.js";
 
 import { Buyer_products } from "./pages/buyer_products.js";
 import { Buyer_Productdetail } from "./pages/buyer_productdetail.js";
@@ -77,6 +78,7 @@ const Layout = () => {
               element={<Buyer_Productdetail />}
               component={Buyer_Productdetail}
             />
+            <Route element={<GoToDirection />} path="/go-to-direction" />
             <Route element={<CartView />} path="/cart" />
             <Route element={<Category />} path="/category" />
             <Route element={<Buyer />} path="/buyer" />
