@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../store/appContext';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 const PayPalCheckout = () => {
+  const { store } = useContext(Context);
+
   return (
-    <PayPalScriptProvider options={{ "client-id": "ATJqMAkqG5mG-xCRTSquqwgZLLNBKMY-205ucKxZp_ahIKvIRkFW4Y90cPoqbdBQk6Z6pmmTprOoYYzj" }}>
+    <PayPalScriptProvider options={{ "client-id": "AUmVvVtMmjOG1_oYnEC0SkOXI07qoNtDv-qXUx5iTlpQjNwZysTiOGY9iHUJWa3OPVXOtjhjE2p28NKR" }}>
       <PayPalButtons
         createOrder={(data, actions) => {
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: "0.01" // Change this to the amount you want to charge
+                value: `${store.Pago}` // Change this to the amount you want to charge
               }
             }]
           });
