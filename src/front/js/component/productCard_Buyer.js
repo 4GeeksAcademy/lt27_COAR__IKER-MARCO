@@ -57,7 +57,7 @@ const ProductCard_Buyer = (props) => {
           <button className="btn btn-outline-primary mx-2"
            onClick={handleAdd}
           >
-              <i class="fa-solid fa-cart-shopping"></i>
+              <i className="fa-solid fa-cart-shopping"></i>
           </button>
 
           <button
