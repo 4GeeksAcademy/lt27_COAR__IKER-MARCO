@@ -37,6 +37,8 @@ import { Login_admin } from "./pages/login_admin.js";
 import { Signup_b } from "./component/formsignup_b";
 import { Allproducts } from "./pages/allproducts.js";
 
+import { Paypalltest } from "./pages/paypaltest.js";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -101,6 +103,7 @@ const Layout = () => {
             <Route element={<Allproducts />} path="/allproducts" />
             
             <Route element={<h1>Not found!</h1>} />
+            <Route element={<Paypalltest />} path="/paypalltest" /> 
             
           </Routes>
 

@@ -55,6 +55,12 @@ export const Navbar = () => {
           </div>
 
           <div className="col">
+            <Link to="/paypalltest">
+              <button className="btn btn-primary">paypalltest</button>
+            </Link>
+          </div>
+
+          <div className="col">
             {store.authorize}
             {store.authorize == true ? (
               <>
