@@ -20,19 +20,18 @@ export const Navbar = () => {
     navigate("/");
   }
 
+  const handleClick =()=>{
+    navigate("/cart")
+  }
+  
+
   return (
     <>
       <nav className="navbar navbar-light bg-light">
         <div className="container center col-sm-11">
           <div className="col">
             <Link to="/">
-              <span className="navbar-brand mb-0 h1">React Boilerplate</span>
-            </Link>
-          </div>
-
-          <div className="col">
-            <Link to="/allproducts">
-              <button className="btn btn-primary">All Products</button>
+              <span className="navbar-brand mb-0 h1">COAR</span>
             </Link>
           </div>
 
@@ -115,7 +114,7 @@ export const Navbar = () => {
                       store.productsLiked.map((elemento, index) => (
                         <li key={index}>
                           <a className="dropdown-item" href="#">
-                            <div className="d-flex justify-content-between m-2 ">
+                            <div className="d-flex justify-content-between m-2">
                               <p>{elemento}</p>
                               <i
                                 onClick={() => actions.deleteFavorite(elemento)}
@@ -174,13 +173,38 @@ export const Navbar = () => {
             ) : null}
           </div>
         </div>
-        <div className="container center col-sm-1">
-          <div className="col">
-            <Link to="/">
-              <button className="btn btn-primary">
-                <i class="bi bi-cart4"></i>
-              </button>
-            </Link>
+        <div className=" col-1">
+          <div className="btn-group dropstart">
+              <button 
+                className=" btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >
+                <i style={{"border":"1px solid white"}} onClick={handleClick} class="fa-solid fa-cart-shopping p-1 m-0"></i>
+                <span className="badge text-bg-secondary">
+                  ({store.cart.length}) 
+                </span>
+                </button>
+            <ul className="dropdown-menu">
+              {store.cart.map((item, index) => (
+                <li key={index}>
+                  <a className="dropdown-item" href="#">
+                    <div className="d-flex justify-content-between m-2">
+                        <p style={{"margin":"0px"}}>Name: <strong>{item.name}</strong>
+                        <br/> 
+                        Price: <strong>{item.price}</strong></p>
+                        <button 
+                          type="button" 
+                          className="btn-close" 
+                          aria-label="Close"
+                          onClick={()=> actions.deleteFromCart(item.name)}
+                        ></button>
+                      </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </nav>

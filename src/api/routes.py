@@ -585,5 +585,102 @@ def getOrderProduct():
     return jsonify(resp), 200
 
 
-########################## PAYPALL #################################################
 
+@api.route('/orderProduct/<int:id_orderproduct>', methods=['GET'])
+def getOneOrderProduct(id_orderproduct):
+    oneOrderProduct = OrderProduct.query.filter_by(id = id_orderproduct).first()
+    if oneOrderProduct == None:
+        oneOrderProduct = {
+            "msg": "Don't exist"
+        }
+        return jsonify(oneOrderProduct), 404
+    else:
+        return jsonify(oneOrderProduct.serialize()),200
+    
+@api.route('/orderProduct/new', methods=['POST'])
+def newOrderProduct():
+    body = request.get_json()
+
+    required_fields = ["product_id", "order_id", "quantity"]
+    for field in required_fields:
+        if field not in body:
+            return jsonify({"error": f"'{field}' is required"}), 400
+
+    
+    product = Product.query.get(body["product_id"])
+    order = Order.query.get(body["order_id"])
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+    if order is None:
+        return jsonify({"error": "Order not found"}), 404
+
+    
+    try:
+        new_order_product = OrderProduct(
+            product_id=body["product_id"],
+            order_id=body["order_id"],
+            quantity=body["quantity"]
+        )
+        db.session.add(new_order_product)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+ 
+    response_body = {
+        "message": "New order product successfully added",
+        "order_product": new_order_product.serialize()
+    }
+
+    return jsonify(response_body), 201
+
+@api.route('/orderProduct/update/<int:id_orderp>', methods=['PUT'])
+def updateOrderProduct(id_orderp):
+    updateOrderProduct = OrderProduct.query.filter_by(id=id_orderp).first()
+
+    if not updateOrderProduct:
+        response_body = {
+            "msg": "Order product don't exist"
+        }
+        return jsonify(response_body), 404
+    
+    data = request.get_json()
+
+    if data:
+        if  'product_id' in data:
+            updateOrderProduct.product_id = data['product_id']
+        if 'order_id' in data:
+            updateOrderProduct.order_id = data['order_id']
+        if  'quantity' in data:
+            updateOrderProduct.quantity = data['quantity']
+
+        db.session.commit()
+
+        response_body = {
+            "msg":"Order successfully updated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"A order info is required to update."
+        }
+        return jsonify(response_body), 400
+    
+
+@api.route('/orderProduct/delete/<int:id_orderp>', methods=['DELETE'])
+def deleteOrderProduct(id_orderp):
+    orden_product = OrderProduct.query.filter_by(id=id_orderp).first()
+
+    if orden_product:
+        db.session.delete(orden_product)
+        db.session.commit()
+
+        response_body = {
+            "msg":"orden successfully eliminated"
+        }
+        return jsonify(response_body), 200
+    else:
+        response_body = {
+            "msg":"This orden does not exist"
+        }
+        return jsonify(response_body), 401
