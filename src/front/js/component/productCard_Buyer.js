@@ -43,6 +43,7 @@ const ProductCard_Buyer = (props) => {
         <p className="card-text">Price: {props.price}</p>
         <p className="card-text">Category: {props.category}</p>
         <p className="card-text">In stock: {props.stock}</p>
+        <p className="card-text">Description: {props.description}</p>
 
 
         <div className="d-flex justify-content-between">

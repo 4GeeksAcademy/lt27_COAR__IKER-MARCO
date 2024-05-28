@@ -26,7 +26,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       allBuyers: [],
       allOrders: [],
       oneOrder:[],
+      Pago:0,
       cart:[],
+      currentBuyerId:null,
       auth: false,
 
       authorize_b: false,
@@ -37,6 +39,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
     },
     actions: {
+      Total: (total) => {
+        const store = getStore()
+        console.log(total)
+        setStore({Pago: total})
+        console.log(store.Pago)
+      },
+      setCurrentBuyer: (buyerId) => {
+        setStore({currentBuyerId: buyerId})
+      },
+      addNewAddress: (newAddress) => {
+        const store = getStore() 
+        setStore({
+          allBuyers: store.allBuyers.map(buyer =>
+            buyer.id === store.currentBuyerId 
+              ? {...buyer, addresses: [...buyer.addresses, newAddress] }
+              : buyer
+          )
+        })
+      },
       deleteFromCart: (itemName) => {
         const store = getStore()
         const updateCart = store.cart.filter(item => item.name !== itemName)
