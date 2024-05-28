@@ -73,6 +73,9 @@
 		]
 	},
 	"dependencies": {
+		"@paypal/react-paypal-js": "^8.3.0",
+		"express": "^4.19.2",
+		"paypal-rest-sdk": "^1.8.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",

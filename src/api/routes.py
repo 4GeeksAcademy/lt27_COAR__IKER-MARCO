@@ -584,6 +584,8 @@ def getOrderProduct():
 
     return jsonify(resp), 200
 
+
+
 @api.route('/orderProduct/<int:id_orderproduct>', methods=['GET'])
 def getOneOrderProduct(id_orderproduct):
     oneOrderProduct = OrderProduct.query.filter_by(id = id_orderproduct).first()
