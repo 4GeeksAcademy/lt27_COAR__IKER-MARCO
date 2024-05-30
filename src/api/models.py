@@ -64,6 +64,7 @@ class Product(db.Model):
     image = db.Column(db.String(120), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship('Category', backref=db.backref('products', lazy=True))
+    Craftmen = db.relationship('Craftmen', backref=db.backref('products', lazy=True))    
 
     order_product = db.relationship('OrderProduct', back_populates='product')
 
@@ -78,7 +79,8 @@ class Product(db.Model):
             "price": self.price,
             "stock": self.stock,
             "image": self.image,
-            "category": self.category.name
+            "category": self.category.name,
+            "Craftmen": self.Craftmen.id,
         }
 ##################### MODEL CATEGORY ####################################        
 class Category(db.Model):

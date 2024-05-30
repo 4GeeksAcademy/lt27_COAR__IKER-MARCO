@@ -18,7 +18,7 @@ export const Login_craftmen = () => {
       <div className="container text-center">
         <div className="row">
           <div className="col">
-            {store.authorize == true ? <Navigate to="/product" /> : <Formc />}
+            {store.authorize == true ? <Navigate to="/craftman_dash" /> : <Formc />}
           </div>
         </div>
       </div>
