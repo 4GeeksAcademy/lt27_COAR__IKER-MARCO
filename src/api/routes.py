@@ -130,7 +130,7 @@ def get_product_by_id(id):
 @api.route('/product/new/', methods=['POST'])
 def create_product():
     request_body = request.get_json()
-    category = Category.query.get(category_id)
+    category = Category.query.get(category)
     if category is None:
         return jsonify("Category not found"), 404
     product = Product(
@@ -139,7 +139,7 @@ def create_product():
         price=request_body["price"], 
         stock=request_body["stock"], 
         image=request_body["image"],
-        category_id=category_id)
+        category_id=category)
     db.session.add(product)
     db.session.commit()
     return jsonify("Product created"), 200
