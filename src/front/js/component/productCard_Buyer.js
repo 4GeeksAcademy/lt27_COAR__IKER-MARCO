@@ -11,17 +11,19 @@ const ProductCard_Buyer = (props) => {
 
   const handleAdd =()=>{
     const product = {
+      id : props.id,
       name: props.name,
       price:props.price,
-      category:props.category,
-      stock:props.stock
+      category:props.category
     }
+    console.log(product)
     if(store.authorize_b == true){
       actions.addToCart(product)
     }else{
       Navigate("/login_buyer")
     }      
   }
+  
 
   const handleSelected = (id) => {
     actions.getproduct(id);

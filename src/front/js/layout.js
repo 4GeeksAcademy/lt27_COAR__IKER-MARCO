@@ -23,10 +23,12 @@ import { CategoryEdit } from "./pages/CategoryEdit";
 import { Craftmen } from "./pages/craftmen";
 import { Craftmendetail } from "./pages/craftmendetail";
 import { Craftmencreate } from "./pages/craftmencreate";
-import { Product } from "./pages/product";
 import { Productcreate } from "./pages/productcreate.js";
 import { Productdetail } from "./pages/productdetail.js";
 import { GoToDirection } from "./pages/GoToDirection.js";
+import { OrdersView } from "./pages/OrdersViews.js";
+import { CraftmanProducts } from "./pages/CraftmanProducts.js";
+import { CraftmanOrders } from "./pages/CraftmanOrders.js";
 
 import { Buyer_products } from "./pages/buyer_products.js";
 import { Buyer_Productdetail } from "./pages/buyer_productdetail.js";
@@ -58,7 +60,7 @@ const Layout = () => {
             <Route element={<Home />} path="/" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Craftmen />} path="/craftmen" />
-            <Route element={<Product />} path="/product" />
+            <Route element={<CraftmanProducts />} path="/product" />
             <Route element={<Productcreate />} path="/productcreate" />
             <Route element={<Craftmencreate />} path="/craftmencreate" />
             <Route element={<Single />} path="/single/:theid" />
@@ -78,6 +80,8 @@ const Layout = () => {
               element={<Buyer_Productdetail />}
               component={Buyer_Productdetail}
             />
+            <Route element={<CraftmanOrders />} path="/pedidos" />
+            <Route element={<OrdersView />} path="/my-orders" />
             <Route element={<GoToDirection />} path="/go-to-direction" />
             <Route element={<CartView />} path="/cart" />
             <Route element={<Category />} path="/category" />

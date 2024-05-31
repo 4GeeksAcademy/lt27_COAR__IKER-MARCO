@@ -29,7 +29,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       Pago:0,
       cart:[],
       currentBuyerId:null,
+      currentBuyerAddress:'',
       auth: false,
+      authToken:"valor inicial",
+      orders:"",
+      authToken2:"valor inicial",
+      products:[],
 
       authorize_b: false,
       authorize_a: false,
@@ -39,6 +44,102 @@ const getState = ({ getStore, getActions, setStore }) => {
 
     },
     actions: {
+      getCraftmanProducts: async () => {
+        const store = getStore();
+        const token = store.authToken2 || localStorage.getItem('authToken2')
+      
+        if (!token) {
+          console.error("No token found");
+          return;
+        }
+
+        console.log("Using token:", token)
+
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/craftman/products", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          });
+
+          console.log("Response status:", response.status)
+
+          if (response.ok) {
+            const products = await response.json();
+            setStore({ products: products });
+          } else {
+            const errorData = await response.json();
+            console.error("Error fetching craftman products:", errorData);
+            alert(`Error fetching products: ${errorData.msg}`);
+          }
+        } catch (error) {
+          console.error("Error fetching craftman products:", error);
+          alert("An unexpected error occurred. Please try again.");
+        }
+      },
+      
+      getCraftmanOrders: async () => {
+        const store = getStore();
+        const token = store.authToken2 || localStorage.getItem('authToken2');
+        const buyerId = store.currentBuyerId;
+
+        if (!buyerId) {
+            console.error("No buyer ID found.");
+            return;
+        }
+
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/craftman/orders", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          })
+
+          console.log("Response status:", response.status)
+
+          if (response.ok) {
+            const orders = await response.json();
+            console.log("Fetched orders:", orders);
+            setStore({ orders: orders });
+          } else {
+              const errorData = await response.json();
+              console.error("Error fetching orders:", errorData);
+              alert(`Error fetching orders: ${errorData.msg}`);
+          }
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+            alert("An unexpected error occurred. Please try again.");
+        }
+      },
+      getOrders: async () => {
+        const store = getStore();
+        const token = store.authToken || localStorage.getItem('authToken')
+        
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/orders", {
+              method: "GET",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+              }
+          })
+          if (response.ok) {
+              const orders = await response.json();
+              setStore({ orders : orders });
+          } else {
+              const errorData = await response.json();
+              console.error("Error fetching orders:", errorData);
+              alert(`Error fetching orders: ${errorData.error}`);
+          }
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+          alert("An unexpected error occurred. Please try again.")
+        }
+      },
       deleteFromCart: (itemName) => {
         const store = getStore();
         setStore({
@@ -70,12 +171,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({cart:updateCart})
       },
       addToCart: (product) => {
-        const store = getStore()
-        if (typeof product === 'string') {
-          product = JSON.parse(product);
+        const store = getStore();
+        const existingProduct = store.cart.find(item => item.id === product.id)
+
+        if (existingProduct) {
+            setStore({
+                cart: store.cart.map(item => 
+                    item.id === product.id 
+                        ? { ...item, quantity: item.quantity + 1 } 
+                        : item
+                )
+            });
+        } else {
+            setStore({
+                cart: [...store.cart, { ...product, quantity: 1 }]
+            });
         }
-        console.log('Adding product to cart:', product)
-        setStore({ cart: [...store.cart, product] })
       },
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
@@ -653,6 +764,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       ////////////////////////////  LOGINS  ////////////////////////////
 
       login: (email, password) => {
+        const actions = getActions();
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append(
@@ -682,8 +795,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .then((data) => {
             console.log(data);
+            actions.saveAuthToken2(data.access_token)
             localStorage.setItem("token", data.access_token);
           });
+      },
+      saveAuthToken2: (access_token)=>{
+        const store = getStore()
+        setStore({ authToken2: access_token });
+        localStorage.setItem('authToken2', access_token)
+        console.log("Token saved:", access_token)
       },
       logout: () => {
         console.log("logout desde flux");
@@ -692,6 +812,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       login_b: (email_b, password_b) => {
         console.log("desde flux " + email_b, password_b);
+        const store = getStore()
+        const actions = getActions()
+
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -714,22 +837,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(process.env.BACKEND_URL + "/api/login_b", requestOptions)
           .then((response) => {
-            console.log(response);
+            console.log("aqui que hay",response);
             if (response.status == 200) {
               return response.json();
             }
             throw new Error ("Failed to authenticate")
           })
           .then((datab) => {
-            console.log(datab);
+            console.log("recibo",datab);
+            actions.saveAuthToken(datab.access_token)
             localStorage.setItem("token2", datab.access_token);
-            setStore({ authorize_b: true, currentBuyerId: datab.buyer_id})
+            setStore({ authorize_b: true, currentBuyerId: datab.buyer_id, currentBuyerAddress: datab.address})
           });
+          console.log(store.authToken)
+          
       },
       logout_b: () => {
         console.log("logout desde flux");
         localStorage.removeItem("token");
         setStore({ authorize_b: false });
+      },
+      saveAuthToken: (access_token)=>{
+        const store = getStore()
+        setStore({ authToken: access_token });
+        localStorage.setItem('authToken', access_token)
+        console.log(store.authToken)
       },
       login_a: (email_a, password_a) => {
         console.log("desde flux " + email_a, password_a);

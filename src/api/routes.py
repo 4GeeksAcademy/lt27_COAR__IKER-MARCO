@@ -94,8 +94,25 @@ def delete_craftmen(id):
     db.session.commit()
     return jsonify("Craftmen deleted"), 200
 
+@api.route('/craftman/products', methods=['GET'])
+@jwt_required()
+def get_craftman_products():
+    current_craftman_id = get_jwt_identity()
+    products = Product.query.filter_by(craftman_id=current_craftman_id).all()
+    products = [product.serialize() for product in products]
+    return jsonify(products), 200
+
 ################################---------#############################
 #################################CRUD PRODUCT#########################
+@api.route('/craftman/orders', methods=['GET'])
+@jwt_required()
+def get_craftman_orders():
+    current_craftman_id = get_jwt_identity()
+    orders = Order.query.join(OrderProduct).join(Product).filter(Product.craftman_id == current_craftman_id).all()
+    orders = [order.serialize() for order in orders]
+    return jsonify(orders), 200
+
+
 @api.route('/product', methods=['GET'])
 def get_product():
     product = Product.query.all()
@@ -457,7 +474,7 @@ def login():
     if craftmen.password != password:
         return jsonify({"msg": "Bad username or password, estas en login_C"}), 401
     
-    access_token = create_access_token(identity=username)
+    access_token = create_access_token(identity=craftmen.id)
     return jsonify(access_token=access_token)
 ################################# LOGIN_B ########################
 
@@ -470,11 +487,18 @@ def login_b():
     print(oneBuyer)
     print(oneBuyer.serialize())
 
-    if oneBuyer.password != password:
+    if oneBuyer is None or oneBuyer.password != password:
         return jsonify({"msg": "Bad username or password, estas en login_b"}), 401
 
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    access_token = create_access_token(identity=oneBuyer.id)
+
+    response = {
+        "access_token": access_token,
+        "buyer_id": oneBuyer.id,
+        "address": oneBuyer.address 
+    }
+
+    return jsonify(response)
 
 ################################# LOGIN_A ########################
 
@@ -490,42 +514,61 @@ def login_a():
     if oneAdmin.password != password:
         return jsonify({"msg": "Bad username or password, estas en login_a"}), 401
 
-    access_token = create_access_token(identity=username)
+    access_token = create_access_token(identity=oneAdmin.id)
     return jsonify(access_token=access_token)
    
 ################################# ORDERS ############################################3
 
 @api.route('/orders', methods=['GET'])
-def getOrders():
-    allOrders = Order.query.all()
-    resp = list(map(lambda element: element.serialize(),allOrders))
+@jwt_required()
+def get_orders():
+    current_user_id = get_jwt_identity()
+    orders = Order.query.filter_by(buyer_id=current_user_id).all()
+    return jsonify([order.serialize() for order in orders]), 200
 
-    return jsonify(resp), 200
-
-@api.route('/orders/<int:id_orders>', methods=['GET'])
-def getOneOrder(id_orders):
-    oneOrder = Order.query.filter_by(id = id_orders).first()
-    if oneOrder == None:
-        oneOrder = {
-            "msg": "Don't exist"
-        }
-        return jsonify(oneOrder), 404
-    else:
-        return jsonify(oneOrder.serialize()),200
     
 @api.route('/orders/new', methods=['POST'])
-def newOrders():
-    body = request.get_json()
-    new_order = Order(buyer_id = body["buyer_id"], product_state = body["product_state"])
+@jwt_required()
+def create_order():
+    data = request.get_json()
 
-    db.session.add(new_order)
-    db.session.commit()
+    if not data:
+        return jsonify({"error": "Missing JSON in request"}), 400
 
-    response_body = {
-        "message": "New order successfully added"
-    }
+    required_fields = ['buyer_id', 'total_price', 'shipping_address', 'items']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"Missing required field: {field}"}), 400
 
-    return jsonify(response_body), 200
+    try:
+        new_order = Order(
+            buyer_id=data['buyer_id'],
+            product_state='new',
+            total_price=data['total_price'],
+            shipping_address=data['shipping_address'],
+            status="pending"
+        )
+        db.session.add(new_order)
+        db.session.commit()
+
+        for item in data['items']:
+            if 'product_id' not in item or 'quantity' not in item or 'price' not in item:
+                return jsonify({"error": "Missing fields in items"}), 400
+
+            new_order_item = OrderProduct(
+                order_id=new_order.id,
+                product_id=item['product_id'],
+                quantity=item['quantity'],  
+                price=item['price']
+            )
+            db.session.add(new_order_item)
+
+        db.session.commit()
+        return jsonify(new_order.serialize()), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
 
 @api.route('/orders/update/<int:id_order>', methods=['PUT'])
 def updateOrder(id_order):
@@ -574,6 +617,28 @@ def deleteOrder(id_order):
             "msg":"This orden does not exist"
         }
         return jsonify(response_body), 401
+    
+@api.route('/orders/<int:order_id>/status', methods=['PUT'])
+@jwt_required()
+def update_order_status(order_id):
+    current_craftman_id = get_jwt_identity()
+    order = Order.query.join(OrderProduct).join(Product).filter(
+        Product.craftman_id == current_craftman_id,
+        Order.id == order_id
+    ).first()
+
+    if not order:
+        return jsonify({"msg": "Order not found or not authorized"}), 404
+
+    request_body = request.get_json()
+    new_status = request_body.get("status", None)
+
+    if new_status:
+        order.status = new_status
+        db.session.commit()
+        return jsonify({"msg": "Order status updated"}), 200
+
+    return jsonify({"msg": "Invalid request"}), 400
     
 ########################## CRUD ORDER PRODUCT #################################################
 

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import ProductCard_Buyer from "../component/productCard_Buyer";
 
 export const Buyer_products = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
   
 
   const [data, setData] = useState({
@@ -36,7 +37,7 @@ export const Buyer_products = () => {
             Edit profile
           </button>
           <br />
-          <button className="btn btn-outline-secondary">
+          <button onClick={()=> navigate("/my-orders")} className="btn btn-outline-secondary">
             Orders
           </button>
           <br />

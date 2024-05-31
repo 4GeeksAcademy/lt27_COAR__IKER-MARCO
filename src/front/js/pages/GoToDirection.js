@@ -4,43 +4,27 @@ import { useNavigate } from "react-router-dom";
 
 export const GoToDirection =()=>{
     const { store, actions } = useContext(Context)
-    const [newAddress, setNewAddress] = useState("")
     const navigate = useNavigate()
-
-    const buyer = store.allBuyers.find(item => item.id === store.currentBuyerId)
-
-    const handleAddressChange = (e) => {
-        setNewAddress(e.target.value);
-    };
-
-    const handleAddressSubmit = async () => {
-        await actions.addNewAddress(newAddress);
-        setNewAddress("");
-    };
 
     return(
         <div className="container">
             <h1>Previously provides an address</h1>
-            {buyer && buyer.addresses ? (
+            {store.currentBuyerAddress ? (
                 <div>
-                    <ul>
-                        {buyer.addresses.map((address, index) => (
-                            <li key={index}>{address}</li>
-                        ))}
-                    </ul>
+                    <h3>Current Address:</h3>
+                    <p>{store.currentBuyerAddress}</p>
                 </div>
             ) : (
-                <p>No previous addresses found.</p>
+                <p>No address available</p>
             )}
-            <h2>Enter a New Address</h2>
-            <input
-                type="text"
-                value={newAddress}
-                onChange={handleAddressChange}
-            />
-            <button onClick={handleAddressSubmit}>Submit</button>
-            <br />
-            <button onClick={()=> navigate("/paypalltest")} className="my-5 btn btn-warning">Pay</button>
+            <h3>Enter a new address:</h3>
+            <form>
+                <div className="mb-3">
+                    <label htmlFor="newAddress" className="form-label">New Address</label>
+                    <input type="text" className="form-control" id="newAddress" />
+                </div>
+                <button onClick={()=> navigate("/paypalltest")} type="submit" className="btn btn-primary">Submit</button>
+            </form>
         </div>
     )
 }
