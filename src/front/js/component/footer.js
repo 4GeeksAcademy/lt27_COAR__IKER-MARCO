@@ -1,67 +1,111 @@
 import React, { Component } from "react";
 
-export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center">
-		<div className="py-5 py-lg-6 bg-gray-100" bg-secondary>
-			<div className="container">
-				<div className="row">
-					<div className="py-4 service-column col-lg-3 col-sm-6">
-						<i className="bi bi-truck"></i>
-						<div className="service-text">
-							<h6 className="text-sm mb-1">Free shipping; return</h6>
-							<p className="text-muted fw-light text-sm mb-0">Free Shipping over $300</p>
-						</div>
-					</div>
-					<div className="py-4 service-column col-lg-3 col-sm-6">
-						<i className="bi bi-piggy-bank"></i>
-						<div className="service-text">
-							<h6 className="text-sm mb-1">Money back guarantee</h6>
-							<p className="text-muted fw-light text-sm mb-0">30 Days Money Back Guarantee</p>
-						</div>
-					</div>
-					<div className="py-4 service-column col-lg-3 col-sm-6">
-						<i className="bi bi-tag"></i>
-						<div className="service-text">
-							<h6 className="text-sm mb-1">Best prices</h6>
-							<p className="text-muted fw-light text-sm mb-0">Always the best prices</p>
-						</div>
-					</div>
-					<div className="py-4 service-column col-lg-3 col-sm-6">
-						<i className="bi bi-headset"></i>
-						<div className="service-text">
-							<h6 className="text-sm mb-1">020-800-456-747</h6>
-							<p className="text-muted fw-light text-sm mb-0">24/7 Available Support</p>
-						</div>
-					</div>
 
+export const Footer = () => (
+	<footer className="footer-section bg-success p-2 text-dark bg-opacity-50">
+		<div className="container relative">
+
+	
+			<div className="row">
+				<div className="col-lg-8">
+					<div className="subscription-form">
+						<h3 className="d-flex align-items-center">
+							<span className="me-1">
+							<i class="bi bi-envelope"></i>
+							</span>
+							<span>Subscribe to Newsletter</span>
+						</h3>
+
+						<form action="#" className="row g-3">
+							<div className="col-auto">
+								<input type="text" className="form-control" placeholder="Enter your name" />
+							</div>
+							<div className="col-auto">
+								<input type="email" className="form-control" placeholder="Enter your email" />
+							</div>
+							<div className="col-auto">
+								<button className="btn btn-primary">
+									<span className="fa fa-paper-plane"></span>
+								</button>
+							</div>
+						</form>
+
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div className="py-4 fw-light bg-gray-800 text-gray-300">
-			<div className="container">
-				<div className="align-items-center row">
-					<div className="text-center text-md-start col-md-6">
-						<p className="text-sm mb-md-0">© 2021, Your company. All rights reserved.</p>
+			<div className="row g-5 mb-5">
+				<div className="col-lg-4">
+					<br></br>
+					<p className="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
+
+					<div className="row">
+						<div className="col"><a href="#" className="text-black"><span className="fa fa-brands fa-facebook-f"></span></a></div>
+						<div className="col"><a href="#" className="text-black"><span className="fa fa-brands fa-twitter"></span></a></div>
+						<div className="col"><a href="#" className="text-black"><span className="fa fa-brands fa-instagram"></span></a></div>
+						<div className="col"><a href="#" className="text-black"><span className="fa fa-brands fa-linkedin"></span></a></div>
 					</div>
-					<div className="col-md-6">
-						<ul className="list-inline mb-0 mt-2 mt-md-0 text-center text-md-end">
-							<li className="list-inline-item">
-								<img width="32" height="32" src="/svg/visa.svg" alt="..." className="w-2rem" />
-							</li>
-							<li className="list-inline-item">
-								<img src="/svg/mastercard.svg" width="32" height="32" alt="..." className="w-2rem" />
-							</li>
-							<li className="list-inline-item">
-								<img src="/svg/paypal.svg" width="32" height="32" alt="..." className="w-2rem" />
-							</li>
-							<li className="list-inline-item">
-								<img src="/svg/western-union.svg" width="32" height="32" alt="..." className="w-2rem" />
-							</li>
+				</div>
+
+				<div className="col-lg-8">
+					<br></br>
+					<div className="row links-wrap">
+						<div className="col-6 col-sm-6 col-md-3">
+							<ul className="list-unstyled">
+								<li><a href="#" className="text-black">About us</a></li>
+								<li><a href="#" className="text-black">Services</a></li>
+								<li><a href="#" className="text-black">Blog</a></li>
+								<li><a href="#" className="text-black">Contact us</a></li>
+							</ul>
+						</div>
+
+						<div className="col-6 col-sm-6 col-md-3">
+							<ul className="list-unstyled">
+								<li><a href="#" className="text-black">Support</a></li>
+								<li><a href="#" className="text-black">Knowledge base</a></li>
+								<li><a href="#" className="text-black">Live chat</a></li>
+							</ul>
+						</div>
+
+						<div className="col-6 col-sm-6 col-md-3">
+							<ul className="list-unstyled">
+								<li><a href="#" className="text-black">Jobs</a></li>
+								<li><a href="#" className="text-black">Our team</a></li>
+								<li><a href="#" className="text-black">Leadership</a></li>
+								<li><a href="#" className="text-black">Privacy Policy</a></li>
+							</ul>
+						</div>
+
+						<div className="col-6 col-sm-6 col-md-3">
+							<ul className="list-unstyled">
+								<li><a href="#" className="text-black">Nordic Chair</a></li>
+								<li><a href="#" className="text-black">Kruzo Aero</a></li>
+								<li><a href="#" className="text-black">Ergonomic Chair</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div className="border-top copyright">
+				<div className="row pt-4">
+					<div className="col-lg-6">
+						<p className="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a> 
+						 {/* <!-- License information: https://untree.co/license/ --> */}
+						</p>
+					</div>
+
+					<div className="col-lg-6 text-center text-lg-end">
+						<ul className="list-unstyled d-inline-flex ms-auto">
+							<li className="me-4"><a href="#" className="text-black">Terms &amp; Conditions</a></li>
+							<li><a href="#" className="text-black">Privacy Policy</a></li>
 						</ul>
 					</div>
+
 				</div>
 			</div>
+
 		</div>
-	</footer>
+</footer>
 );
