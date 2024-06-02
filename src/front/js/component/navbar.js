@@ -7,201 +7,147 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-  function handlelogout_c() {
-    actions.logout();
-    navigate("/");
-  }
-  function handlelogout_b() {
-    actions.logout_b();
-    navigate("/");
-  }
-  function handlelogout_a() {
-    actions.logout_a();
-    navigate("/");
-  }
 
-  const handleClick =()=>{
+
+
+  const handleClick = () => {
     navigate("/cart")
   }
-  
+
 
   return (
     <>
-      <nav className="navbar navbar-light bg-light">
-        <div className="container center col-sm-11">
-          <div className="col">
+      <div className="hero bg-success p-2 text-dark bg-opacity-50">
+        <nav className="navbar">
+          <div className="col-1"></div>
+
+          <div className="col-1">
             <Link to="/">
-              <span className="navbar-brand mb-0 h1">COAR</span>
+              <span className="btn btn-outline-light">COAR</span>
             </Link>
           </div>
+          <div className="col-7 row">
 
-          <div className="col">
-            <Link to="/login_craftmen">
-              <button className="btn btn-primary">Login Craftmen</button>
-            </Link>
+            <div className="col">
+            </div>
+            <div className="col">
+            </div>
+            <div className="col">
+            </div>
+    
+
+            <div className="col">
+              <Link to="/">
+                <button className="btn btn-outline-light">Home</button>
+              </Link>
+            </div>
+
+            <div className="col">
+              <Link to="/shop">
+                <button className="btn btn-outline-light">Shop</button>
+              </Link>
+            </div>
+
+            <div className="col">
+              <Link to="/about">
+                <button className="btn btn-outline-light">About</button>
+              </Link>
+            </div>
+
+            <div className="col">
+              <Link to="/services">
+                <button className="btn btn-outline-light">Services</button>
+              </Link>
+            </div>
+
+            <div className="col">
+              <Link to="/blogpage">
+                <button className="btn btn-outline-light">Blog</button>
+              </Link>
+            </div>
+
+            <div className="col">
+              <Link to="/contactus">
+                <button className="btn btn-outline-light">Contact</button>
+              </Link>
+            </div>
+
           </div>
+          <div className="col-2 row">
 
-          <div className="col">
-            <Link to="/login_buyer">
-              <button className="btn btn-primary">Login buyer</button>
-            </Link>
-          </div>
-
-          <div className="col">
-            <Link to="/login_admin">
-              <button className="btn btn-primary">Login admin</button>
-            </Link>
-          </div>
-      
-          <div className="col">
-            {store.authorize}
-            {store.authorize == true ? (
-              <>
-                <button
-                  onClick={() => handlelogout_c()}
-                  className="btn btn-danger"
-                >
-                  Logout Craftmen
-                </button>
-
-                <Link to="/product">
-                  <button className="btn btn-outline-secondary">
-                    Products
-                  </button>
-                </Link>
-              </>
-            ) : null}
-          </div>
-
-          <div className="col">
-            {store.authorize_b}
-            {store.authorize_b == true ? (
-              <>
-                <button
-                  onClick={() => handlelogout_b()}
-                  className="btn btn-danger"
-                >
-                  Logout Buyer
-                </button>
-                <div className="btn-group dropstart">
-                  <button
-                    type="button"
-                    className="btn btn-primary dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Favorites{" "}
-                    <span className="badge text-bg-secondary">
-                      {store.productsLiked.length}
-                    </span>
-                  </button>
-
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="#"></a>
-                    </li>
-                    {store.productsLiked.length === 0 ? (
-                      <li>
-                        <p>Empty</p>
-                      </li>
-                    ) : (
-                      store.productsLiked.map((elemento, index) => (
-                        <li key={index}>
-                          <a className="dropdown-item" href="#">
-                            <div className="d-flex justify-content-between m-2">
-                              <p>{elemento}</p>
-                              <i
-                                onClick={() => actions.deleteFavorite(elemento)}
-                                className="bi bi-trash3-fill"
-                              ></i>
-                            </div>
-                          </a>
-                        </li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-              </>
-            ) : null}
-          </div>
-
-          <div className="col">
-            {store.authorize_a}
-            {store.authorize_a == true ? (
-              <div className="col">
-                <div className="col">
-                  <button
-                    onClick={() => handlelogout_a()}
-                    className="btn btn-danger"
-                  >
-                    Logout Admin
-                  </button>
-                </div>
-                <div className="col">
-                  <Link to="/category">
-                    <button className="btn btn-outline-secondary">
-                      Category
-                    </button>
-                  </Link>
-                </div>
-                <div className="col">
-                  <Link to="/admin">
-                    <button className="btn btn-outline-secondary">Admin</button>
-                  </Link>
-                </div>
-                <div className="col">
-                  <Link to="/craftmen">
-                    <button className="btn btn-outline-secondary">
-                      Craftmen
-                    </button>
-                  </Link>
-                </div>
-                <div className="col">
-                  <Link to="/buyer">
-                    <button className="btn btn-outline-secondary">
-                      Buyers
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </div>
-        <div className=" col-1">
-          <div className="btn-group dropstart">
-              <button 
-                className=" btn btn-primary dropdown-toggle"
+            <div className="col btn-group dropstart">
+              <button
+                className=" btn btn-outline-light dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                >
-                <i style={{"border":"1px solid white"}} onClick={handleClick} className="fa-solid fa-cart-shopping p-1 m-0"></i>
-                <span className="badge text-bg-secondary">
-                  ({store.cart.length}) 
-                </span>
-                </button>
-            <ul className="dropdown-menu">
-              {store.cart.map((item, index) => (
-                <li key={index}>
+              >
+                <i class="bi bi-person-lines-fill"></i>
+
+              </button>
+              <ul className="dropdown-menu">
+                <li>
                   <a className="dropdown-item" href="#">
-                    <div className="d-flex justify-content-between m-2">
-                        <p style={{"margin":"0px"}}>Name: <strong>{item.name}</strong>
-                        <br/> 
-                        Price: <strong>{item.price}</strong></p>
-                        <button 
-                          type="button" 
-                          className="btn-close" 
-                          aria-label="Close"
-                          onClick={()=> actions.deleteFromCart(item.name)}
-                        ></button>
-                      </div>
+                    <Link to="/login_craftmen">
+                      <button className="btn btn-outline-dark">Craftmen</button>
+                    </Link>
                   </a>
                 </li>
-              ))}
-            </ul>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    <Link to="/login_buyer">
+                      <button className="btn btn-outline-dark">Client</button>
+                    </Link>
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    <Link to="/login_admin">
+                      <button className="btn btn-outline-dark">Admin</button>
+                    </Link>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col btn-group dropstart">
+              <button
+                className=" btn btn-outline-light dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i style={{ "border": "1px solid white" }} onClick={handleClick} className="fa-solid fa-cart-shopping p-1 m-0"></i>
+                <span className="badge text-bg-secondary">
+                  ({store.cart.length})
+                </span>
+              </button>
+              <ul className="dropdown-menu">
+                {store.cart.map((item, index) => (
+                  <li key={index}>
+                    <a className="dropdown-item" href="#">
+                      <div className="d-flex justify-content-between m-2">
+                        <p style={{ "margin": "0px" }}>Name: <strong>{item.name}</strong>
+                          <br />
+                          Price: <strong>{item.price}</strong></p>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={() => actions.deleteFromCart(item.name)}
+                        ></button>
+                      </div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
           </div>
-        </div>
-      </nav>
+
+          <div className="col-1"></div>
+        </nav>
+      </div>
     </>
   );
 };
