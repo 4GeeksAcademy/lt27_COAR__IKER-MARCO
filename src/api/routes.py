@@ -130,15 +130,19 @@ def get_product_by_id(id):
 @api.route('/product/new/', methods=['POST'])
 def create_product():
     request_body = request.get_json()
+    category_id = request_body.get('category_id')
     category = Category.query.get(category_id)
+
     if category is None:
         return jsonify("Category not found"), 404
+    
     product = Product(
         name=request_body["name"], 
         description=request_body["description"], 
         price=request_body["price"], 
         stock=request_body["stock"], 
         image=request_body["image"],
+        craftman_id=request_body["craftman_id"],
         category_id=category_id)
     db.session.add(product)
     db.session.commit()
@@ -475,7 +479,13 @@ def login():
         return jsonify({"msg": "Bad username or password, estas en login_C"}), 401
     
     access_token = create_access_token(identity=craftmen.id)
-    return jsonify(access_token=access_token)
+
+    response = {
+        "access_token": access_token,
+        "craftman_id": craftmen.id,
+        "address": craftmen.address
+    }
+    return jsonify(response)
 ################################# LOGIN_B ########################
 
 @api.route('/login_b', methods=['POST'])
@@ -587,11 +597,14 @@ def updateOrder(id_order):
             updateOrder.buyer_id = data['buyer_id']
         if 'product_state' in data:
             updateOrder.product_state = data['product_state']
+        if 'status' in data: 
+            updateOrder.status = data['status']
 
         db.session.commit()
 
         response_body = {
-            "msg":"Order successfully updated"
+            "msg":"Order successfully updated",
+            "order": updateOrder.serialize()
         }
         return jsonify(response_body), 200
     else:

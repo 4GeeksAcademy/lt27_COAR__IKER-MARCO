@@ -1,31 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import rigoImage from "../../img/rigo-baby.jpg";
 import { useNavigate } from "react-router-dom";
 
-export const Productcreate = (props) => {
+export const Productcreate = () => {
   const { store, actions } = useContext(Context);
   const [selectedCategory, setSelectedCategory] = useState("");
-
-
-  useEffect(() => {
-    actions.categorys();
-  }, []);
-
   const navigate = useNavigate();
 
   const [data, setData] = useState({
-    category: "",
     category_id: "",
     description: "",
-    id: "",
     image: "",
     name: "",
     price: "",
     stock: "",
+    craftman_id: store.currentCraftman
   });
+
+  useEffect(() => {
+  },[])
+
+  useEffect(() => {
+    actions.categorys();
+  }, []);
+  
+  useEffect(() => {
+    setData(prevData => ({
+      ...prevData,
+      category_id: selectedCategory,
+      craftman_id: store.currentCraftman || ""
+    }));
+  }, [selectedCategory, store.currentCraftman])
 
   const saveProduct = (e) => {
     e.preventDefault();
@@ -79,10 +85,11 @@ export const Productcreate = (props) => {
                 Category
               </label>
               <select
-                name="category"
+                name="category_id"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
+              <option value="">Select a category</option>
                 {store.allCategory.map((category, index) => (
                   <option key={index} value={category.id}>
                     {category.name}

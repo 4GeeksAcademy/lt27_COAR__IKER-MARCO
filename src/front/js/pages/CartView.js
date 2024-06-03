@@ -88,6 +88,12 @@ export const CartView = () => {
                                     <p>
                                         Quantity: <strong>{item.quantity}</strong>
                                     </p>
+                                    <button onClick={() => actions.incrementQuantity(item.id)} className="sum">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                    <button onClick={()=> actions.decrementQuantity(item.id)} className="subtract">
+                                        <i class="fa-solid fa-minus">
+                                    </i></button>
                                 </div>
                                 <button
                                     type="button"

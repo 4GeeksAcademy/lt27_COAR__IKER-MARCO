@@ -5,11 +5,11 @@ export const CraftmanOrders = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.getCraftmanOrders(); // Nuevo action para obtener órdenes del craftman
-  }, [actions]);
+    actions.getCraftmanOrders();
+  }, []);
 
   const handleStatusChange = (orderId, newStatus) => {
-    actions.updateOrderStatus(orderId, newStatus); // Nuevo action para actualizar el estado de una orden
+    actions.updateOrderStatus(orderId, newStatus)
   };
 
   return (
@@ -38,6 +38,8 @@ export const CraftmanOrders = () => {
                 ))}
               </ul>
               <div className="mt-3">
+                <button onClick={() => handleStatusChange(order.id, "En espera")} className="btn btn-warning">En espera</button>
+                <button onClick={() => handleStatusChange(order.id, "Pago rechazado")} className="btn btn-danger">Pago rechazado</button>
                 <button onClick={() => handleStatusChange(order.id, "En camino")} className="btn btn-primary">En camino</button>
                 <button onClick={() => handleStatusChange(order.id, "Entregado")} className="btn btn-success ml-2">Entregado</button>
               </div>
