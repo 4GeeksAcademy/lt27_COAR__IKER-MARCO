@@ -1,17 +1,28 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 
 export const Footer = () => (
 	<footer className="footer-section bg-success p-2 text-dark bg-opacity-50">
 		<div className="container relative">
 
-	
+			<br></br>
+			<div className="col">
+				<Link to="/">
+					<button className="btn btn-accent bsb-btn-2xl">
+						<i className="bi bi-arrow-bar-left"></i>
+						Home
+					</button>
+				</Link>
+			</div>
+			<br></br>
+
 			<div className="row">
 				<div className="col-lg-8">
 					<div className="subscription-form">
 						<h3 className="d-flex align-items-center">
 							<span className="me-1">
-							<i class="bi bi-envelope"></i>
+								<i className="bi bi-envelope"></i>
 							</span>
 							<span>Subscribe to Newsletter</span>
 						</h3>
@@ -91,8 +102,8 @@ export const Footer = () => (
 			<div className="border-top copyright">
 				<div className="row pt-4">
 					<div className="col-lg-6">
-						<p className="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a> 
-						 {/* <!-- License information: https://untree.co/license/ --> */}
+						<p className="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
+							{/* <!-- License information: https://untree.co/license/ --> */}
 						</p>
 					</div>
 
@@ -107,5 +118,5 @@ export const Footer = () => (
 			</div>
 
 		</div>
-</footer>
+	</footer>
 );

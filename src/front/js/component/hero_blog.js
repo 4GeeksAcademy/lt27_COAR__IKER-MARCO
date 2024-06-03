@@ -12,18 +12,16 @@ export const Hero_blog = () => (
                         <p className="mb-4">
                             In our blog you will find articles about the artisans, their products, their stories, and their lives. We will also share tips and tricks for artisans to improve their craft and grow their business. Stay tuned for more!
                         </p>
-                        <div className="row">
-                            <div className="col text-end">
-                                <Link to="/">
-                                    <button className="btn btn-outline-light">Home</button>
-                                </Link>
-                            </div>
-                            <div className="col">
-                                <Link to="/about">
-                                    <button className="btn btn-outline-light">About</button>
-                                </Link>
-                            </div>
+                        <br></br>
+                        <div className="col">
+                            <Link to="/">
+                                <button className="btn btn-accent bsb-btn-2xl">
+                                    <i className="bi bi-arrow-bar-left"></i>
+                                    Home
+                                </button>
+                            </Link>
                         </div>
+                        <br></br>
 
                     </div>
                 </div>

@@ -36,6 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       authToken2:"valor inicial",
       products:[],
       currentCraftman: null,
+      currentCraftmanAddress: null,
 
       authorize_b: false,
       authorize_a: false,
@@ -846,6 +847,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("Segundo .then ",data);
             actions.saveAuthToken2(data.access_token);
             setStore({ currentCraftman: data.craftman_id })
+            setStore({ currentCraftmanAddress: data.address })
             localStorage.setItem("token", data.access_token);
           });
       },

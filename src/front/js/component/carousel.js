@@ -1,5 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import fondo1 from "../../img/fondo1-01.png";
+import person1 from "../../img/person-1.jpg";
+
 
 export const Carousel = () => {
 
@@ -12,25 +15,37 @@ export const Carousel = () => {
             </div>
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                    <img src="https://picsum.photos/seed/picsum/500/200" className="d-block w-100" alt="..."/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>Wood</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
+                    <img src={fondo1} className="d-block w-100" alt="..." style={{ width: '1920px', height: '540px' }}/>
+                    <div className="carousel-caption d-none d-md-block">
+                        <img src={person1} className="circle" alt="..." />
+                        <h5>Testimonial 1</h5>
+                        <p>
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                    </div>
                 </div>
                 <div className="carousel-item">
-                    <img src="https://picsum.photos/seed/picsum/500/200" className="d-block w-100" alt="..."/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>Natural Fibers</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
-                        </div>
+                    <img src={fondo1} className="d-block w-100" alt="..." style={{ width: '1920px', height: '540px' }}/>
+                    <div className="carousel-caption d-none d-md-block">
+                        <img src={person1} className="circle" alt="..." />  
+                        <h5>Testimonial 2</h5>
+                        <p>
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                   
+                   
+                    </div>
                 </div>
                 <div className="carousel-item">
-                    <img src="https://picsum.photos/seed/picsum/500/200" className="d-block w-100" alt="..."/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>Ceramics</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
-                        </div>
+                    <img src={fondo1} className="d-block w-100" alt="..." style={{ width: '1920px', height: '540px' }}/>
+                    <div className="carousel-caption d-none d-md-block">
+                        <img src={person1} className="circle" alt="..." />
+                        <h5>Testimonial 3</h5>
+                        <p>
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+
+                    </div>
                 </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

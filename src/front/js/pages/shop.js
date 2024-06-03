@@ -3,11 +3,6 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 import ProductCard_Buyer from "../component/productCard_Buyer";
-import { Carousel } from "../component/carousel.js";
-import { Jumbo } from "../component/jumbo.js";
-import { Cate } from "../component/cate.js";
-import { Blog } from "../component/blog.js";
-import { Testimonial } from "../component/testimonial.js";
 import { Hero_shop } from "../component/hero_shop.js";
 
 export const Shop = () => {
