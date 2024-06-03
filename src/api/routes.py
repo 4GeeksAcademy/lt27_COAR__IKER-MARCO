@@ -132,7 +132,7 @@ def create_product():
     request_body = request.get_json()
     category_id = request_body.get('category_id')
     category = Category.query.get(category_id)
-
+    
     if category is None:
         return jsonify("Category not found"), 404
     
@@ -144,6 +144,7 @@ def create_product():
         image=request_body["image"],
         craftman_id=request_body["craftman_id"],
         category_id=category_id)
+    
     db.session.add(product)
     db.session.commit()
     return jsonify("Product created"), 200

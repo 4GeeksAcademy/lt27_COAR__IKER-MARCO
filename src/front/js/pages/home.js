@@ -3,10 +3,16 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 import ProductCard_Buyer from "../component/productCard_Buyer";
+import { Carousel } from "../component/carousel.js";
+import { Jumbo } from "../component/jumbo.js";
+import { Cate } from "../component/cate.js";
+import { Blog } from "../component/blog.js";
+import { Testimonial } from "../component/testimonial.js";
+import { Hero } from "../component/hero.js";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  
+
 
   const [data, setData] = useState({
     category: "",
@@ -27,38 +33,65 @@ export const Home = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row text-center">
-        <h1>WELCOME TO Co-Ar</h1>
-        <div className="card col-6 col-md-2">
-          <h2>Order by : </h2>
-            <select
-                className="form-select"
-                aria-label="Default select example"
-                name="category"
-                onChange={info}>
-                <option value="1">Category</option>
-                <option value="2">Price</option>
-                <option value="3">Stock</option>
-                <option value="4">Craftmen</option>
-            </select>         
+    <>
+      <Hero />
+      <div className="container fluid">
+        <div className="row text-center">
+          <h2>Featured Categories</h2>
+          <Cate />
+
+          <h2>Popular products</h2>
+          <div className="row flex-row flex-nowrap " style={{ overflowX: "auto" }}>
+            {store.product.map((product) => {
+              return (
+                <ProductCard_Buyer
+                  key={product.id}
+                  name={product.name}
+                  category={product.category}
+                  stock={product.stock}
+                  price={product.price}
+                  {...product}
+                />
+              );
+            })}
+          </div>
+
+          <h2>Best Sellers</h2>
+          <div className="row flex-row flex-nowrap " style={{ overflowX: "auto" }}>
+            {store.product.map((product) => {
+              return (
+                <ProductCard_Buyer
+                  key={product.id}
+                  name={product.name}
+                  category={product.category}
+                  stock={product.stock}
+                  price={product.price}
+                  {...product}
+                />
+              );
+            })}
+          </div>
+
+          {/* <!-- Start Testimonial Section --> */}
+          <br />
+          <Testimonial />
+
+          {/* <!-- Start Blog Section --> */}
+          <br />
+          <div className="row mb-5">
+            <div className="col-md-6 text-start">
+              <h2 className="section-title">Recent Blog</h2>
+            </div>
+            <div className="col-md-6 text-md-end">
+              <Link to="/blogpage">
+                <a className="more">View All Posts</a>
+              </Link>
+            </div>
+          </div>
+          <Blog />
 
         </div>
-        <div className="row mb-3 text-center col-md-10">
-          {store.product.map((product) => {
-            return (
-              <ProductCard_Buyer
-                key={product.id}
-                name={product.name}
-                category={product.category}
-                stock={product.stock}
-                price={product.price}
-                {...product}
-              />
-            );
-          })}
-        </div>
       </div>
-    </div>
+    </>
   );
 };

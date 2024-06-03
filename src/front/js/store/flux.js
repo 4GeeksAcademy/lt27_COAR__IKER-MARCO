@@ -25,11 +25,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       allAdmins: [],
       allBuyers: [],
       allOrders: [],
-      oneOrder:[],
-      Pago:0,
-      cart:[],
-      currentBuyerId:null,
-      currentBuyerAddress:'',
+      oneOrder: [],
+      Pago: 0,
+      cart: [],
+      currentBuyerId: null,
+      currentBuyerAddress: '',
       auth: false,
       authToken:"valor inicial",
       orders:[],
@@ -95,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getCraftmanProducts: async () => {
         const store = getStore();
         const token = store.authToken2 || localStorage.getItem('authToken2')
-      
+
         if (!token) {
           console.error("No token found");
           return;
@@ -127,15 +127,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           alert("An unexpected error occurred. Please try again.");
         }
       },
-      
+
       getCraftmanOrders: async () => {
         const store = getStore();
         const token = store.authToken2 || localStorage.getItem('authToken2');
         const buyerId = store.currentBuyerId;
 
         if (!buyerId) {
-            console.error("No buyer ID found.");
-            return;
+          console.error("No buyer ID found.");
+          return;
         }
 
         try {
@@ -154,34 +154,34 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("Fetched orders:", orders);
             setStore({ orders: orders });
           } else {
-              const errorData = await response.json();
-              console.error("Error fetching orders:", errorData);
-              alert(`Error fetching orders: ${errorData.msg}`);
+            const errorData = await response.json();
+            console.error("Error fetching orders:", errorData);
+            alert(`Error fetching orders: ${errorData.msg}`);
           }
         } catch (error) {
-            console.error("Error fetching orders:", error);
-            alert("An unexpected error occurred. Please try again.");
+          console.error("Error fetching orders:", error);
+          alert("An unexpected error occurred. Please try again.");
         }
       },
       getOrders: async () => {
         const store = getStore();
         const token = store.authToken || localStorage.getItem('authToken')
-        
+
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/orders", {
-              method: "GET",
-              headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${token}`
-              }
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
           })
           if (response.ok) {
-              const orders = await response.json();
-              setStore({ orders : orders });
+            const orders = await response.json();
+            setStore({ orders: orders });
           } else {
-              const errorData = await response.json();
-              console.error("Error fetching orders:", errorData);
-              alert(`Error fetching orders: ${errorData.error}`);
+            const errorData = await response.json();
+            console.error("Error fetching orders:", errorData);
+            alert(`Error fetching orders: ${errorData.error}`);
           }
         } catch (error) {
           console.error("Error fetching orders:", error);
@@ -191,24 +191,24 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteFromCart: (itemName) => {
         const store = getStore();
         setStore({
-            cart: store.cart.filter(item => item.name !== itemName)
+          cart: store.cart.filter(item => item.name !== itemName)
         });
       },
       Total: (total) => {
         const store = getStore()
         console.log(total)
-        setStore({Pago: total})
+        setStore({ Pago: total })
         console.log(store.Pago)
       },
       setCurrentBuyer: (buyerId) => {
-        setStore({currentBuyerId: buyerId})
+        setStore({ currentBuyerId: buyerId })
       },
       addNewAddress: (newAddress) => {
-        const store = getStore() 
+        const store = getStore()
         setStore({
           allBuyers: store.allBuyers.map(buyer =>
-            buyer.id === store.currentBuyerId 
-              ? {...buyer, addresses: [...buyer.addresses, newAddress] }
+            buyer.id === store.currentBuyerId
+              ? { ...buyer, addresses: [...buyer.addresses, newAddress] }
               : buyer
           )
         })
@@ -216,24 +216,24 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteFromCart: (itemName) => {
         const store = getStore()
         const updateCart = store.cart.filter(item => item.name !== itemName)
-        setStore({cart:updateCart})
+        setStore({ cart: updateCart })
       },
       addToCart: (product) => {
         const store = getStore();
         const existingProduct = store.cart.find(item => item.id === product.id)
 
         if (existingProduct) {
-            setStore({
-                cart: store.cart.map(item => 
-                    item.id === product.id 
-                        ? { ...item, quantity: item.quantity + 1 } 
-                        : item
-                )
-            });
+          setStore({
+            cart: store.cart.map(item =>
+              item.id === product.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            )
+          });
         } else {
-            setStore({
-                cart: [...store.cart, { ...product, quantity: 1 }]
-            });
+          setStore({
+            cart: [...store.cart, { ...product, quantity: 1 }]
+          });
         }
       },
       // Use getActions to call a function within a fuction
@@ -272,7 +272,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               console.log(data)
               setStore({ oneOrder: data });
             });
-        } 
+        }
         catch {
           console.error("Something wrong", error);
         }
@@ -323,28 +323,28 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error creating buyer", error);
         }
       },
-      updateBuyer: async (updateBuyer, id) =>{
+      updateBuyer: async (updateBuyer, id) => {
         const actions = getActions();
         try {
-          const response = await fetch(process.env.BACKEND_URL + "/api/buyer/update/" + id , {
-            method:"PUT",
-            headers:{
+          const response = await fetch(process.env.BACKEND_URL + "/api/buyer/update/" + id, {
+            method: "PUT",
+            headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(updateBuyer),
           })
 
-          if(!response.ok) {
+          if (!response.ok) {
             throw new Error("Failed to update buyer")
           }
 
           const data = await response.json();
 
           setStore({
-            allBuyers: getStore().allBuyers.map(b => (b.id === id ? data: b))
+            allBuyers: getStore().allBuyers.map(b => (b.id === id ? data : b))
           })
           actions.BUYER()
-        }catch(error) {
+        } catch (error) {
           console.error("error updating buyer", error)
         }
       },
@@ -678,8 +678,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/product/" +
-            `${store.craftmenselected.id}`,
+          "/api/product/" +
+          `${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -717,8 +717,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/product/" +
-            `${store.productselected.id}`,
+          "/api/product/" +
+          `${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -736,8 +736,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/craftmen/" +
-            `${store.craftmenselected.id}`,
+          "/api/craftmen/" +
+          `${store.craftmenselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -757,8 +757,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(
           process.env.BACKEND_URL +
-            "/api/product/" +
-            `${store.productselected.id}`,
+          "/api/product/" +
+          `${store.productselected.id}`,
           requestOptions
         )
           .then((response) => response.text())
@@ -849,7 +849,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             localStorage.setItem("token", data.access_token);
           });
       },
-      saveAuthToken2: (access_token)=>{
+      saveAuthToken2: (access_token) => {
         const store = getStore()
         setStore({ authToken2: access_token });
         localStorage.setItem('authToken2', access_token)
@@ -887,27 +887,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         fetch(process.env.BACKEND_URL + "/api/login_b", requestOptions)
           .then((response) => {
-            console.log("aqui que hay",response);
+            console.log("aqui que hay", response);
             if (response.status == 200) {
               return response.json();
             }
-            throw new Error ("Failed to authenticate")
+            throw new Error("Failed to authenticate")
           })
           .then((datab) => {
-            console.log("recibo",datab);
+            console.log("recibo", datab);
             actions.saveAuthToken(datab.access_token)
             localStorage.setItem("token2", datab.access_token);
-            setStore({ authorize_b: true, currentBuyerId: datab.buyer_id, currentBuyerAddress: datab.address})
+            setStore({ authorize_b: true, currentBuyerId: datab.buyer_id, currentBuyerAddress: datab.address })
           });
-          console.log(store.authToken)
-          
+        console.log(store.authToken)
+
       },
       logout_b: () => {
         console.log("logout desde flux");
         localStorage.removeItem("token");
         setStore({ authorize_b: false });
       },
-      saveAuthToken: (access_token)=>{
+      saveAuthToken: (access_token) => {
         const store = getStore()
         setStore({ authToken: access_token });
         localStorage.setItem('authToken', access_token)
@@ -985,7 +985,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       ////////////////////////////  SIGN-UP  ////////////////////////////
       signup_b: (email, password) => {
-        
+
       },
     },
   };

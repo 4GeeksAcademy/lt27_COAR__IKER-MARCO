@@ -41,6 +41,11 @@ import { Signup_b } from "./component/formsignup_b";
 import { CartView } from "./pages/CartView.js";
 
 import { Paypalltest } from "./pages/paypaltest.js";
+import { Shop } from "./pages/shop.js";
+import { About } from "./pages/About.js";
+import { Services } from "./pages/Services.js";
+import { Blogpage } from "./pages/Blogpage.js";
+import { Contactus } from "./pages/Contactus.js";
 
 //create your first component
 const Layout = () => {
@@ -105,12 +110,20 @@ const Layout = () => {
             <Route element={<Login_buyer />} path="/login_buyer" />
             <Route element={<Login_admin />} path="/login_admin" />
 
-            <Route element={<Signup_b />} path="/signup_b" />            
+            <Route element={<Signup_b />} path="/signup_b" />
             <Route element={<h1>Not found!</h1>} />
-            <Route element={<Paypalltest />} path="/paypalltest" /> 
-            
-          </Routes>
+            <Route element={<Paypalltest />} path="/paypalltest" />
 
+            <Route element={<Shop />} path="/shop" />
+            <Route element={<About />} path="/about" />
+            <Route element={<Services />} path="/services" />
+            <Route element={<Blogpage />} path="/blogpage" />
+            <Route element={<Contactus />} path="/contactus" />
+
+
+
+          </Routes>
+          <br />
           <Footer />
         </ScrollToTop>
       </BrowserRouter>
