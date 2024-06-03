@@ -14,7 +14,7 @@ export const Login_craftmen = () => {
 
   return (
     <div className="text-center mt-5">
-      <h1>Hello Craftmen!!</h1>
+      <h1>Hello Craftman!!</h1>
       <div className="container text-center">
         <div className="row">
           <div className="col">
@@ -24,19 +24,8 @@ export const Login_craftmen = () => {
       </div>
 
       <h2>Or <Link to={"/craftmencreate"} className="btn btn-outline-primary">
-                    <span>Sign-up</span>
-              </Link>  if you are new </h2>
-
-      <div className="alert alert-info">
-        {store.message ||
-          "Loading message from the backend (make sure your python backend is running)..."}
-      </div>
-      <p>
-        This boilerplate comes with lots of documentation:{" "}
-        <a href="https://start.4geeksacademy.com/starters/react-flask">
-          Read documentation
-        </a>
-      </p>
+        <span>Sign-up</span>
+      </Link>  if you are new </h2>
     </div>
   );
 };

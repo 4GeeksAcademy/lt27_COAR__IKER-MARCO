@@ -14,11 +14,11 @@ export const Login_buyer = () => {
 
   return (
     <div className="text-center mt-5">
-      <h1>Hello Buyer!!</h1>
+      <h1>Welcome!</h1>
       <div className="container text-center">
         <div className="row">
           <div className="col">
-          {store.authorize_b == true ? (
+            {store.authorize_b == true ? (
               <Navigate to="/buyer_products" />
             ) : (
               <Formb />
@@ -28,19 +28,8 @@ export const Login_buyer = () => {
       </div>
 
       <h2>Or <Link to={"/buyer/new"} className="btn btn-outline-primary">
-                    <span>Sign-up</span>
-              </Link>  if you are new </h2>
-
-      <div className="alert alert-info">
-        {store.message ||
-          "Loading message from the backend (make sure your python backend is running)..."}
-      </div>
-      <p>
-        This boilerplate comes with lots of documentation:{" "}
-        <a href="https://start.4geeksacademy.com/starters/react-flask">
-          Read documentation
-        </a>
-      </p>
+        <span>Sign-up</span>
+      </Link>  if you are new </h2>
     </div>
   );
 };

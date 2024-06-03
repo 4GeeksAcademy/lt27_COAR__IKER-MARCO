@@ -12,18 +12,16 @@ export const Hero_about = () => (
                         <p className="mb-4">
                             COAR is a platform designed to connect artisans with customers interested in handmade and artisanal products. The platform will allow artisans to create profiles, upload their products, manage inventories, and make sales, while customers will be able to browse, search, and purchase unique and personalized products directly from the creators.
                         </p>
-                        <div className="row">
-                            <div className="col text-end">
-                                <Link to="/">
-                                    <button className="btn btn-outline-light">Home</button>
-                                </Link>
-                            </div>
-                            <div className="col">
-                                <Link to="/about">
-                                    <button className="btn btn-outline-light">Craftmen</button>
-                                </Link>
-                            </div>
+                        <br></br>
+                        <div className="col">
+                            <Link to="/">
+                                <button className="btn btn-accent bsb-btn-2xl">
+                                    <i className="bi bi-arrow-bar-left"></i>
+                                    Home
+                                </button>
+                            </Link>
                         </div>
+                        <br></br>
 
                     </div>
                 </div>

@@ -16,19 +16,27 @@ export const Hero = () => (
                         <p className="mb-4">
                             COAR es una plataforma de e-commerce diseñada para conectar a artesanos con clientes interesados en productos hechos a mano y artesanales. La plataforma permitirá a los artesanos crear perfiles, subir sus productos, gestionar inventarios y realizar ventas, mientras que los clientes podrán navegar, buscar y comprar productos únicos y personalizados directamente de los creadores.
                         </p>
-                        <div className="row">    
-                            <div className="col text-end">
-                                <Link to="/shop">
-                                    <button className="btn btn-outline-light">Shop</button>
-                                </Link>
-                            </div>
-                            <div className="col">
-                                <Link to="/about">
-                                    <button className="btn btn-outline-light">About</button>
-                                </Link>
-                            </div>
+                        <br></br>
+                        <div className="col">
+                            <Link to="/shop">
+                                <button className="btn btn-accent bsb-btn-2xl">
+                                    Shop
+                                    <i className="bi bi-arrow-bar-right"></i>
+
+                                </button>
+                            </Link>
                         </div>
+                        <div className="col">
+                            <Link to="/about">
+                                <button className="btn btn-accent bsb-btn-2xl">
+                                    About
+                                    <i className="bi bi-arrow-bar-right"></i>
+                                </button>
+                            </Link>
+                        </div>
+                        <br></br>
                         <br />
+
                     </div>
                 </div>
                 <div className="col-lg-7">

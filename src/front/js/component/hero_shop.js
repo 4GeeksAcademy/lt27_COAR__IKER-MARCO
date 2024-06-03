@@ -12,18 +12,16 @@ export const Hero_shop = () => (
                         <p className="mb-4">
                             Find the best deals on handmade products from local artisans. Support small businesses and get unique products that you won't find anywhere else.
                         </p>
-                        <div className="row">
-                            <div className="col text-end">
-                                <Link to="/">
-                                    <button className="btn btn-outline-light">Home</button>
-                                </Link>
-                            </div>
-                            <div className="col">
-                                <Link to="/about">
-                                    <button className="btn btn-outline-light">About</button>
-                                </Link>
-                            </div>
+                        <br></br>
+                        <div className="col">
+                            <Link to="/">
+                                <button className="btn btn-accent bsb-btn-2xl">
+                                    <i className="bi bi-arrow-bar-left"></i>
+                                    Home
+                                </button>
+                            </Link>
                         </div>
+                        <br></br>
 
                     </div>
                 </div>

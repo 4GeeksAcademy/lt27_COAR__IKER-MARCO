@@ -12,18 +12,16 @@ export const Hero_contact = () => (
                         <p className="mb-4">
                             If you have any questions, comments, or suggestions, please feel free to contact us. We are always looking for ways to improve our platform and make it more useful for artisans and customers. Your feedback is important to us!
                         </p>
-                        <div className="row">
-                            <div className="col text-end">
-                                <Link to="/">
-                                    <button className="btn btn-outline-light">Home</button>
-                                </Link>
-                            </div>
-                            <div className="col">
-                                <Link to="/about">
-                                    <button className="btn btn-outline-light">About</button>
-                                </Link>
-                            </div>
-                        </div>
+                        <br></br>
+			<div className="col">
+				<Link to="/">
+					<button className="btn btn-accent bsb-btn-2xl">
+						<i className="bi bi-arrow-bar-left"></i>
+						Home
+					</button>
+				</Link>
+			</div>
+			<br></br>
 
                     </div>
                 </div>
