@@ -2,3 +2,24 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+a {
+    color: #212529;
+    text-decoration: underline;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.text-primary {
+    --bs-text-opacity: 1;
+    color: #198754 !important;
+}
+
+.btn-outline-primary {
+    color: #198754;
+    border-color: #6c757d;
+}

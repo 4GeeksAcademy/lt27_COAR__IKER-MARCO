@@ -17,6 +17,10 @@ import team4 from "../../img/team/team-img-4.jpg";
 import team5 from "../../img/team/team-img-5.jpg";
 import team6 from "../../img/team/team-img-6.jpg";
 
+import iker from "../../img/iker.jpg";
+import marco from "../../img/marco.jpg";
+import about from "../../img/about.jpg";
+
 
 export const About = () => {
 
@@ -33,7 +37,7 @@ export const About = () => {
             <div className="container">
               <div className="row gy-4 gy-lg-0 align-items-lg-center">
                 <div className="col-12 col-lg-6">
-                  <img className="img-fluid rounded border border-dark" loading="lazy" src={about2} alt="About Us" />
+                  <img className="img-fluid rounded border border-dark" loading="lazy" src={about} alt="About Us" />
                 </div>
                 <div className="col-12 col-lg-6 col-xxl-6">
                   <div className="row justify-content-lg-end">
@@ -87,58 +91,22 @@ export const About = () => {
             </div>
 
             <div className="container">
-              <div className="row gy-4 gy-lg-0">
+              <div className="row justify-content-md-center">
                 <div className="col-12 col-md-6 col-lg-4">
                   <div className="card border border-dark">
-                    <img className="card-img-top" src={team1} alt="Card image cap" />
+                    <img className="card-img-top" src={marco} alt="Card image cap" />
                     <div className="card-body">
-                      <h5 className="card-title">John Doe</h5>
-                      <p className="card-text">CEO</p>
+                      <h5 className="card-title">Marco de la Rosa </h5>
+                      <p className="card-text">FULL STACK DEVELOPER</p>
                     </div>
                   </div>
                 </div>
                 <div className="col-12 col-md-6 col-lg-4">
                   <div className="card border border-dark">
-                    <img className="card-img-top" src={team2} alt="Card image cap" />
+                    <img className="card-img-top" src={iker} alt="Card image cap" />
                     <div className="card-body">
-                      <h5 className="card-title">Jane Doe</h5>
-                      <p className="card-text">COO</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-4">
-                  <div className="card border border-dark">
-                    <img className="card-img-top" src={team3} alt="Card image cap" />
-                    <div className="card-body">
-                      <h5 className="card-title">John Smith</h5>
-                      <p className="card-text">CTO</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-4">
-                  <div className="card border border-dark">
-                    <img className="card-img-top" src={team4} alt="Card image cap" />
-                    <div className="card-body">
-                      <h5 className="card-title">Jane Smith</h5>
-                      <p className="card-text">CFO</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-4">
-                  <div className="card border border-dark">
-                    <img className="card-img-top" src={team5} alt="Card image cap" />
-                    <div className="card-body">
-                      <h5 className="card-title">John Doe</h5>
-                      <p className="card-text">CEO</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6 col-lg-4">
-                  <div className="card border border-dark">
-                    <img className="card-img-top" src={team6} alt="Card image cap" />
-                    <div className="card-body">
-                      <h5 className="card-title">Jane Doe</h5>
-                      <p className="card-text">COO</p>
+                      <h5 className="card-title">Iker Luna</h5>
+                      <p className="card-text">FULL STACK DEVELOPER</p>
                     </div>
                   </div>
                 </div>

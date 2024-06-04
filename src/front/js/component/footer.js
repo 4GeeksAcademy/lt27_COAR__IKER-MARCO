@@ -35,7 +35,7 @@ export const Footer = () => (
 								<input type="email" className="form-control" placeholder="Enter your email" />
 							</div>
 							<div className="col-auto">
-								<button className="btn btn-primary">
+								<button className="btn btn-secondary">
 									<span className="fa fa-paper-plane"></span>
 								</button>
 							</div>
@@ -102,8 +102,8 @@ export const Footer = () => (
 			<div className="border-top copyright">
 				<div className="row pt-4">
 					<div className="col-lg-6">
-						<p className="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
-							{/* <!-- License information: https://untree.co/license/ --> */}
+						<p className="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by Marco e Iker
+
 						</p>
 					</div>
 

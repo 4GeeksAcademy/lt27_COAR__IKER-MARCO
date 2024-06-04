@@ -44,36 +44,7 @@ export const Craftmencreate = (props) => {
       <div className="text-center mt-5">
         <h1>Are you a New Craftmen? Please sign-up</h1>
       </div>
-      <div className="container text-center">
-              <div className="row">
-
-                <div className="col">
-                  <button
-                    onClick={saveCraftmen}
-                    className="btn btn-outline-success"
-                  >
-                    Create new craftmen
-                  </button>
-                </div>
-
-                <div className="col">
-                  <Link to={"/"} className="btn btn-outline-primary">
-                    <span>Home</span>
-                  </Link>
-                </div>
-
-                <div className="col">
-                  <Link
-                    to={"/craftmen"}
-                    className="btn btn-outline-success"
-                    onClick={() => actions.loadSomeData()}
-                  >
-                    <span>Regresar</span>
-                  </Link>
-                </div>
-
-              </div>
-            </div>
+     
 
 
       <div className="text-start mt-5">
@@ -207,23 +178,8 @@ export const Craftmencreate = (props) => {
                   >
                     Create new craftmen
                   </button>
-                </div>
+                </div>  
 
-                <div className="col">
-                  <Link to={"/"} className="btn btn-outline-primary">
-                    <span>Home</span>
-                  </Link>
-                </div>
-
-                <div className="col">
-                  <Link
-                    to={"/craftmen"}
-                    className="btn btn-outline-success"
-                    onClick={() => actions.loadSomeData()}
-                  >
-                    <span>Regresar</span>
-                  </Link>
-                </div>
 
               </div>
             </div>

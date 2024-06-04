@@ -61,10 +61,8 @@ export const Shop = () => {
                     <ProductCard_Buyer
                       key={product.id}
                       name={product.name}
-                      category={product.category}
                       stock={product.stock}
                       price={product.price}
-                      {...product}
                     />
                   );
                 })}
