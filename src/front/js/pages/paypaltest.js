@@ -15,7 +15,7 @@ export const Paypalltest = () => {
 
   return (
     <div className="text-center mt-5">
-      <h1>Paypall test</h1>
+      <h1>Checkout</h1>
       <div className="container text-center">
         <div className="row">
           <div className="col"></div>
