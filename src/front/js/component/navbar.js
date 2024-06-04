@@ -15,7 +15,7 @@ export const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">COAR</Link>
+          <Link className="navbar-brand" to="/"><h1>COAR</h1></Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -43,6 +43,9 @@ export const Navbar = () => {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/contactus">Contact</Link>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-secondary" onClick={handleClick}><i class="bi bi-cart"></i> ({store.cart.length})</button>
                 </li>
               </ul>
               <div className="dropdown">
