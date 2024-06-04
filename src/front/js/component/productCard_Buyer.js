@@ -33,30 +33,28 @@ const ProductCard_Buyer = (props) => {
 
   return (
     <div className="card mx-3 m-3" style={{ width: "14rem" }}>
+      <h3 className="card-title">
+          <strong> {props.name}</strong>
+        </h3>
       <img src={rigoImage} className="card-img-top" alt="..." />
       <div className="card-body m-2 ">
+        
         <h5 className="card-title">
-          Product de compra
-        </h5>
-        <h5 className="card-title">
-          Nombre:
           <strong> {props.name}</strong>
         </h5>
-        <p className="card-text">Price: {props.price}</p>
-        <p className="card-text">Category: {props.category}</p>
-        <p className="card-text">In stock: {props.stock}</p>
-        <p className="card-text">Description: {props.description}</p>
+        <p className="card-text">Price: ${props.price}</p>
+        <p className="card-text">In stock: {props.stock} units </p>
 
 
         <div className="d-flex justify-content-between">
           <Link
             to={"/buyer_productdetail/" + props.id}
-            className="btn btn-outline-primary"
+            className="btn btn-outline-success"
           >
             <span>Details</span>
           </Link>
 
-          <button className="btn btn-outline-primary mx-2"
+          <button className="btn btn-outline-success mx-2"
            onClick={handleAdd}
           >
               <i className="fa-solid fa-cart-shopping"></i>
